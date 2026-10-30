@@ -1,7 +1,7 @@
-/* Kapitel 1 – Tumorklassifikation, Molekularpathologie & Methoden (PDF S. 4–6) */
+/* Chapter 1 – Tumor classification, molecular pathology & methods (PDF pp. 4–6) */
 PQ.registerChapter(1, [
 
-  /* ---------- 1.1 Tumorklassifikation: Typing, Grading, Staging ---------- */
+  /* ---------- 1.1 Tumor classification: typing, grading, staging ---------- */
   {
     id: 'k1-01', sec: '1.1', p: '4–5', type: 'single', alt: '2015, 2021',
     q: 'Welcher Parameter ist für das histologische Grading NICHT geeignet?',
@@ -84,7 +84,7 @@ PQ.registerChapter(1, [
     ex: 'ZNS: WHO-Grad 1–4, Grad 1 = benigne; kein TNM.'
   },
 
-  /* ---------- 1.2 TNM-System und R-Klassifikation ---------- */
+  /* ---------- 1.2 TNM system and R classification ---------- */
   {
     id: 'k1-10', sec: '1.2', p: '4–5', type: 'single',
     q: 'Was bedeutet R2?',
@@ -146,7 +146,7 @@ PQ.registerChapter(1, [
     ex: 'Optional L (Lymphgefäß-), V (Venen-) und Pn (Perineuralinvasion).'
   },
 
-  /* ---------- 1.3 Biomarker, prädiktive Faktoren, EGFR/KRAS ---------- */
+  /* ---------- 1.3 Biomarkers, predictive factors, EGFR/KRAS ---------- */
   {
     id: 'k1-16', sec: '1.3', p: 5, type: 'single', alt: '2018, 2020, 2025',
     q: 'Welche Kombination ist KEINE typische Indikation für einen prädiktiven Faktor?',
@@ -275,7 +275,7 @@ PQ.registerChapter(1, [
     ex: 'Magen/GÖÜ: HER2 mit anderen Auswertekriterien, höherer intratumoraler Heterogenität als bei Mamma; IHC teils prädiktiver als FISH.'
   },
 
-  /* ---------- 1.4 Färbungen & Immunhistochemie ---------- */
+  /* ---------- 1.4 Stains & immunohistochemistry ---------- */
   {
     id: 'k1-29', sec: '1.4', p: 5, type: 'single',
     q: 'Welche Färbung stellt Mykobakterien dar?',
@@ -357,7 +357,7 @@ PQ.registerChapter(1, [
     ex: 'Kongorot: Amyloid rot, im polarisierten Licht apfelgrüne Doppelbrechung. Berliner Blau → Eisen; EvG → elastische Fasern/Kollagen.'
   },
 
-  /* ---------- 1.5 Metastasierungsmuster ---------- */
+  /* ---------- 1.5 Patterns of metastasis ---------- */
   {
     id: 'k1-38', sec: '1.5', p: 6, type: 'match',
     q: 'Ordne die Metastase ihrem typischen Primärtumor zu.',
@@ -391,7 +391,7 @@ PQ.registerChapter(1, [
     ex: 'Gehirn: Bronchial-Ca (40–50 %) > Mamma (15–20 %) > Melanom (5–20 %) > Niere (5–10 %); selten Gallenblase, Prostata.'
   },
 
-  /* ---------- Richtig/Falsch-Aussagen ---------- */
+  /* ---------- True/false statements ---------- */
   { id: 'k1-t01', sec: '1.1', p: 4, type: 'tf', a: false, q: 'Der Lymphknotenbefall ist ein Grading-Parameter.', ex: 'LK-Befall gehört zum Staging (Altfrage 2015, 2021).' },
   { id: 'k1-t02', sec: '1.1', p: 4, type: 'tf', a: true, q: 'Beim Melanom der Haut erfolgt kein Grading.', ex: 'Kein Grading bei Schilddrüsen-Ca, Keimzelltumoren, Melanom der Haut.' },
   { id: 'k1-t03', sec: '1.1', p: 4, type: 'tf', a: true, q: 'Die endgültige Typisierung erfolgt oft erst am Resektat, nicht an der Biopsie.', ex: 'Endgültige Typisierung oft erst am Resektat.' },

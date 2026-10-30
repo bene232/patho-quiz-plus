@@ -1,7 +1,7 @@
-/* Kapitel 4 – Herz (PDF S. 12–15) */
+/* Chapter 4 – Heart (PDF pp. 12–15) */
 PQ.registerChapter(4, [
 
-  /* ---------- 4.1 Arteriosklerose & KHK ---------- */
+  /* ---------- 4.1 Atherosclerosis & coronary heart disease ---------- */
   {
     id: 'k4-01', sec: '4.1', p: 12, type: 'single', alt: '2008',
     q: 'KHK – welche Aussage ist FALSCH?',
@@ -78,7 +78,7 @@ PQ.registerChapter(4, [
     ex: 'Fettstreifen (Schaumzellen) → fibröse/fibroatheromatöse Plaque (Lipidkern + fibröse Kappe) → komplizierte Läsion (Ruptur, Ulzeration, Thrombose, Blutung, Verkalkung).'
   },
 
-  /* ---------- 4.2 Myokardinfarkt ---------- */
+  /* ---------- 4.2 Myocardial infarction ---------- */
   {
     id: 'k4-08', sec: '4.2', p: 12, type: 'kprim', alt: '2023',
     q: 'Welche der folgenden sind Komplikationen eines Myokardinfarkts?',
@@ -163,7 +163,7 @@ PQ.registerChapter(4, [
     ex: 'Transmural = STEMI; nicht-transmural/subendokardial = NSTEMI, z. B. bei Hypotonie. Definition des Infarkts: ischämische Myokardnekrose (Troponin-Anstieg + Klinik/EKG).'
   },
 
-  /* ---------- 4.3 Herzhypertrophie & Cor pulmonale ---------- */
+  /* ---------- 4.3 Cardiac hypertrophy & cor pulmonale ---------- */
   {
     id: 'k4-16', sec: '4.3', p: 13, type: 'single',
     q: 'Worauf beruht eine Herzhypertrophie?',
@@ -186,7 +186,7 @@ PQ.registerChapter(4, [
     ex: 'Cor pulmonale = Rechtsherzhypertrophie/-dilatation infolge pulmonaler Hypertonie bei Lungenerkrankung: akut (Lungenembolie), chronisch (COPD/Emphysem, Lungenfibrose, Silikose, rezidivierende Embolien). Folgen: Stauungsleber (Muskatnussleber), Ödeme.'
   },
 
-  /* ---------- 4.4 Kardiomyopathien ---------- */
+  /* ---------- 4.4 Cardiomyopathies ---------- */
   {
     id: 'k4-19', sec: '4.4', p: 13, type: 'single', alt: '2013, 2021–2024',
     q: 'Welche Region ist bei der hypertrophen obstruktiven Kardiomyopathie (HOCM) am stärksten betroffen?',
@@ -240,7 +240,7 @@ PQ.registerChapter(4, [
     ex: 'DCM (primär gemischt): Dilatation + systolische Dysfunktion des linken oder beider Ventrikel; ca. 25 % familiär, sonst nach Myokarditis, Alkohol, toxisch, peripartal. Normal großer Ventrikel mit diastolischer Störung = RCM.'
   },
 
-  /* ---------- 4.5 Myokarditis ---------- */
+  /* ---------- 4.5 Myocarditis ---------- */
   {
     id: 'k4-25', sec: '4.5', p: 13, type: 'single', alt: '2010, 2019',
     q: 'Myokarditis/Kardiomyopathie – welche Aussage ist FALSCH?',
@@ -309,7 +309,7 @@ PQ.registerChapter(4, [
     ex: 'IHC-Kriterium: ≥ 14 Leukozyten/mm² (davon bis zu 4 Monozyten) mit ≥ 7 CD3+ T-Zellen/mm². Diagnose per Endomyokardbiopsie.'
   },
 
-  /* ---------- 4.6 Endokarditis ---------- */
+  /* ---------- 4.6 Endocarditis ---------- */
   {
     id: 'k4-31', sec: '4.6', p: 14, type: 'kprim', alt: '2013, 2020, 2025',
     q: 'Endokarditis – welche Aussagen treffen zu?',
@@ -403,7 +403,7 @@ PQ.registerChapter(4, [
     ex: 'Folgen: septische Embolien → periphere Infarkte (Milz, Niere, Gehirn), Herdnephritis Löhlein, Osler-Knötchen, Janeway-Läsionen, Splinter-Blutungen, Roth-Flecken. Lungenembolien/-abszesse entstehen bei der Rechtsherz-Endokarditis.'
   },
 
-  /* ---------- 4.7 Erworbene Klappenfehler ---------- */
+  /* ---------- 4.7 Acquired valvular disease ---------- */
   {
     id: 'k4-40', sec: '4.7', p: 14, type: 'kprim', alt: '2021',
     q: 'Erworbene Klappenfehler – welche Zuordnungen treffen zu?',
@@ -439,7 +439,7 @@ PQ.registerChapter(4, [
     ex: 'Mitralstenose: großer LA, kleiner LV, Stauungslunge (Herzfehlerzellen), pulmonale Hypertonie → Rechtsherzhypertrophie; Vorhofflimmern, Vorhofthromben → Embolien. Konzentrische Hypertrophie = Aortenstenose, frühe Dilatation = Aorteninsuffizienz.'
   },
 
-  /* ---------- 4.8 Angeborene Herzfehler ---------- */
+  /* ---------- 4.8 Congenital heart defects ---------- */
   {
     id: 'k4-43', sec: '4.8', p: '14–15', type: 'kprim', alt: '2015, 2019, 2021, 2022',
     q: 'Zur Fallot-Tetralogie gehören:',
@@ -534,7 +534,7 @@ PQ.registerChapter(4, [
     ex: 'Spaltförmiges PFO: bei ca. 25 % der Erwachsenen, kein pathologischer Befund – eine paradoxe Embolie ist aber möglich. Häufigster angeborener Herzfehler ist der VSD (27 %).'
   },
 
-  /* ---------- 4.9 Perikarditis & Herztumoren ---------- */
+  /* ---------- 4.9 Pericarditis & cardiac tumors ---------- */
   {
     id: 'k4-52', sec: '4.9', p: 15, type: 'single', alt: '2013, 2016, 2024',
     q: 'Welche Reihenfolge der Herztumoren beim Erwachsenen (nach Häufigkeit) ist richtig?',
@@ -608,7 +608,7 @@ PQ.registerChapter(4, [
     ex: 'Häufigster primär maligner Herztumor: Angiosarkom. „Lymphangiosarkom häufigster beim Erwachsenen“ war in einer Altfrage falsch. Myxom und Rhabdomyom sind benigne. Insgesamt sind Metastasen (Lunge, Mamma, Melanom, Lymphom) viel häufiger als primäre Herztumoren.'
   },
 
-  /* ---------- Weitere K-prim ---------- */
+  /* ---------- More K-prim ---------- */
   {
     id: 'k4-59', sec: '4.1', p: 12, type: 'kprim',
     q: 'Arteriosklerose & KHK – welche Aussagen treffen zu?',
@@ -709,7 +709,7 @@ PQ.registerChapter(4, [
     ex: 'Papilläres Fibroelastom: Klappen („Seeanemone“); im linken Vorhof sitzt das Myxom. Kardiales Fibrom: echokardiographisch gut umschrieben, DD hypertrophe KMP.'
   },
 
-  /* ---------- Richtig/Falsch-Aussagen ---------- */
+  /* ---------- True/false statements ---------- */
   { id: 'k4-t01', sec: '4.1', p: 12, type: 'tf', a: true, q: 'Die Arteriosklerose ist eine Erkrankung der Intima großer und mittelgroßer Arterien.', ex: 'Chronische Erkrankung der Intima großer und mittelgroßer Arterien mit Lipideinlagerung, Fibrose, Verkalkung.' },
   { id: 'k4-t02', sec: '4.1', p: 12, type: 'tf', a: false, q: 'Die Mönckeberg-Mediasklerose führt typischerweise zu einer hochgradigen Lumeneinengung.', ex: 'Mönckeberg = Mediaverkalkung muskulärer Arterien ohne Lumeneinengung („Gänsegurgel-Arterien“).' },
   { id: 'k4-t03', sec: '4.1', p: 12, type: 'tf', a: false, q: 'Adipositas ist ein Risikofaktor 1. Ordnung der Arteriosklerose.', ex: 'Adipositas ist ein Risikofaktor 2. Ordnung. 1. Ordnung: Hypertonie, Nikotin, Fettstoffwechselstörung, Diabetes mellitus.' },

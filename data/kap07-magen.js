@@ -1,7 +1,7 @@
-/* Kapitel 7 – Ösophagus, Magen, Dünndarm (PDF S. 23–25) */
+/* Chapter 7 – Esophagus, stomach, small intestine (PDF pp. 23–25) */
 PQ.registerChapter(7, [
 
-  /* ---------- 7.1 Ösophagus ---------- */
+  /* ---------- 7.1 Esophagus ---------- */
   {
     id: 'k7-01', sec: '7.1', p: 23, type: 'kprim', alt: '2022, 2024',
     q: 'Ösophaguskarzinom – welche Aussagen treffen zu?',
@@ -208,7 +208,7 @@ PQ.registerChapter(7, [
     ex: 'Typ A: Achlorhydrie → Hypergastrinämie → ECL-Hyperplasie → NET Typ 1 (Mikrokarzinoide, ~5 %).'
   },
 
-  /* ---------- 7.3 Erosion & Ulkus ---------- */
+  /* ---------- 7.3 Erosion & ulcer ---------- */
   {
     id: 'k7-20', sec: '7.3', p: 24, type: 'single', alt: '2009, 2013A',
     q: 'Ulkus – welche Aussage ist FALSCH?',
@@ -281,7 +281,7 @@ PQ.registerChapter(7, [
     ex: 'Ulkus-Wandschichten: Fibrin/Exsudat → fibrinoide Nekrose → Granulationsgewebe → Narbe.'
   },
 
-  /* ---------- 7.4 Magenkarzinom ---------- */
+  /* ---------- 7.4 Gastric carcinoma ---------- */
   {
     id: 'k7-27', sec: '7.4', p: '24–25', type: 'single', alt: '2008',
     q: 'Magenkarzinom – welche Aussage trifft zu?',
@@ -426,7 +426,7 @@ PQ.registerChapter(7, [
     ex: 'GIST: CD117, DOG1, CD34; spindelzellig/epitheloid. Synaptophysin/Chromogranin → NET; Desmin/Myogenin → Rhabdomyosarkom.'
   },
 
-  /* ---------- 7.6 Dünndarm ---------- */
+  /* ---------- 7.6 Small intestine ---------- */
   {
     id: 'k7-41', sec: '7.6', p: 25, type: 'single', alt: '2010',
     q: 'Zöliakie – welche Aussage ist FALSCH?',
@@ -537,7 +537,7 @@ PQ.registerChapter(7, [
     ex: 'Zöliakie: ~1 : 100; Biopsien (3–5) aus dem distalen Duodenum; Klinik u. a. Dermatitis herpetiformis Duhring, Anämie, Osteoporose, oft oligo-/asymptomatisch.'
   },
 
-  /* ---------- Richtig/Falsch-Aussagen ---------- */
+  /* ---------- True/false statements ---------- */
   { id: 'k7-t01', sec: '7.1', p: 23, type: 'tf', a: false, q: 'Alkohol ist ein Risikofaktor des Barrett-Adenokarzinoms.', ex: 'Alkohol und H. pylori sind keine RF des Adeno-Ca (Altfrage 2008).' },
   { id: 'k7-t02', sec: '7.1', p: 23, type: 'tf', a: true, q: 'H. pylori wirkt beim Ösophagus-Adenokarzinom eher protektiv.', ex: 'HP ist eher protektiv für das Adeno-Ca.' },
   { id: 'k7-t03', sec: '7.1', p: 23, type: 'tf', a: true, q: 'Das Adenokarzinom des Ösophagus liegt zu ca. 95 % im distalen Drittel bzw. am gastroösophagealen Übergang.', ex: 'Adeno-Ca: distales Drittel/GÖÜ (~95 %).' },

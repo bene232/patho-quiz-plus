@@ -1,7 +1,7 @@
-/* Kapitel 5 – Gefäße: Vaskulitis, Aneurysma, Thrombose, Gefäßtumoren (PDF S. 16–18) */
+/* Chapter 5 – Vessels: vasculitis, aneurysm, thrombosis, vascular tumors (PDF pp. 16–18) */
 PQ.registerChapter(5, [
 
-  /* ---------- 5.1 Vaskulitiden ---------- */
+  /* ---------- 5.1 Vasculitides ---------- */
   {
     id: 'k5-01', sec: '5.1', p: 16, type: 'kprim', alt: '2013',
     q: 'Riesenzellarteriitis – welche Aussagen treffen zu?',
@@ -178,7 +178,7 @@ PQ.registerChapter(5, [
     ex: 'RZA: Gefahr der Erblindung (A. ophthalmica) und des Schlaganfalls, Aortenaneurysma. Der Myokardinfarkt wurde in der Altfrage 2013 als falsch gewertet. RPGN → GPA/MPA; Koronaraneurysmen → Kawasaki.'
   },
 
-  /* ---------- 5.2 Aneurysma & Dissektion ---------- */
+  /* ---------- 5.2 Aneurysm & dissection ---------- */
   {
     id: 'k5-17', sec: '5.2', p: 17, type: 'single', alt: '2008, 2018, 2021',
     q: 'Was ist KEINE Ursache für ein Aortenaneurysma?',
@@ -247,7 +247,7 @@ PQ.registerChapter(5, [
     ex: 'Marfan-Syndrom: Fibrillin, zystische Medianekrose → Aneurysma und Aortendissektion; außerdem Aortenwurzeldilatation als Ursache einer Aorteninsuffizienz.'
   },
 
-  /* ---------- 5.3 Thrombose, Thrombophlebitis, Embolie ---------- */
+  /* ---------- 5.3 Thrombosis, thrombophlebitis, embolism ---------- */
   {
     id: 'k5-24', sec: '5.3', p: 17, type: 'single', alt: '2009, 2019, 2021',
     q: 'Was ist KEINE Ursache einer tiefen Venenthrombose?',
@@ -317,7 +317,7 @@ PQ.registerChapter(5, [
     ex: 'Thrombophlebitis: epifasziale Venen (Varizen, Venenkatheter), Rubor, Calor, Dolor, keine Schwellung. Phlebothrombose: tiefe Venen, meist ohne Entzündung. Thrombophlebitis migrans/saltans: M. Buerger, Pankreas-Ca.'
   },
 
-  /* ---------- 5.4 pAVK ---------- */
+  /* ---------- 5.4 Peripheral artery disease (pAVK) ---------- */
   {
     id: 'k5-31', sec: '5.4', p: 17, type: 'single', alt: '2008',
     q: 'pAVK – welche Aussage ist FALSCH?',
@@ -344,7 +344,7 @@ PQ.registerChapter(5, [
     ex: 'Fontaine: I asymptomatisch · II Claudicatio intermittens (a > 200 m, b < 200 m) · III Ruheschmerz · IV Nekrose/Gangrän, irreversibel.'
   },
 
-  /* ---------- 5.5 Vaskuläre Tumoren & Malformationen ---------- */
+  /* ---------- 5.5 Vascular tumors & malformations ---------- */
   {
     id: 'k5-33', sec: '5.5', p: 18, type: 'single', alt: '2010',
     q: 'Vaskuläre Tumoren – welche Aussage ist FALSCH?',
@@ -420,7 +420,7 @@ PQ.registerChapter(5, [
     ex: 'Benigne: Hämangiom, pyogenes Granulom, Glomustumor, Lymphangiom. Intermediär: Hämangioendotheliom, Kaposi-Sarkom. Maligne: Angiosarkom.'
   },
 
-  /* ---------- Weitere K-prim ---------- */
+  /* ---------- More K-prim ---------- */
   {
     id: 'k5-40', sec: '5.1', p: 16, type: 'kprim',
     q: 'ANCA und Vaskulitiden – welche Aussagen treffen zu?',
@@ -488,7 +488,7 @@ PQ.registerChapter(5, [
     ex: 'Kaposi-Sarkom: intermediär (wie das Hämangioendotheliom). Vaskuläre Malformationen wachsen proportional mit und bilden sich nicht zurück – im Gegensatz zum Hämangiom.'
   },
 
-  /* ---------- Richtig/Falsch-Aussagen ---------- */
+  /* ---------- True/false statements ---------- */
   { id: 'k5-t01', sec: '5.1', p: 16, type: 'tf', a: true, q: 'Die Riesenzellarteriitis ist die häufigste Vaskulitis in Deutschland.', ex: 'RZA: häufigste Vaskulitis in Deutschland; > 50 J (meist > 60).' },
   { id: 'k5-t02', sec: '5.1', p: 17, type: 'tf', a: false, q: 'Die Riesenzellarteriitis betrifft überwiegend kleine Gefäße.', ex: 'Die RZA betrifft mittlere bis große Arterien der oberen Körperhälfte/des Kopfes (Altfrage 2013).' },
   { id: 'k5-t03', sec: '5.1', p: 16, type: 'tf', a: false, q: 'Bei der Riesenzellarteriitis sind Riesenzellen in jedem Schnitt nachweisbar.', ex: 'Riesenzellen sind nicht in jedem Schnitt zu sehen (segmentaler Befall, Biopsie ≥ 1 cm).' },

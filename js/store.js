@@ -1,16 +1,16 @@
-/* Fortschritt im localStorage: Lernkartei (Leitner-Boxen 1–5), Tagesaktivität, Punkte, Einstellungen. */
+/* Progress in localStorage: flashcards (Leitner boxes 1–5), daily activity, points, settings. */
 (function () {
   'use strict';
 
-  // Plus läuft unter derselben Origin (bene232.github.io) wie Patho-Quiz, daher eigene Schlüssel.
-  // MAIN_KEY wird nur gelesen: Solange Plus noch nichts gespeichert hat, startet es mit dem Fortschritt aus Patho-Quiz.
+  // Plus runs on the same origin (bene232.github.io) as Patho-Quiz, hence its own keys.
+  // MAIN_KEY is only ever read: until Plus has saved anything, it starts with the progress from Patho-Quiz.
   const KEY = 'pathoquiz-plus.v1';
   const SESSION_KEY = 'pathoquiz-plus.session';
   const MAIN_KEY = 'pathoquiz.v1';
   const DAY = 86400000;
-  // Wiedervorlage in Tagen je Box: Box 1 sofort, Box 2 nach 1 Tag, … Box 5 nach 21 Tagen
+  // Review interval in days per box: box 1 immediately, box 2 after 1 day, … box 5 after 21 days
   const INTERVAL_DAYS = [0, 0, 1, 3, 7, 21];
-  // Wählbare Tagesziele; ein gespeicherter Wert außerhalb davon (früher 10–50) wird auf den Standard gesetzt
+  // Selectable daily goals; a saved value outside these (formerly 10–50) is reset to the default
   const GOALS = [100, 200, 300, 400];
   const DEFAULT_GOAL = 300;
 
@@ -28,14 +28,14 @@
         if (GOALS.indexOf(loaded.settings.dailyGoal) < 0) loaded.settings.dailyGoal = DEFAULT_GOAL;
         return loaded;
       }
-    } catch (e) { /* privater Modus o. Ä. – dann ohne Speicherung */ }
+    } catch (e) { /* private mode or similar – run without saving */ }
     return blank();
   }
 
   let state = load();
 
   function save() {
-    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* ignorieren */ }
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* ignore */ }
   }
 
   function dayKey(t) {
@@ -78,7 +78,7 @@
     return !!s && s.b >= 2 && s.d <= (now || Date.now());
   }
 
-  // Kalendertage rückwärts (setDate statt −24 h, damit die Zeitumstellung nichts verschiebt)
+  // Calendar days backwards (setDate instead of −24 h so daylight saving time shifts nothing)
   function daysBack(i) {
     const d = new Date();
     d.setHours(12, 0, 0, 0);
@@ -87,7 +87,7 @@
   }
 
   function streak() {
-    let i = state.days[dayKey()] ? 0 : 1; // heute noch nichts gemacht → Serie zählt bis gestern
+    let i = state.days[dayKey()] ? 0 : 1; // nothing done today yet → streak counts up to yesterday
     let n = 0;
     while (state.days[dayKey(daysBack(i).getTime())]) { n += 1; i += 1; }
     return n;
@@ -115,7 +115,7 @@
     return 'PQ1:' + btoa(unescape(encodeURIComponent(JSON.stringify(state))));
   }
 
-  // Akzeptiert sowohl den Code (PQ1:…) als auch den Inhalt einer exportierten Datei.
+  // Accepts both the code (PQ1:…) and the contents of an exported file.
   function importData(text) {
     text = String(text || '').trim();
     let parsed;
@@ -146,7 +146,7 @@
     save();
   }
 
-  // Zuletzt gewählte Filter je Modus (reine Komfortfunktion)
+  // Last chosen filters per mode (convenience only)
   function pref(name, value) {
     if (value === undefined) return state.prefs[name];
     state.prefs[name] = value;
@@ -157,7 +157,7 @@
     try {
       if (data) localStorage.setItem(SESSION_KEY, JSON.stringify(data));
       else localStorage.removeItem(SESSION_KEY);
-    } catch (e) { /* ignorieren */ }
+    } catch (e) { /* ignore */ }
   }
 
   function loadSession() {

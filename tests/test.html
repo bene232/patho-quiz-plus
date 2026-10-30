@@ -31,7 +31,7 @@
   function ok(cond, msg) { if (!cond) fails++; lines.push((cond ? 'PASS ' : 'FAIL ') + msg); }
   window.onerror = (m, src, l) => { fails++; lines.push('FAIL JS-Fehler: ' + m + ' @' + src + ':' + l); };
 
-  /* ---------- Daten ---------- */
+  /* ---------- Data ---------- */
   const pageRange = { 1: [4, 6], 2: [7, 9], 3: [10, 11], 4: [12, 15], 5: [16, 18], 6: [19, 22], 7: [23, 25], 8: [26, 28], 9: [29, 31], 10: [32, 35], 11: [36, 38], 12: [39, 41], 13: [42, 43], 14: [44, 46], 15: [47, 51], 16: [52, 56], 17: [57, 57] };
   const ids = new Set();
   const problems = [];
@@ -99,7 +99,7 @@
     ok(n >= 3, 'Abschnitt ' + s.id + ' hat ' + n + ' Fragen');
   }));
 
-  /* ---------- Bewertung ---------- */
+  /* ---------- Scoring ---------- */
   const Q = PQ.quiz;
   const single = PQ.questions.find(q => q.type === 'single');
   ok(Q.evaluate(single, single.a).correct && Q.evaluate(single, single.a).score === 1, 'Einfachauswahl richtig');
@@ -125,7 +125,7 @@
   ok(Q.isComplete(single, 0) && !Q.isComplete(single, null), 'Einfachauswahl vollständig');
   ok(Q.isComplete(tf, false) && !Q.isComplete(tf, null), 'Richtig/Falsch vollständig (auch bei false)');
 
-  /* ---------- Filter & Runden ---------- */
+  /* ---------- Filters & rounds ---------- */
   const allSecs = Object.keys(PQ.sections);
   const alt = Q.filter({ sections: allSecs, types: ['single', 'kprim', 'match', 'tf'], altOnly: true });
   ok(alt.length > 0 && alt.every(q => q.alt), 'Filter „Nur Altfragen“');
@@ -153,7 +153,7 @@
   }
   ok(Object.keys(firstPos).length === single.opts.length, 'Richtige Antwort landet auf allen Positionen ' + JSON.stringify(firstPos));
 
-  /* ---------- Lernkartei ---------- */
+  /* ---------- Flashcards ---------- */
   const S = PQ.store;
   const id = 'k4-01';
   S.record(id, true, 10);

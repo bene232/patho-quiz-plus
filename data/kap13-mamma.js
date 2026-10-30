@@ -1,7 +1,7 @@
-/* Kapitel 13 – Mamma (PDF S. 42–43) */
+/* Chapter 13 – Breast (PDF pp. 42–43) */
 PQ.registerChapter(13, [
 
-  /* ---------- 13.1 Diagnostik & DD Rundherd ---------- */
+  /* ---------- 13.1 Diagnostics & differential diagnosis of breast masses ---------- */
   {
     id: 'k13-01', sec: '13.1', p: '42–43', type: 'single', alt: '2012, 2020',
     q: 'Wann ist nach einer Mamma-Stanzbiopsie eine weitere Abklärung nötig?',
@@ -51,7 +51,7 @@ PQ.registerChapter(13, [
     ex: 'Präparate: Feinnadelaspiration (Zytologie), Hochgeschwindigkeits-Stanzbiopsie (Standard), Vakuumbiopsie (Mikrokalk), Exzisat, Mastektomie, Sentinel-LK, Schnellschnitt.'
   },
 
-  /* ---------- 13.2 Präkanzerosen & In-situ-Läsionen ---------- */
+  /* ---------- 13.2 Precancerous & in situ lesions ---------- */
   {
     id: 'k13-06', sec: '13.2', p: '42–43', type: 'single', alt: '2015',
     q: 'Welche Läsion ist eine Vorläuferläsion des Mammakarzinoms?',
@@ -122,7 +122,7 @@ PQ.registerChapter(13, [
     ex: 'DCIS: Grading low/intermediate/high (Van Nuys). Elston & Ellis gilt für das invasive Karzinom.'
   },
 
-  /* ---------- 13.3 Mammakarzinom ---------- */
+  /* ---------- 13.3 Breast carcinoma ---------- */
   {
     id: 'k13-13', sec: '13.3', p: 43, type: 'single', alt: '2013B, 2019, 2021',
     q: 'Maligne Mammatumoren – welche Aussage ist FALSCH?',
@@ -305,7 +305,7 @@ PQ.registerChapter(13, [
     ex: 'RF: Alter, lange Östrogenexposition (frühe Menarche, späte Menopause, Nulliparität, späte Erstgebärende, nicht gestillt, HRT), postmenopausale Adipositas, Alkohol, Bewegungsmangel, Strahlung, dichtes Drüsengewebe, Familie.'
   },
 
-  /* ---------- Richtig/Falsch-Aussagen ---------- */
+  /* ---------- True/false statements ---------- */
   { id: 'k13-t01', sec: '13.1', p: 42, type: 'tf', a: true, q: 'Das Fibroadenom ist der häufigste benigne Tumor junger Frauen.', ex: 'Fibroadenom: häufigster benigner Tumor junger Frauen; Epithel + Stroma.' },
   { id: 'k13-t02', sec: '13.1', p: 42, type: 'tf', a: false, q: 'Eine radiäre Narbe wird in der Stanzbiopsie als B2 eingestuft.', ex: 'Radiäre Narbe = B3 → Exzision.' },
   { id: 'k13-t03', sec: '13.1', p: 42, type: 'tf', a: true, q: 'Ein intraduktales Papillom kann eine blutige Mamillensekretion verursachen.', ex: 'Intraduktales Papillom: blutige Mamillensekretion.' },

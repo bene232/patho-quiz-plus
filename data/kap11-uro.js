@@ -1,7 +1,7 @@
-/* Kapitel 11 – Harnblase, Prostata, Hoden (PDF S. 36–38) */
+/* Chapter 11 – Urinary bladder, prostate, testis (PDF pp. 36–38) */
 PQ.registerChapter(11, [
 
-  /* ---------- 11.1 Harnblase: Entzündung ---------- */
+  /* ---------- 11.1 Urinary bladder: inflammation ---------- */
   {
     id: 'k11-01', sec: '11.1', p: 36, type: 'kprim', alt: '2012, 2015',
     q: 'Welche der folgenden sind Formen bzw. Ursachen einer Urozystitis?',
@@ -47,7 +47,7 @@ PQ.registerChapter(11, [
     ex: 'Urogenital-Tbc = häufigste isolierte Organ-Tbc.'
   },
 
-  /* ---------- 11.2 Urotheltumoren ---------- */
+  /* ---------- 11.2 Urothelial tumors ---------- */
   {
     id: 'k11-06', sec: '11.2', p: 36, type: 'single', alt: '2015, Fragensammlung',
     q: 'Urothelkarzinom – welche Aussage ist FALSCH?',
@@ -171,7 +171,7 @@ PQ.registerChapter(11, [
     ex: 'Urothelkarzinom: multizentrisch synchron und metachron; Männer : Frauen ≈ 3 : 1; Durchschnittsalter ~60 J (selten < 40).'
   },
 
-  /* ---------- 11.3 Prostata: BPH & Prostatitis ---------- */
+  /* ---------- 11.3 Prostate: BPH & prostatitis ---------- */
   {
     id: 'k11-18', sec: '11.3', p: 37, type: 'single', alt: '2015, 2018, 2020, 2022',
     q: 'Was ist KEINE typische Folge bzw. Komplikation der BPH?',
@@ -234,7 +234,7 @@ PQ.registerChapter(11, [
     ex: 'PSA = Protease zur Spermaverflüssigung; erhöht bei Karzinom, BPH, Prostatitis und nach Manipulation.'
   },
 
-  /* ---------- 11.4 Prostatakarzinom ---------- */
+  /* ---------- 11.4 Prostate carcinoma ---------- */
   {
     id: 'k11-25', sec: '11.4', p: 37, type: 'single', alt: '2008, 2024',
     q: 'Prostatakarzinom – welche Aussage ist FALSCH?',
@@ -401,7 +401,7 @@ PQ.registerChapter(11, [
     ex: 'PSA > 4 ng/ml suspekt; erhöht auch bei BPH, Prostatitis, nach Manipulation.'
   },
 
-  /* ---------- 11.5 Hodentumoren ---------- */
+  /* ---------- 11.5 Testicular tumors ---------- */
   {
     id: 'k11-40', sec: '11.5', p: 38, type: 'single', alt: '2018, 2020, 2023',
     q: 'Histologie: große helle runde Zellen mit großen Kernen, dazwischen mehrkernige β-HCG-positive Zellen. Welche Diagnose passt?',
@@ -511,7 +511,7 @@ PQ.registerChapter(11, [
     ex: 'GCNIS: große Zellen mit klarem Zytoplasma, großen hyperchromatischen Kernen und prominenten Nukleolen am Tubulusrand; PLAP, OCT3/4, D2-40 (Podoplanin), CD117+.'
   },
 
-  /* ---------- Richtig/Falsch-Aussagen ---------- */
+  /* ---------- True/false statements ---------- */
   { id: 'k11-t01', sec: '11.1', p: 36, type: 'tf', a: true, q: 'Die Urogenital-Tuberkulose ist die häufigste isolierte Organ-Tbc.', ex: 'Urogenital-Tbc = häufigste isolierte Organ-Tbc.' },
   { id: 'k11-t02', sec: '11.1', p: 36, type: 'tf', a: false, q: 'Die BCG-Zystitis zeigt verkäsende Granulome.', ex: 'BCG-Zystitis: nicht verkäsende Granulome.' },
   { id: 'k11-t03', sec: '11.1', p: 36, type: 'tf', a: true, q: 'Mesna dient der Prophylaxe der Cyclophosphamid-Zystitis.', ex: 'Cyclophosphamid → Acrolein → hämorrhagische Zystitis; Prophylaxe Mesna.' },

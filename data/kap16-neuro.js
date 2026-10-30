@@ -1,7 +1,7 @@
-/* Kapitel 16 – Neuropathologie (PDF S. 52–56) */
+/* Chapter 16 – Neuropathology (PDF pp. 52–56) */
 PQ.registerChapter(16, [
 
-  /* ---------- 16.1 ZNS-Tumoren: Grundlagen ---------- */
+  /* ---------- 16.1 CNS tumors: basics ---------- */
   {
     id: 'k16-01', sec: '16.1', p: '52–53', type: 'kprim', alt: '2025',
     q: 'WHO-Klassifikation der ZNS-Tumoren – welche Aussagen treffen zu?',
@@ -109,7 +109,7 @@ PQ.registerChapter(16, [
     ex: 'Glioblastom: häufigster maligner primärer Hirntumor, 50–70 J, mediane Überlebenszeit ~15 Monate, WHO-Grad 4. Häufigster primärer Hirntumor ist das Meningeom, häufigster kindlicher das pilozytische Astrozytom.'
   },
 
-  /* ---------- 16.2 ZNS-Tumoren: Entitäten ---------- */
+  /* ---------- 16.2 CNS tumors: entities ---------- */
   {
     id: 'k16-11', sec: '16.2', p: '52–53', type: 'single', alt: '2018, 2019, 2022',
     q: 'Welcher Tumor zeigt 4 genetische Subtypen mit benignem bis hochmalignem Verlauf?',
@@ -417,7 +417,7 @@ PQ.registerChapter(16, [
     ex: 'Oligodendrogliom (WHO 2–3): IDH-mutiert + 1p/19q-kodeletiert; Frontallappen, Epilepsie, Verkalkungen; „Spiegeleier“, „Maschendraht“-Kapillaren; bessere Prognose als Astrozytome, chemosensibel.'
   },
 
-  /* ---------- 16.3 Neurodegeneration & Demenzen ---------- */
+  /* ---------- 16.3 Neurodegeneration & dementias ---------- */
   {
     id: 'k16-42', sec: '16.3', p: 54, type: 'single', alt: '2018',
     q: 'Wo findet man Lewy-Körper?',
@@ -604,7 +604,7 @@ PQ.registerChapter(16, [
     ex: 'Vaskuläre Demenz: Multiinfarktdemenz, Binswanger (Mikroangiopathie bei Hypertonie, Hyalinose; Marklagerschäden, Lakunen), strategische Infarkte (Thalamus), Amyloidangiopathie.'
   },
 
-  /* ---------- 16.4 Zerebrovaskuläre Erkrankungen & Blutungen ---------- */
+  /* ---------- 16.4 Cerebrovascular diseases & hemorrhages ---------- */
   {
     id: 'k16-60', sec: '16.4', p: 55, type: 'kprim', alt: '2019',
     q: 'Intrakranielle Blutungen – welche Aussagen treffen zu?',
@@ -765,7 +765,7 @@ PQ.registerChapter(16, [
     ex: 'Duret-Blutungen: Hirnstamm bei Einklemmung. Subependymale/germinale Matrixblutung → unreife Frühgeborene (IRDS); petechiale Marklagerblutungen → Purpura cerebri; Stammganglien → hypertensive ICB.'
   },
 
-  /* ---------- 16.5 Entzündliche ZNS-Erkrankungen ---------- */
+  /* ---------- 16.5 Inflammatory CNS diseases ---------- */
   {
     id: 'k16-76', sec: '16.5', p: '55–56', type: 'single', alt: '2020',
     q: 'Multiple Sklerose – welche Aussage ist FALSCH?',
@@ -870,7 +870,7 @@ PQ.registerChapter(16, [
     ex: 'HSV-Enzephalitis: hämorrhagisch-nekrotisierend, temporal, Cowdry-A-Einschlüsse. Ringherde → Toxoplasmose; JC-Virus → PML; eitrige Haube → bakterielle Meningitis.'
   },
 
-  /* ---------- 16.6 Peripherer Nerv & Muskel ---------- */
+  /* ---------- 16.6 Peripheral nerve & muscle ---------- */
   {
     id: 'k16-86', sec: '16.6', p: 56, type: 'single', alt: '2023',
     q: 'Welches Schädigungsmuster ist typisch für das Guillain-Barré-Syndrom?',
@@ -923,7 +923,7 @@ PQ.registerChapter(16, [
     ex: 'Duchenne: X-chromosomal, Dystrophin fehlt; Jungen, Gowers-Zeichen, Wadenpseudohypertrophie, CK ↑↑. Becker: Dystrophin vermindert.'
   },
 
-  /* ---------- Richtig/Falsch-Aussagen ---------- */
+  /* ---------- True/false statements ---------- */
   { id: 'k16-t01', sec: '16.1', p: 52, type: 'tf', a: false, q: 'ZNS-Tumoren werden nach dem TNM-System klassifiziert.', ex: 'ZNS-Tumoren werden nicht nach TNM klassifiziert; die Typisierung erfolgt histologisch und molekular („integrierte Diagnose“).' },
   { id: 'k16-t02', sec: '16.1', p: 52, type: 'tf', a: true, q: 'Anders als bei Karzinomen ist ein WHO-Grad-1-Tumor des ZNS benigne.', ex: 'Grad 1 = langsam, gutartig, durch Resektion potenziell heilbar; bei anderen Tumoren ist G1 trotzdem maligne.' },
   { id: 'k16-t03', sec: '16.1', p: 52, type: 'tf', a: true, q: 'Das Meningeom ist der häufigste primäre Hirntumor.', ex: 'Häufigster primärer Hirntumor: Meningeom (Frauen, meist WHO 1).' },

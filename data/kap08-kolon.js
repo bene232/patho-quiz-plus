@@ -1,7 +1,7 @@
-/* Kapitel 8 – Kolon & Rektum (PDF S. 26–28) */
+/* Chapter 8 – Colon & rectum (PDF pp. 26–28) */
 PQ.registerChapter(8, [
 
-  /* ---------- 8.1 Chronisch-entzündliche Darmerkrankungen ---------- */
+  /* ---------- 8.1 Inflammatory bowel disease ---------- */
   {
     id: 'k8-01', sec: '8.1', p: 26, type: 'kprim', alt: '2013B, 2018',
     q: 'Colitis ulcerosa – welche Befunde treffen zu?',
@@ -93,7 +93,7 @@ PQ.registerChapter(8, [
     ex: 'MC: gesamter GIT, diskontinuierlich, v. a. terminales Ileum + proximales Kolon; Rektum oft frei. Kontinuierlich vom Rektum nach proximal = CU.'
   },
 
-  /* ---------- 8.2 Weitere Kolitiden ---------- */
+  /* ---------- 8.2 Other forms of colitis ---------- */
   {
     id: 'k8-11', sec: '8.2', p: '26–27', type: 'kprim', alt: '2013B, 2022',
     q: 'Kolitiden – welche Aussagen treffen zu?',
@@ -191,7 +191,7 @@ PQ.registerChapter(8, [
     ex: 'Divertikulose: Dickdarm, v. a. Sigma; Pseudodivertikel (Schleimhautausstülpung durch Muskellücken an Gefäßdurchtrittsstellen); RF ballaststoffarme Kost, Alter, Obstipation, Adipositas. Komplikationen: Abszess, Perforation, Fistel (Blase), Stenose, Blutung.'
   },
 
-  /* ---------- 8.3 Kolorektale Polypen ---------- */
+  /* ---------- 8.3 Colorectal polyps ---------- */
   {
     id: 'k8-20', sec: '8.3', p: 27, type: 'single', alt: '2013A, 2015, 2019',
     q: 'Kolorektale Polypen – welche Aussage ist FALSCH?',
@@ -296,7 +296,7 @@ PQ.registerChapter(8, [
     ex: 'Peutz-Jeghers-Polypen sind Hamartome mit baumartig verzweigter Muscularis mucosae. Serratierung bis zur Basis → SSA; obligate Dysplasie → Adenom.'
   },
 
-  /* ---------- 8.4 Kolorektales Karzinom ---------- */
+  /* ---------- 8.4 Colorectal carcinoma ---------- */
   {
     id: 'k8-31', sec: '8.4', p: '27–28', type: 'single', alt: '2010, 2013A, Fragensammlung',
     q: 'Kolorektales Karzinom – welche Aussage ist FALSCH?',
@@ -418,7 +418,7 @@ PQ.registerChapter(8, [
     ex: 'Rektumkarzinom: Hämatochezie, Stuhlunregelmäßigkeiten, „Bleistiftstuhl“. Wässrige Diarrhö bei unauffälliger Endoskopie → mikroskopische Kolitis; rechter Unterbauch → M. Crohn.'
   },
 
-  /* ---------- 8.5 Hereditäre Syndrome ---------- */
+  /* ---------- 8.5 Hereditary syndromes ---------- */
   {
     id: 'k8-43', sec: '8.5', p: 28, type: 'single', alt: '2009, 2013A, 2024',
     q: 'Ein 43-jähriger Patient hat mehrere hundert Kolonpolypen. Sein Vater hatte Adenome und ein Sigmakarzinom, die Geschwister haben Adenome. Welche Aussage trifft zu?',
@@ -502,7 +502,7 @@ PQ.registerChapter(8, [
     ex: 'Peutz-Jeghers: STK11; hamartomatöse Polypen, periorale Pigmentflecken; Risiko für Pankreas-, Mamma-, Ovar-, Hoden-Ca.'
   },
 
-  /* ---------- Richtig/Falsch-Aussagen ---------- */
+  /* ---------- True/false statements ---------- */
   { id: 'k8-t01', sec: '8.1', p: 26, type: 'tf', a: true, q: 'Die Colitis ulcerosa befällt immer das Rektum.', ex: 'CU: Kolon, Rektum immer, kontinuierlich von distal nach proximal.' },
   { id: 'k8-t02', sec: '8.1', p: 26, type: 'tf', a: false, q: 'Die Colitis ulcerosa ist im Gegensatz zum M. Crohn typischerweise transmural.', ex: 'Umgekehrt: CU = Mukosa, MC = transmural (Altfrage).' },
   { id: 'k8-t03', sec: '8.1', p: 26, type: 'tf', a: false, q: 'Eine langjährige Colitis ulcerosa geht nicht mit einem erhöhten Karzinomrisiko einher.', ex: 'CU: KRK-Risiko ↑ mit Dauer und Ausdehnung (Altfrage).' },

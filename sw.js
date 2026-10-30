@@ -1,6 +1,6 @@
-/* Service Worker: legt alle Dateien beim Installieren in einen versionierten Cache und liefert sie offline aus.
-   Bei jeder inhaltlichen Änderung CACHE hochzählen, damit Geräte die neue Version laden. */
-// Eigenes Präfix: Caches gelten für die ganze Origin, die von Patho-Quiz (patho-quiz-vNN) dürfen nicht gelöscht werden
+/* Service worker: puts all files into a versioned cache on install and serves them offline.
+   Bump CACHE on every content change so devices load the new version. */
+// Own prefix: caches are shared across the whole origin, and those of Patho-Quiz (patho-quiz-vNN) must not be deleted
 const PREFIX = 'patho-quiz-plus-';
 const CACHE = PREFIX + 'v1';
 const ART = [
@@ -40,7 +40,7 @@ const ASSETS = ART.concat([
 ]);
 
 self.addEventListener('install', event => {
-  // cache: 'reload' umgeht den HTTP-Cache (GitHub Pages: max-age=600), sonst landen alte Dateien im neuen Cache
+  // cache: 'reload' bypasses the HTTP cache (GitHub Pages: max-age=600), otherwise stale files end up in the new cache
   const fresh = ASSETS.map(url => new Request(url, { cache: 'reload' }));
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(fresh)).then(() => self.skipWaiting()));
 });

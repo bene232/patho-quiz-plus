@@ -1,7 +1,7 @@
-/* Kapitel 6 – Lunge & Pleura (PDF S. 19–22) */
+/* Chapter 6 – Lung & pleura (PDF pp. 19–22) */
 PQ.registerChapter(6, [
 
-  /* ---------- 6.1 Pneumonien ---------- */
+  /* ---------- 6.1 Pneumonias ---------- */
   {
     id: 'k6-01', sec: '6.1', p: 19, type: 'single', alt: '2008',
     q: 'Pneumonie – welche Aussage ist FALSCH?',
@@ -133,7 +133,7 @@ PQ.registerChapter(6, [
     ex: 'Nosokomial > 60 % gramnegativ (Pseudomonas, Klebsiellen, E. coli). Die rote Hepatisation liegt an Tag 3–4; Tag 6–9 ist die gelbe Hepatisation.'
   },
 
-  /* ---------- 6.2 Tuberkulose ---------- */
+  /* ---------- 6.2 Tuberculosis ---------- */
   {
     id: 'k6-13', sec: '6.2', p: '19–20', type: 'kprim', alt: '2010, 2015, 2018, 2021, 2022',
     q: 'Tuberkulose – welche Aussagen treffen zu?',
@@ -206,7 +206,7 @@ PQ.registerChapter(6, [
     ex: 'Extrapulmonal (20 % der postprimären Tbc): Lymphknoten, Urogenital (Kittniere), Nebenniere, Knochen (Spondylitis tuberculosa), ZNS/Meningitis.'
   },
 
-  /* ---------- 6.3 Sarkoidose ---------- */
+  /* ---------- 6.3 Sarcoidosis ---------- */
   {
     id: 'k6-20', sec: '6.3', p: 20, type: 'single',
     q: 'Welcher histologische Befund ist typisch für die Sarkoidose?',
@@ -248,7 +248,7 @@ PQ.registerChapter(6, [
     ex: 'Sarkoidose: nicht verkäsende Granulome durch eine CD4-Th1-Reaktion; Hyperkalzämie über die 1α-Hydroxylase der Makrophagen; Biopsie zum Ausschluss von Tbc, Fremdkörper, Hodgkin.'
   },
 
-  /* ---------- 6.4 Diffuser Alveolarschaden ---------- */
+  /* ---------- 6.4 Diffuse alveolar damage ---------- */
   {
     id: 'k6-24', sec: '6.4', p: 20, type: 'kprim', alt: '2010, 2013, 2015, 2016, 2021',
     q: 'Diffuser Alveolarschaden (DAD) – welche Aussagen treffen zu?',
@@ -286,7 +286,7 @@ PQ.registerChapter(6, [
     ex: 'In der Mehrzahl Restitutio ad integrum, teils aber Wabenlunge. Der Schock kann also Spätursache einer Lungenfibrose sein.'
   },
 
-  /* ---------- 6.5 Interstitielle Lungenerkrankungen & Fibrose ---------- */
+  /* ---------- 6.5 Interstitial lung diseases & fibrosis ---------- */
   {
     id: 'k6-28', sec: '6.5', p: '20–21', type: 'single', alt: '2008',
     q: 'Lungenfibrose – welche Aussage ist FALSCH?',
@@ -460,7 +460,7 @@ PQ.registerChapter(6, [
     ex: 'Caplan-Syndrom = RA + Pneumokoniose (Silikose/Kohle) mit Rheumaknoten in der Lunge; kein Zusammenhang mit der UIP (Altfrage 2008).'
   },
 
-  /* ---------- 6.6 Asbest & Mesotheliom ---------- */
+  /* ---------- 6.6 Asbestos & mesothelioma ---------- */
   {
     id: 'k6-43', sec: '6.6', p: 21, type: 'single', alt: '2020',
     q: 'Asbestose – welche Aussage ist FALSCH?',
@@ -522,7 +522,7 @@ PQ.registerChapter(6, [
     ex: 'Mesotheliom: Erguss, Thoraxschmerz, Dyspnoe; epitheloid/sarkomatoid/biphasisch; Adeno-Marker (wie TTF-1) negativ; sehr schlechte Prognose (Monate). Pleuraplaques sind keine Präkanzerose.'
   },
 
-  /* ---------- 6.7 Emphysem, COPD, Kreislauf ---------- */
+  /* ---------- 6.7 Emphysema, COPD, circulation ---------- */
   {
     id: 'k6-49', sec: '6.7', p: 21, type: 'single', alt: '2022, Fragensammlung',
     q: 'Lungenemphysem – welche Aussage ist FALSCH?',
@@ -597,7 +597,7 @@ PQ.registerChapter(6, [
     ex: 'Emphysem-Klinik: Fassthorax, abgeschwächtes Atemgeräusch, hypersonorer Klopfschall, leise Herztöne, „Pink Puffer“. Panlobulär → Unterlappen; Altersemphysem = „Altersblähung“ ohne Destruktion.'
   },
 
-  /* ---------- 6.8 Lungenkarzinom ---------- */
+  /* ---------- 6.8 Lung carcinoma ---------- */
   {
     id: 'k6-55', sec: '6.8', p: 22, type: 'single', alt: '2015, 2018, 2022, 2025',
     q: 'Histologie: zellreich, chromatindichte Kerne ohne bzw. mit minimalem Zytoplasma, Synaptophysin-positiv. Welche Diagnose passt?',
@@ -710,7 +710,7 @@ PQ.registerChapter(6, [
     ex: 'Karzinoid (typisch/atypisch): zentral, NET G1/G2, gute Prognose. SCLC und Mesotheliom haben eine sehr schlechte Prognose.'
   },
 
-  /* ---------- Richtig/Falsch-Aussagen ---------- */
+  /* ---------- True/false statements ---------- */
   { id: 'k6-t01', sec: '6.1', p: 19, type: 'tf', a: false, q: 'Die gelbe Hepatisation der Lobärpneumonie tritt am 1.–2. Tag auf.', ex: 'Gelbe Hepatisation (eitrig): Tag 6–9 (Altfrage 2008).' },
   { id: 'k6-t02', sec: '6.1', p: 19, type: 'tf', a: true, q: 'Die rote Hepatisation entspricht einer hämorrhagisch-fibrinösen Entzündung.', ex: 'Rote Hepatisation (Tag 3–4): Erythrozyten + Fibrin, leberartig fest.' },
   { id: 'k6-t03', sec: '6.1', p: 19, type: 'tf', a: false, q: 'Die Lungenembolie ist eine typische Komplikation der Lobärpneumonie.', ex: 'Keine Lungenembolie (Altfrage 2015).' },

@@ -1,38 +1,38 @@
 # Patho-Quiz Plus
 
-Quiz-Web-App zur „Klinische Pathologie – Kurzfassung“. Läuft ohne Build-Schritt und ist auf dem iPhone über Safari → „Zum Home-Bildschirm“ installierbar, sobald sie über HTTPS gehostet ist (z. B. GitHub Pages).
+Quiz web app for the „Klinische Pathologie – Kurzfassung“ (a clinical pathology summary script). It needs no build step and can be installed on an iPhone via Safari → “Add to Home Screen” once it is served over HTTPS (e.g. GitHub Pages). The app itself is in German.
 
-Weiterentwickelte Version von [Patho-Quiz](https://github.com/bene232/patho-quiz). Beide laufen auf bene232.github.io und teilen sich damit localStorage und Cache Storage. Plus nutzt deshalb eigene Schlüssel (`pathoquiz-plus.*`) und ein eigenes Cache-Präfix (`patho-quiz-plus-`). Den Fortschritt von Patho-Quiz liest es nur, solange es selbst noch nichts gespeichert hat.
+An evolved version of [Patho-Quiz](https://github.com/bene232/patho-quiz). Both run on bene232.github.io and therefore share localStorage and Cache Storage. Plus uses its own keys (`pathoquiz-plus.*`) and its own cache prefix (`patho-quiz-plus-`). It only reads the progress of Patho-Quiz as long as it has not saved anything itself.
 
-## Lokal starten
+## Running locally
 
-`index.html` doppelt anklicken. Offline-Modus und Installation funktionieren erst, wenn die App gehostet ist (Service Worker braucht http/https).
+Double-click `index.html`. Offline mode and installation only work once the app is hosted (the service worker needs http/https).
 
-## Aufbau
+## Structure
 
-| Pfad | Inhalt |
+| Path | Contents |
 |---|---|
-| `data/chapters.js` | Kapitel- und Abschnittsstruktur inkl. ★-Häufigkeit, `PQ.registerChapter()` |
-| `data/kapNN-*.js` | Fragen eines Kapitels |
-| `js/store.js` | Fortschritt (localStorage), Lernkartei mit Boxen 1–5, Export/Import |
-| `js/quiz.js` | Filter, Rundenaufbau, Bewertung (K-prim: 4 richtig = 1, 3 richtig = ½) |
-| `js/app.js` | Oberfläche und Router |
-| `img/*.svg` | Eigene Bilder (Kapitel, Modi, Auswertung) statt Emojis, damit sie auf jedem Gerät gleich aussehen. Neue Bilder auch in `ART` in `sw.js` eintragen; Vorschau: `tests/art.html` |
-| `sw.js` | Offline-Cache |
-| `fonts/OFL.txt` | Lizenz der Schrift Nunito (in `css/style.css` eingebettet, damit sie auch per `file://` lädt) |
+| `data/chapters.js` | Chapter and section structure incl. ★ frequency, `PQ.registerChapter()` |
+| `data/kapNN-*.js` | Questions of one chapter |
+| `js/store.js` | Progress (localStorage), flashcards with boxes 1–5, export/import |
+| `js/quiz.js` | Filters, round building, scoring (K-prim: 4 correct = 1, 3 correct = ½) |
+| `js/app.js` | UI and router |
+| `img/*.svg` | Own images (chapters, modes, results) instead of emojis so they look the same on every device. Also add new images to `ART` in `sw.js`; preview: `tests/art.html` |
+| `sw.js` | Offline cache |
+| `fonts/OFL.txt` | License of the Nunito font (embedded in `css/style.css` so it also loads via `file://`) |
 
-## Neues Kapitel hinzufügen
+## Adding a chapter
 
-1. In `data/chapters.js` beim Kapitel `stars` und `sections` eintragen (Bild `art` und Farbe `color` sind schon gesetzt).
-2. `data/kapNN-name.js` anlegen und mit `PQ.registerChapter(NN, [...])` füllen. Formate stehen in `data/chapters.js`.
-3. Datei in `index.html`, `tests/test.html`, `tests/ui.html` und in die `ASSETS` von `sw.js` aufnehmen.
-4. In `tests/test.html` den Seitenbereich des Kapitels in `pageRange` ergänzen.
-5. `CACHE` in `sw.js` hochzählen, damit installierte Apps die neue Version laden.
+1. In `data/chapters.js`, set `stars` and `sections` for the chapter (image `art` and color `color` are already set).
+2. Create `data/kapNN-name.js` and fill it with `PQ.registerChapter(NN, [...])`. The formats are described in `data/chapters.js`.
+3. Add the file to `index.html`, `tests/test.html`, `tests/ui.html` and to `ASSETS` in `sw.js`.
+4. In `tests/test.html`, add the chapter's page range to `pageRange`.
+5. Bump `CACHE` in `sw.js` so installed apps load the new version.
 
-Jede Frage braucht Abschnitt (`sec`), Seite (`p`) und Erklärung (`ex`). Inhalte dürfen nur aus dem PDF stammen; falsche Antwortoptionen nur, wenn das PDF sie widerlegt.
+Every question needs a section (`sec`), page (`p`) and explanation (`ex`). Content may only come from the PDF; wrong answer options only if the PDF refutes them.
 
 ## Tests
 
-`tests/test.html` prüft alle Fragen und die Logik, `tests/ui.html` klickt die Abläufe durch (auch Zuordnen per Ziehen). Beide im Browser öffnen; oben steht „alles grün“ oder die Fehlerliste. `tests/phone.html?q=shot=quiz-match` zeigt einen Zwischenstand in iPhone-Breite.
+`tests/test.html` checks all questions and the logic, `tests/ui.html` clicks through the flows (including matching by dragging). Open both in a browser; the top line says „alles grün“ (all green) or lists the failures. `tests/phone.html?q=shot=quiz-match` shows a checkpoint at iPhone width.
 
-`tests/iphone.ps1` simuliert ein iPhone 14/15 (390 px, Retina, Touch, Safari-User-Agent, Safe Area unten) mit Edge über das DevTools-Protokoll: Screenshots aller Kontrollpunkte, Prüfung auf horizontales Überlaufen, Tippen, Wischen und Ziehen mit dem Finger. Aufruf: `powershell -ExecutionPolicy Bypass -File tests\iphone.ps1 [-Theme dark] [-Shots quiz-match,result] [-OutDir <Ordner>]`. Das ist Chromium mit iPhone-Maßen, kein echtes Safari.
+`tests/iphone.ps1` simulates an iPhone 14/15 (390 px, Retina, touch, Safari user agent, bottom safe area) with Edge via the DevTools protocol: screenshots of all checkpoints, a check for horizontal overflow, and tapping, swiping and dragging with a finger. Usage: `powershell -ExecutionPolicy Bypass -File tests\iphone.ps1 [-Theme dark] [-Shots quiz-match,result] [-OutDir <folder>]`. This is Chromium with iPhone dimensions, not real Safari.

@@ -1,7 +1,7 @@
-/* Kapitel 12 – Schilddrüse & Nebenschilddrüse (PDF S. 39–41) */
+/* Chapter 12 – Thyroid & parathyroid (PDF pp. 39–41) */
 PQ.registerChapter(12, [
 
-  /* ---------- 12.1 Struma, Funktion, Thyreoiditis ---------- */
+  /* ---------- 12.1 Goiter, function, thyroiditis ---------- */
   {
     id: 'k12-01', sec: '12.1', p: 39, type: 'single', alt: '2009, 2013A',
     q: 'Schilddrüse – welche Aussage trifft zu?',
@@ -89,7 +89,7 @@ PQ.registerChapter(12, [
     ex: 'De Quervain: subakut-granulomatös nach Virusinfekt, schmerzhaft, Riesenzellen um Kolloid, BSG ↑.'
   },
 
-  /* ---------- 12.2 Schilddrüsenkarzinome ---------- */
+  /* ---------- 12.2 Thyroid carcinomas ---------- */
   {
     id: 'k12-10', sec: '12.2', p: '39–40', type: 'single', alt: '2008',
     q: 'Schilddrüsenkarzinom – welche Aussage trifft zu?',
@@ -305,7 +305,7 @@ PQ.registerChapter(12, [
     ex: 'Bei differenzierten SD-Ca < 55 J gibt es nur Stadium I/II.'
   },
 
-  /* ---------- 12.3 Nebenschilddrüse & Hyperparathyreoidismus ---------- */
+  /* ---------- 12.3 Parathyroid & hyperparathyroidism ---------- */
   {
     id: 'k12-31', sec: '12.3', p: 41, type: 'single', alt: '2021, 2022',
     q: 'Nebenschilddrüse – welche Aussage ist FALSCH?',
@@ -420,7 +420,7 @@ PQ.registerChapter(12, [
     ex: 'DD Hyperkalzämie: Tumor (PTHrP, Osteolysen; PTH supprimiert!), Sarkoidose/Tbc (Calcitriol), Vitamin-D-Intoxikation, Immobilisation, Thiazide.'
   },
 
-  /* ---------- Richtig/Falsch-Aussagen ---------- */
+  /* ---------- True/false statements ---------- */
   { id: 'k12-t01', sec: '12.1', p: 39, type: 'tf', a: false, q: 'Die Struma colloides nodosa ist eine Präkanzerose.', ex: 'Struma colloides nodosa = knotige Kolloidstruma, keine Präkanzerose (Altfrage).' },
   { id: 'k12-t02', sec: '12.1', p: 39, type: 'tf', a: true, q: 'Strumigene Substanzen wie Lithium oder Thyreostatika können eine Struma verursachen.', ex: 'Strumigene Substanzen: Thiocyanat, Lithium, Thyreostatika, Kohlarten.' },
   { id: 'k12-t03', sec: '12.1', p: 39, type: 'tf', a: false, q: 'Beim M. Basedow sind die Follikel kolloidreich und gefüllt.', ex: 'Basedow: kolloidarme Follikel mit Randvakuolen (Altfrage 2009, 2013A).' },

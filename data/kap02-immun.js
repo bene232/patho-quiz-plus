@@ -1,7 +1,7 @@
-/* Kapitel 2 – Immunpathologie, Granulome, Infektionen (PDF S. 7–9) */
+/* Chapter 2 – Immunopathology, granulomas, infections (PDF pp. 7–9) */
 PQ.registerChapter(2, [
 
-  /* ---------- 2.1 Hypersensitivitätsreaktionen ---------- */
+  /* ---------- 2.1 Hypersensitivity reactions ---------- */
   {
     id: 'k2-01', sec: '2.1', p: 7, type: 'single', alt: '2025',
     q: 'Hypersensitivitätsreaktionen – welche Zuordnung ist richtig?',
@@ -79,7 +79,7 @@ PQ.registerChapter(2, [
     ex: 'Charcot-Leyden-Kristalle stammen aus Eosinophilen.'
   },
 
-  /* ---------- 2.2 Granulome ---------- */
+  /* ---------- 2.2 Granulomas ---------- */
   {
     id: 'k2-09', sec: '2.2', p: 7, type: 'kprim', alt: '2015, 2019, 2024',
     q: 'Granulomatöse Erkrankungen – welche Zuordnungen treffen zu?',
@@ -160,7 +160,7 @@ PQ.registerChapter(2, [
     ex: 'Aschoff-Knötchen: perivaskulär im Myokard. Subkutane Knoten (und Lunge) → Rheumaknoten der RA.'
   },
 
-  /* ---------- 2.3 Transplantation & Abstoßung ---------- */
+  /* ---------- 2.3 Transplantation & rejection ---------- */
   {
     id: 'k2-17', sec: '2.3', p: 8, type: 'kprim', alt: '2016, 2021',
     q: 'Nierentransplantation – welche Aussagen treffen zu?',
@@ -216,7 +216,7 @@ PQ.registerChapter(2, [
     ex: 'Chronisch: CD4-T-Zellen, chronische Endothelentzündung → Intimafibrose/Gefäßstenose. Präformierte AK → hyperakut; IgE/Mastzellen → Typ I.'
   },
 
-  /* ---------- 2.4 Immunsuppression & opportunistische Erreger ---------- */
+  /* ---------- 2.4 Immunosuppression & opportunistic pathogens ---------- */
   {
     id: 'k2-23', sec: '2.4', p: 8, type: 'match',
     q: 'Ordne das humane Herpesvirus seiner Erkrankung zu.',
@@ -287,7 +287,7 @@ PQ.registerChapter(2, [
     ex: 'Opportunistisch u. a.: JC-Virus (PML), Toxoplasmose, Candida, atypische Mykobakterien (Lymphknoten), Pneumocystis.'
   },
 
-  /* ---------- 2.5 Amyloidose ---------- */
+  /* ---------- 2.5 Amyloidosis ---------- */
   {
     id: 'k2-31', sec: '2.5', p: '8–9', type: 'single', alt: '2019',
     q: 'Amyloidose – welche Aussage ist FALSCH?',
@@ -358,7 +358,7 @@ PQ.registerChapter(2, [
     ex: 'AL (Ig-Leichtketten) = häufigste systemische Form in Industrieländern.'
   },
 
-  /* ---------- 2.6 Autoimmunerkrankungen ---------- */
+  /* ---------- 2.6 Autoimmune diseases ---------- */
   {
     id: 'k2-38', sec: '2.6', p: 9, type: 'match',
     q: 'Ordne die Autoimmunerkrankung ihrem Autoantikörper zu.',
@@ -414,7 +414,7 @@ PQ.registerChapter(2, [
     ex: 'Autoimmunerkrankungen: fehlerhafte T-/B-Zell-Aktivierung gegen Körperantigene; Frauen : Männer ≈ 3 : 1, Gesamthäufigkeit 3–5 %.'
   },
 
-  /* ---------- Richtig/Falsch-Aussagen ---------- */
+  /* ---------- True/false statements ---------- */
   { id: 'k2-t01', sec: '2.1', p: 7, type: 'tf', a: true, q: 'Bei der Typ-I-Reaktion degranulieren Mastzellen nach IgE-Bindung.', ex: 'Typ I: IgE auf Mastzellen → Degranulation (Histamin, Leukotriene, Prostaglandine).' },
   { id: 'k2-t02', sec: '2.1', p: 7, type: 'tf', a: false, q: 'Die Purpura Schönlein-Henoch ist eine Typ-IV-Reaktion.', ex: 'Purpura Schönlein-Henoch = Typ III (IgA-Immunkomplexe) (Altfrage).' },
   { id: 'k2-t03', sec: '2.1', p: 7, type: 'tf', a: false, q: 'Der M. Basedow ist eine Typ-IV-Reaktion.', ex: 'M. Basedow = Typ IIb (TSH-R-Stimulation) (Altfrage 2025).' },

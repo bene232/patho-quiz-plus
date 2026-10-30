@@ -1,7 +1,7 @@
-/* Kapitelstruktur der „Klinische Pathologie – Kurzfassung“ (57 Seiten).
-   stars: ★★★ = Dauerbrenner (≥ 7 von 16 Altklausuren), ★★ = regelmäßig (4–6), ★ = vereinzelt, 0 = ohne Markierung.
-   art/color: Kapitelbild (img/<art>.svg) und Kapitelfarbe in der Oberfläche.
-   Fragen werden von den Kapiteldateien über PQ.registerChapter() eingetragen. */
+/* Chapter structure of „Klinische Pathologie – Kurzfassung“ (57 pages).
+   stars: ★★★ = perennial (≥ 7 of 16 past exams), ★★ = regular (4–6), ★ = occasional, 0 = unmarked.
+   art/color: chapter image (img/<art>.svg) and chapter color in the UI.
+   Questions are added by the chapter files via PQ.registerChapter(). */
 window.PQ = window.PQ || {};
 
 PQ.VERSION = 'Plus 1.0 · Kapitel 1–17';
@@ -188,12 +188,12 @@ PQ.sections = {};
 
 PQ.chapters.forEach(ch => (ch.sections || []).forEach(s => { PQ.sections[s.id] = Object.assign({ chapter: ch.id }, s); }));
 
-/* Frageformate:
-   single: { opts: [...], a: Index der richtigen Option }
-   kprim:  { st: [[Aussage, true|false] × 4] }
-   match:  { pairs: [[Begriff, Zuordnung], ...] }  (rechte Seite wird gemischt)
-   tf:     { q: Aussage, a: true|false }
-   Gemeinsam: id, sec, p (Seite), q, ex (Erklärung), optional alt (Altklausur-Jahre), dis (umstritten). */
+/* Question formats:
+   single: { opts: [...], a: index of the correct option }
+   kprim:  { st: [[statement, true|false] × 4] }
+   match:  { pairs: [[term, match], ...] }  (right side is shuffled)
+   tf:     { q: statement, a: true|false }
+   Common: id, sec, p (page), q, ex (explanation), optional alt (past exam years), dis (disputed). */
 PQ.registerChapter = function (chapterId, items) {
   const ch = PQ.chapters.find(c => c.id === chapterId);
   ch.available = true;

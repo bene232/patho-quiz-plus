@@ -1,7 +1,7 @@
-/* Kapitel 14 – Zervix, Uterus, Ovar (PDF S. 44–46) */
+/* Chapter 14 – Cervix, uterus, ovary (PDF pp. 44–46) */
 PQ.registerChapter(14, [
 
-  /* ---------- 14.1 Zervixkarzinom & Präneoplasien ---------- */
+  /* ---------- 14.1 Cervical carcinoma & preneoplastic lesions ---------- */
   {
     id: 'k14-01', sec: '14.1', p: 44, type: 'single', alt: '2010, 2013A',
     q: 'Zervixkarzinom – welche Aussage ist FALSCH?',
@@ -286,7 +286,7 @@ PQ.registerChapter(14, [
     ex: 'Typ II: p53, p16, HER2. Typ I: PTEN, KRAS, β-Catenin, MSI. FOXL2 → Granulosazelltumor.'
   },
 
-  /* ---------- 14.3 Weitere Uterustumoren & Endometriose ---------- */
+  /* ---------- 14.3 Other uterine tumors & endometriosis ---------- */
   {
     id: 'k14-31', sec: '14.3', p: '45–46', type: 'single', alt: '2022',
     q: 'Was ist der häufigste maligne mesenchymale Tumor des Uterus?',
@@ -358,7 +358,7 @@ PQ.registerChapter(14, [
     ex: 'Karzinosarkom: Ca + Sarkom (homolog/heterolog, z. B. chondroid); heute als metaplastisches Ca aufgefasst; ältere Frauen, Prognose schlecht.'
   },
 
-  /* ---------- 14.4 Ovar ---------- */
+  /* ---------- 14.4 Ovary ---------- */
   {
     id: 'k14-39', sec: '14.4', p: 46, type: 'single', alt: '2009',
     q: 'Ovarialkarzinom – welche Aussage ist FALSCH?',
@@ -504,7 +504,7 @@ PQ.registerChapter(14, [
     ex: 'Reifes zystisches Teratom (Dermoidzyste): häufigster Ovarialtumor junger Frauen, benigne; Haare, Talg, Zähne.'
   },
 
-  /* ---------- Richtig/Falsch-Aussagen ---------- */
+  /* ---------- True/false statements ---------- */
   { id: 'k14-t01', sec: '14.1', p: 44, type: 'tf', a: false, q: 'Das Zervixkarzinom ist in ca. 90 % ein Adenokarzinom.', ex: '~80 % Plattenepithelkarzinom (Altfrage 2010, 2013A).' },
   { id: 'k14-t02', sec: '14.1', p: 44, type: 'tf', a: true, q: 'HPV befällt bevorzugt die ekto-endozervikale Transformationszone.', ex: 'HPV befällt die Transformationszone (Basalzellen über Mikroläsionen).' },
   { id: 'k14-t03', sec: '14.1', p: 44, type: 'tf', a: false, q: 'HPV 6 und 11 sind High-risk-Typen.', ex: 'HPV 6/11 sind Low-risk-Typen → Kondylome.' },

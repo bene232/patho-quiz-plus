@@ -1,7 +1,7 @@
-/* Kapitel 9 – Leber, Gallenwege, Pankreas (PDF S. 29–31) */
+/* Chapter 9 – Liver, biliary tract, pancreas (PDF pp. 29–31) */
 PQ.registerChapter(9, [
 
-  /* ---------- 9.1 Leberrundherd & Lebertumoren ---------- */
+  /* ---------- 9.1 Focal liver lesions & liver tumors ---------- */
   {
     id: 'k9-01', sec: '9.1', p: 29, type: 'kprim', alt: '2012, 2013A, 2019',
     q: 'Lebertumoren – welche Aussagen treffen zu?',
@@ -159,7 +159,7 @@ PQ.registerChapter(9, [
     ex: 'Hämangiom: sono homogen echoreich, Irisblendenphänomen; keine perkutane Biopsie wegen Blutungsgefahr; benigne.'
   },
 
-  /* ---------- 9.2 Leberzirrhose & portale Hypertonie ---------- */
+  /* ---------- 9.2 Liver cirrhosis & portal hypertension ---------- */
   {
     id: 'k9-16', sec: '9.2', p: 30, type: 'single',
     q: 'Wie ist die Leberzirrhose definiert?',
@@ -282,7 +282,7 @@ PQ.registerChapter(9, [
     ex: 'PSC: RF für CCC (10–20 %), KRK (mit CED), Gallenblasen-, Pankreas-Ca. Angiosarkom → Vinylchlorid, Thorotrast, Arsen.'
   },
 
-  /* ---------- 9.4 Gallenblase & Gallenwege ---------- */
+  /* ---------- 9.4 Gallbladder & biliary tract ---------- */
   {
     id: 'k9-27', sec: '9.4', p: '30–31', type: 'kprim', alt: '2013B, 2016, 2018, 2025',
     q: 'Welche der folgenden sind Risikofaktoren für Gallensteine?',
@@ -367,7 +367,7 @@ PQ.registerChapter(9, [
     ex: 'Gallenblasenkarzinom: Frauen (2–3 : 1), > 90 % Gallensteinleiden; Adeno-Ca 80–90 %; RF Porzellangallenblase, große Steine, PSC, Adipositas, Polypen > 1 cm; spät symptomatisch.'
   },
 
-  /* ---------- 9.5 Pankreas ---------- */
+  /* ---------- 9.5 Pancreas ---------- */
   {
     id: 'k9-35', sec: '9.5', p: 31, type: 'single', alt: '2013B, 2025',
     q: 'Pankreaskarzinom – welche Aussage ist FALSCH?',
@@ -487,7 +487,7 @@ PQ.registerChapter(9, [
     ex: 'Pankreatische NEN: Grading nach Ki-67 bzw. NEC; Marker Synaptophysin, Chromogranin A; syndromal bei MEN1, VHL, tuberöser Sklerose; alle NET haben malignes Potenzial.'
   },
 
-  /* ---------- Richtig/Falsch-Aussagen ---------- */
+  /* ---------- True/false statements ---------- */
   { id: 'k9-t01', sec: '9.1', p: 29, type: 'tf', a: true, q: 'Das Hämangiom ist der häufigste benigne Lebertumor.', ex: 'Hämangiom: häufigster benigner Lebertumor.' },
   { id: 'k9-t02', sec: '9.1', p: '29–30', type: 'tf', a: false, q: 'Das Leberhämangiom zeigt sonographisch meist ein identisches Bild wie Metastasen.', ex: 'Hämangiom: sono homogen echoreich, Irisblendenphänomen (Altfrage 2008).' },
   { id: 'k9-t03', sec: '9.1', p: '29–30', type: 'tf', a: false, q: 'Eine perkutane Biopsie ist beim Leberhämangiom unproblematisch.', ex: 'Keine perkutane Biopsie – Blutungsgefahr (Altfrage 2008).' },

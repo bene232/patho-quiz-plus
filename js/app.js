@@ -1,4 +1,4 @@
-/* Oberfläche: Hash-Router, Bildschirme, Fragetypen. */
+/* UI: hash router, screens, question types. */
 (function () {
   'use strict';
 
@@ -12,13 +12,13 @@
   const PRAISE = ['Richtig!', 'Stark!', 'Genau!', 'Sitzt!', 'Super!'];
   const MILESTONES = [3, 5, 10, 15, 20, 30];
 
-  let session = null;     // laufende Runde
-  let lastResult = null;  // Auswertung der zuletzt beendeten Runde
+  let session = null;     // current round
+  let lastResult = null;  // results of the last finished round
   let presetSections = null;
   let timer = null;
   let keyHandler = null;
 
-  /* ================= Hilfsfunktionen ================= */
+  /* ================= Helpers ================= */
 
   function h(tag, props, ...kids) {
     const el = document.createElement(tag);
@@ -75,7 +75,7 @@
     return svg;
   }
 
-  // Eigene Bilder (img/*.svg) statt Emojis – sehen auf jedem Gerät gleich aus
+  // Own images (img/*.svg) instead of emojis – they look the same on every device
   const ART_BASE = (PQ.ASSET_BASE || '') + 'img/';
   function art(name, cls, title) {
     return h('img', { class: 'art ' + (cls || ''), src: ART_BASE + name + '.svg', alt: title || '', title: title || null, draggable: 'false' });
@@ -163,7 +163,7 @@
     setTimeout(() => wrap.remove(), 4000);
   }
 
-  // Fortschrittsring: Füllung in der Kapitelfarbe, Spur ein heller Ton derselben Farbe
+  // Progress ring: fill in the chapter color, track in a light tint of the same color
   function ring(pct, size, color, label) {
     return h('span', {
       class: 'ring ring-' + size, role: 'img', 'aria-label': pct + ' Prozent',
@@ -213,7 +213,7 @@
     }));
   }
 
-  // Kapitel als Umschalter (Klausur, Blitzrunde); set = Kapitel-IDs
+  // Chapters as toggles (exam, speed round); set = chapter IDs
   function chapterChips(set, onChange) {
     return h('div', { class: 'ch-chips' }, availableChapters().map(ch => {
       const b = h('button', {
@@ -229,7 +229,7 @@
     }));
   }
 
-  // Kapitel mit aufklappbaren Themen (Eigene Runde); sel = Set von Abschnitts-IDs
+  // Chapters with expandable topics (custom round); sel = Set of section IDs
   function sectionPicker(sel, onChange, countFor) {
     return h('div', { class: 'picker' }, availableChapters().map(ch => {
       const secIds = ch.sections.map(s => s.id);
@@ -278,13 +278,13 @@
     }));
   }
 
-  /* ================= Sitzungen ================= */
+  /* ================= Sessions ================= */
 
   function persist() {
     S.saveSession(session);
   }
 
-  // Nur die Fragen an den Positionen idxs behalten
+  // Keep only the questions at positions idxs
   function keepOnly(s, idxs) {
     ['ids', 'views', 'responses', 'results'].forEach(k => { s[k] = idxs.map(i => s[k][i]); });
   }
@@ -309,7 +309,7 @@
 
   function startSession(mode, questions, extra) {
     if (!questions.length) { toast('Keine passenden Fragen gefunden'); return; }
-    // Angefangene Runde nicht stillschweigend überschreiben
+    // Don't silently overwrite a round in progress
     const open = restoreSession();
     const done = open ? answeredCount(open) : 0;
     if (done && !confirm('Du hast noch eine offene Runde (' + MODE_TITLE[open.mode] + ' ' + done + '/' + open.ids.length + '). Verwerfen und neu starten?')) return;
@@ -330,7 +330,7 @@
     startSession('practice', Q.take(Q.prioritize(PQ.questions.filter(q => q.sec === sec)), 12), { origin: { kind: 'section', sec } });
   }
 
-  // o = { id, sections, count, order, altOnly, openOnly }; fehlende Angaben (auch aus älteren Runden): alle Themen, alle Fragen
+  // o = { id, sections, count, order, altOnly, openOnly }; missing fields (also from older rounds): all topics, all questions
   function startChapter(o) {
     const valid = PQ.chapters.find(c => c.id === o.id).sections.map(s => s.id);
     const sections = (o.sections || valid).filter(id => valid.includes(id));
@@ -338,7 +338,7 @@
     startSession('practice', o.order === 'topics' ? Q.bySection(qs) : qs, { origin: Object.assign({}, o, { kind: 'chapter' }) });
   }
 
-  // „Weiter“ auf der Auswertung: dieselbe Art Runde noch einmal
+  // „Weiter“ (next) on the results screen: the same kind of round again
   const AGAIN = {
     smart: { label: 'Nächste Lektion', run: startSmart },
     section: { label: 'Noch eine Runde', run: o => startSection(o.sec) },
@@ -357,7 +357,7 @@
   function finishSession() {
     const s = session;
     if (s.mode === 'exam') {
-      // Klausur: erst jetzt bewerten und in die Lernkartei eintragen
+      // Exam: score only now and record in the flashcards
       s.ids.forEach((id, i) => {
         const q = PQ.byId[id];
         const res = Q.isComplete(q, s.responses[i]) ? Q.evaluate(q, s.responses[i]) : { correct: false, score: 0, skipped: true };
@@ -365,7 +365,7 @@
         S.record(id, res.correct, Q.points(res.score));
       });
     } else {
-      // Vorzeitig beendet: nur die beantworteten Fragen auswerten
+      // Ended early: score only the answered questions
       keepOnly(s, s.ids.map((id, i) => i).filter(i => s.results[i] !== null));
     }
     s.ended = Date.now();
@@ -389,7 +389,7 @@
     return res;
   }
 
-  /* ================= Startseite ================= */
+  /* ================= Home ================= */
 
   function renderHome() {
     const all = PQ.questions;
@@ -463,7 +463,7 @@
     return h('button', { class: 'quick-btn', onclick: () => go(hash) }, art(artName, 'art-lg'), label);
   }
 
-  /* ================= Kapitel ================= */
+  /* ================= Chapter ================= */
 
   function renderChapter(id) {
     const ch = PQ.chapters.find(c => c.id === id && c.available);
@@ -473,7 +473,7 @@
     const altCount = qs.filter(q => q.alt).length;
     const secIds = ch.sections.map(s => s.id);
 
-    // Zuletzt gestartete Auswahl dieses Kapitels; Standard: alle Themen, alle Fragen, gemischt
+    // Last started selection for this chapter; default: all topics, all questions, shuffled
     const saved = (S.pref('chapter') || {})[id] || {};
     const sel = new Set((saved.sections || secIds).filter(s => secIds.includes(s)));
     let count = saved.count === undefined ? 0 : saved.count;
@@ -562,7 +562,7 @@
     update();
   }
 
-  /* ================= Einstellungen der Modi ================= */
+  /* ================= Mode settings ================= */
 
   function renderPracticeSetup() {
     const prefs = S.pref('practice') || {};
@@ -592,7 +592,7 @@
     }
 
     const countFor = ids => Q.filter(Object.assign(opts(), { sections: ids })).length;
-    // Zähler im Picker hängen auch von Typ/Filter ab → bei Filteränderung neu aufbauen
+    // Counts in the picker also depend on type/filter → rebuild when a filter changes
     let pickerEl = sectionPicker(sel, update, countFor);
     function refreshPicker() {
       const fresh = sectionPicker(sel, update, countFor);
@@ -703,8 +703,8 @@
     update();
   }
 
-  /* ================= Fragetypen ================= */
-  // ctx: { value, locked, solved, onChange(value) }; Renderer setzen ctx.repaint (und ggf. ctx.key)
+  /* ================= Question types ================= */
+  // ctx: { value, locked, solved, onChange(value) }; renderers set ctx.repaint (and ctx.key if needed)
 
   function renderSingle(q, view, ctx) {
     const list = h('div', { class: 'opts' });
@@ -848,8 +848,8 @@
     return wrap;
   }
 
-  // Ziehen per Maus oder Finger: Begriff auf Beschreibung (oder umgekehrt) ziehen. Antippen bleibt möglich.
-  // Am Touchscreen ziehen nur die Begriffe (touch-action: none), damit man auf den Beschreibungen weiter scrollen kann.
+  // Drag with mouse or finger: drag a term onto a description (or vice versa). Tapping still works.
+  // On touchscreens only the terms are draggable (touch-action: none), so the descriptions can still be scrolled.
   function dragPairs(wrap, onDrop) {
     let drag = null;
     let suppressClick = false;
@@ -868,7 +868,7 @@
       drag.over = zone;
     }
 
-    // Am oberen bzw. unteren Rand (Kopfzeile, Fußleiste) mitscrollen, damit jede Beschreibung erreichbar ist
+    // Auto-scroll at the top/bottom edge (header, footer) so every description can be reached
     function autoScroll() {
       if (!drag || !drag.ghost) return;
       const bar = document.querySelector('.quiz-top');
@@ -920,7 +920,7 @@
         document.body.append(drag.ghost);
         drag.src.classList.add('drag-src');
         wrap.classList.add('dragging');
-        try { drag.src.setPointerCapture(drag.id); } catch (err) { /* ältere Browser */ }
+        try { drag.src.setPointerCapture(drag.id); } catch (err) { /* older browsers */ }
         drag.raf = requestAnimationFrame(autoScroll);
       }
       e.preventDefault();
@@ -931,9 +931,9 @@
 
     wrap.addEventListener('pointerup', e => { if (drag && e.pointerId === drag.id) end(true); });
     wrap.addEventListener('pointercancel', e => { if (drag && e.pointerId === drag.id) end(false); });
-    // Nur der Verlust am Knopf selbst zählt: Bei Touch hält zuerst das innere <span> die Erfassung und meldet deren Abgabe ebenfalls
+    // Only losing capture on the button itself counts: with touch the inner <span> holds the capture first and reports releasing it too
     wrap.addEventListener('lostpointercapture', e => { if (drag && e.pointerId === drag.id && e.target === drag.src) end(false); });
-    // Nach dem Ziehen keinen zusätzlichen Klick auslösen
+    // Don't fire an extra click after dragging
     wrap.addEventListener('click', e => {
       if (!suppressClick) return;
       e.stopPropagation();
@@ -971,7 +971,7 @@
     return 'Nicht ganz';
   }
 
-  // Rückmeldung: als Leiste unten (onNext gesetzt) oder eingebettet in der Auswertung
+  // Feedback: as a bar at the bottom (onNext set) or embedded in the results
   function feedback(q, res, onNext, nextLabel) {
     const tone = resultTone(res);
     const pts = Q.points(res.score);
@@ -993,7 +993,7 @@
         h('button', { class: 'btn btn-block btn-xl btn-' + (tone === 'ok' ? 'ok' : tone === 'part' ? 'warn' : 'bad'), onclick: onNext }, nextLabel)));
   }
 
-  // Hinter dem X (Üben, Wiederholen, Blitzrunde): auswerten, pausieren oder weitermachen
+  // Behind the X (practice, review, speed round): score, pause or continue
   function exitMenu(s) {
     const n = answeredCount(s);
     const prevKey = keyHandler;
@@ -1009,13 +1009,13 @@
           : h('button', { class: 'btn btn-primary btn-block btn-xl', onclick: () => { abortSession(); go('#/'); } }, 'Runde beenden'),
         h('button', { class: 'btn btn-soft btn-block', onclick: () => go('#/') }, 'Pause – später fortsetzen'),
         h('button', { class: 'link link-center', onclick: close }, 'Weiterüben')));
-    // In #app, damit der nächste Bildschirm (mount) das Menü mit entfernt
+    // Inside #app so the next screen (mount) removes the menu too
     root.append(wrap);
     keyHandler = e => { if (e.key === 'Escape') close(); };
     wrap.querySelector('.btn').focus();
   }
 
-  /* ================= Quiz (Üben, Wiederholen, Klausur) ================= */
+  /* ================= Quiz (practice, review, exam) ================= */
 
   function renderQuiz() {
     const s = restoreSession();
@@ -1156,7 +1156,7 @@
     };
   }
 
-  /* ================= Blitzrunde ================= */
+  /* ================= Speed round ================= */
 
   function renderBlitz() {
     const s = restoreSession();
@@ -1210,7 +1210,7 @@
       }
     }
 
-    // Wischen per Pointer-Events
+    // Swiping via pointer events
     let startX = null;
     let dx = 0;
     card.addEventListener('pointerdown', e => {
@@ -1246,7 +1246,7 @@
     };
   }
 
-  /* ================= Auswertung ================= */
+  /* ================= Results ================= */
 
   function renderResult() {
     const r = lastResult;
@@ -1324,7 +1324,7 @@
       h('span', { class: 'rstat-label' }, label));
   }
 
-  /* ================= Statistik ================= */
+  /* ================= Statistics ================= */
 
   function renderStats() {
     const all = PQ.questions;
@@ -1335,7 +1335,7 @@
     const mistakes = all.filter(q => Q.mastery(q.id) === 'mistake').length;
     const goal = S.setting('dailyGoal') || S.DEFAULT_GOAL;
 
-    // Woche: eine Reihe, heute hervorgehoben, Wert nur an heute und am Maximum
+    // Week: one row, today highlighted, values only on today and at the maximum
     const days = S.recentDays(7);
     const max = Math.max(goal, ...days.map(d => d.count));
     const peak = Math.max(...days.map(d => d.count));
@@ -1349,7 +1349,7 @@
         h('span', { class: 'week-track' }, h('span', { class: 'week-bar', style: 'height:' + (d.count ? Math.max(4, (d.count / max) * 100) : 0) + '%' })),
         h('span', { class: 'week-label' }, d.label))));
 
-    // Lernstand als gestapelter Balken (Teil-vom-Ganzen) mit Legende inkl. Werten
+    // Learning state as a stacked bar (part-to-whole) with a legend including values
     const parts = [
       ['new', 'Neu', all.length - p.seen],
       ['bad', 'Fehler offen', mistakes],
@@ -1371,7 +1371,7 @@
         icon('right', 'ico-muted'));
     });
 
-    // Schwachstellen: Themen mit mind. 3 Antworten unter 80 %
+    // Weak spots: topics with at least 3 answers below 80 %
     const bySec = {};
     all.forEach(q => {
       const s = S.get(q.id);
@@ -1414,7 +1414,7 @@
       h('span', { class: 'big-stat-label' }, label));
   }
 
-  /* ================= Einstellungen ================= */
+  /* ================= Settings ================= */
 
   function applyTheme() {
     const t = S.setting('theme');
@@ -1520,7 +1520,7 @@
       h('p', { class: 'note center' }, 'Alle Fragen stammen aus der „Klinische Pathologie – Kurzfassung“. ' + PQ.questions.length + ' Fragen · Version ' + PQ.VERSION)));
   }
 
-  /* ================= Router & Start ================= */
+  /* ================= Router & startup ================= */
 
   const ROUTES = {
     '': renderHome,
@@ -1552,7 +1552,7 @@
   applyTheme();
   route();
 
-  // Offline-Fähigkeit (nur über http/https, nicht bei file://)
+  // Offline support (only over http/https, not with file://)
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
     navigator.serviceWorker.register('sw.js').then(reg => {
       reg.addEventListener('updatefound', () => {

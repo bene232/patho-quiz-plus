@@ -1,10 +1,10 @@
 ﻿# iPhone-Simulation für die UI-Kontrollpunkte von tests/ui.html.
-# Steuert Edge headless über das DevTools-Protokoll: iPhone 14/15 (390 px breit, Retina 3×), Touch-Eingabe, Safari-User-Agent.
-# Wie die installierte App mit status-bar-style „default“: Inhalt beginnt unter der Statusleiste (844 − 47 = 797 px hoch,
-# Safe Area oben 0), unten 34 px Safe Area mit Home-Indikator (abschaltbar mit -NoNotch).
-# Macht Screenshots, meldet horizontales Überlaufen und testet Zuordnen per Finger (Tippen, Ziehen mit Mitscrollen, Scrollen).
-# Achtung: Das ist Chromium mit iPhone-Maßen, kein echtes Safari/WebKit.
-# Aufruf: powershell -ExecutionPolicy Bypass -File tests\iphone.ps1 [-OutDir <Ordner>] [-Theme dark] [-NoNotch] [-Shots a,b]
+# Drives headless Edge via the DevTools protocol: iPhone 14/15 (390 px wide, Retina 3×), touch input, Safari user agent.
+# Like the installed app with status-bar-style “default”: content starts below the status bar (844 − 47 = 797 px tall,
+# safe area top 0), 34 px safe area at the bottom with home indicator (turn off with -NoNotch).
+# Takes screenshots, reports horizontal overflow and tests matching by finger (tap, drag with auto-scroll, scroll).
+# Note: this is Chromium with iPhone dimensions, not real Safari/WebKit.
+# Usage: powershell -ExecutionPolicy Bypass -File tests\iphone.ps1 [-OutDir <folder>] [-Theme dark] [-NoNotch] [-Shots a,b]
 param(
   [string]$OutDir = (Join-Path $env:TEMP 'patho-iphone'),
   [string[]]$Shots = @('home-empty', 'practice-setup', 'quiz-single', 'quiz-kprim', 'quiz-match', 'quiz-tf', 'feedback-match-wrong',
@@ -14,11 +14,11 @@ param(
   [int]$Port = 9333
 )
 $ErrorActionPreference = 'Stop'
-$Shots = @($Shots | ForEach-Object { $_ -split ',' } | Where-Object { $_ })  # -File reicht „a,b“ als einen Text durch
+$Shots = @($Shots | ForEach-Object { $_ -split ',' } | Where-Object { $_ })  # -File passes “a,b” through as a single string
 $edge =Join-Path ${env:ProgramFiles(x86)} 'Microsoft\Edge\Application\msedge.exe'
 $pageUrl = 'file:///' + ($PSScriptRoot -replace '\\', '/') + '/ui.html'
 New-Item -ItemType Directory -Force $OutDir | Out-Null
-# Eigenes, kurzes Profil (lange Pfade scheitern unter Windows); wird wiederverwendet, ui.html leert den Speicher selbst
+# Own short profile path (long paths fail on Windows); reused, ui.html clears storage itself
 $profileDir = Join-Path $env:TEMP 'patho-iphone-edge'
 
 function Stop-SimEdge {
@@ -29,12 +29,12 @@ function Stop-SimEdge {
 Start-Process $edge -ArgumentList @('--headless=new', "--remote-debugging-port=$Port", "--user-data-dir=`"$profileDir`"",
   '--allow-file-access-from-files', '--no-first-run', 'about:blank') | Out-Null
 
-# Der erste Start mit frischem Profil kann über 10 s dauern
+# The first start with a fresh profile can take over 10 s
 $wsUrl = $null
 for ($i = 0; $i -lt 150 -and -not $wsUrl; $i++) {
   Start-Sleep -Milliseconds 200
   try {
-    # PowerShell 5.1 reicht das JSON-Array als ein Objekt weiter, deshalb einzeln aufzählen
+    # PowerShell 5.1 passes the JSON array on as a single object, so enumerate it item by item
     $targets = @(Invoke-RestMethod "http://127.0.0.1:$Port/json/list" -TimeoutSec 3) | ForEach-Object { $_ }
     $wsUrl = @($targets | Where-Object { $_.type -eq 'page' })[0].webSocketDebuggerUrl
   } catch { }
@@ -46,7 +46,7 @@ $client.ConnectAsync([Uri]$wsUrl, $ct).Wait()
 $script:msgId = 0
 $buf = New-Object byte[] 1048576
 
-# Befehl senden und auf die zugehörige Antwort warten (Ereignisse dazwischen werden übersprungen)
+# Send a command and wait for its response (events in between are skipped)
 function Send-Cdp([string]$method, $params = @{}) {
   $script:msgId++
   $id = $script:msgId
@@ -67,7 +67,7 @@ function Send-Cdp([string]$method, $params = @{}) {
   }
 }
 
-# JavaScript ausführen; Ausdrücke liefern Zahlen/Booleans oder JSON-Strings
+# Run JavaScript; expressions return numbers/booleans or JSON strings
 function Invoke-Js([string]$expr) {
   (Send-Cdp 'Runtime.evaluate' @{ expression = $expr; returnByValue = $true; awaitPromise = $true } | ConvertFrom-Json).result.result.value
 }
@@ -90,7 +90,7 @@ function Move-Touch([double]$x0, [double]$y0, [double]$x1, [double]$y1, [int]$st
   }
 }
 
-# Home-Indikator als Overlay und unterer Safe-Area-Abstand wie in der installierten App
+# Home indicator as an overlay and bottom safe-area inset as in the installed app
 $notchJs = @'
 (() => {
   const s = document.createElement('style');
@@ -116,7 +116,7 @@ function Open-Shot([string]$shot) {
   return $true
 }
 
-# Elemente, die über den Bildschirmrand hinausragen (fixierte Overlays der Simulation ausgenommen)
+# Elements that stick out past the screen edge (except the simulation's fixed overlays)
 $overflowJs = @'
 JSON.stringify({
   sw: document.documentElement.scrollWidth, w: innerWidth,
@@ -136,7 +136,7 @@ try {
   Send-Cdp 'Emulation.setTouchEmulationEnabled' @{ enabled = $true; maxTouchPoints = 5 } | Out-Null
   Send-Cdp 'Emulation.setEmulatedMedia' @{ features = @(@{ name = 'prefers-color-scheme'; value = $Theme }) } | Out-Null
 
-  # ---------- Screenshots + Überlauf-Prüfung ----------
+  # ---------- Screenshots + overflow check ----------
   foreach ($shot in $Shots) {
     if (-not (Open-Shot $shot)) { $results += "FAIL $shot`: nicht erreicht"; continue }
     $o = Invoke-Js $overflowJs | ConvertFrom-Json
@@ -145,14 +145,14 @@ try {
     Save-Shot $shot
   }
 
-  # ---------- Zuordnen per Finger ----------
+  # ---------- Matching by finger ----------
   if (Open-Shot 'quiz-match') {
     $posJs = @'
 (() => {
   const s = PQ.app.getSession(), q = PQ.byId[s.ids[s.idx]];
   const tgt = ri => [...document.querySelectorAll('.target')].find(t => t.querySelector('.target-text').textContent.startsWith(q.pairs[ri][1]));
   const c = el => { const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2, top: r.top, bottom: r.bottom }; };
-  // „last“ = Paar, dessen Beschreibung ganz unten steht (Reihenfolge ist gemischt) – so wird das Mitscrollen geprüft
+  // “last” = the pair whose description is at the very bottom (order is shuffled) – this tests auto-scrolling
   const last = q.pairs.map((p, i) => i).reduce((a, i) => (tgt(i).getBoundingClientRect().top > tgt(a).getBoundingClientRect().top ? i : a), 0);
   return JSON.stringify({ n: last + 1, term0: c(document.querySelectorAll('.term')[0]), termLast: c(document.querySelectorAll('.term')[last]),
     t0: c(tgt(0)), tLast: c(tgt(last)), foot: document.querySelector('.footer').getBoundingClientRect().top, sy: scrollY,
@@ -162,7 +162,7 @@ try {
 '@
     $p = Invoke-Js $posJs | ConvertFrom-Json
 
-    # 1) Wischen auf einer Beschreibung scrollt die Seite und startet kein Ziehen
+    # 1) Swiping on a description scrolls the page and does not start a drag
     Send-Touch 'touchStart' $p.t0.x $p.t0.y
     Move-Touch $p.t0.x $p.t0.y $p.t0.x ($p.t0.y - 150) 8
     $mid = Invoke-Js $posJs | ConvertFrom-Json
@@ -174,7 +174,7 @@ try {
     Invoke-Js 'scrollTo(0, 0), true' | Out-Null
     Start-Sleep -Milliseconds 200
 
-    # 2) Antippen: Begriff 1, dann passende Beschreibung
+    # 2) Tapping: term 1, then the matching description
     $p = Invoke-Js $posJs | ConvertFrom-Json
     Send-Touch 'touchStart' $p.term0.x $p.term0.y
     Send-Touch 'touchEnd'
@@ -188,7 +188,7 @@ try {
     $s2 = Invoke-Js $posJs | ConvertFrom-Json
     if ($s1.sel0 -and $s2.slot0 -eq '1') { $results += 'PASS Finger: Antippen ordnet Begriff 1 zu' } else { $results += "FAIL Finger: Antippen (markiert: $($s1.sel0), Slot: '$($s2.slot0)')" }
 
-    # 3) Ziehen des letzten Begriffs auf die passende Beschreibung, ggf. mit Mitscrollen an der Fußleiste
+    # 3) Dragging the last term onto the matching description, auto-scrolling at the footer if needed
     Invoke-Js 'scrollTo(0, 0), true' | Out-Null
     Start-Sleep -Milliseconds 200
     $p = Invoke-Js $posJs | ConvertFrom-Json

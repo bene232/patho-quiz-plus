@@ -1,7 +1,7 @@
-/* Kapitel 10 – Niere & Nebenniere (PDF S. 32–35) */
+/* Chapter 10 – Kidney & adrenal gland (PDF pp. 32–35) */
 PQ.registerChapter(10, [
 
-  /* ---------- 10.1 Glomerulopathien ---------- */
+  /* ---------- 10.1 Glomerulopathies ---------- */
   {
     id: 'k10-01', sec: '10.1', p: '32–33', type: 'single', alt: '2010',
     q: 'Glomerulonephritis – welche Aussage ist FALSCH?',
@@ -206,7 +206,7 @@ PQ.registerChapter(10, [
     ex: 'Erythrozytenzylinder entstehen in den Tubuli und sind pathognomonisch für eine entzündliche glomeruläre Erkrankung. Leukozytenzylinder → akute Pyelonephritis; Malteserkreuze → nephrotisches Syndrom.'
   },
 
-  /* ---------- 10.2 Interstitielle Nephritis & Pyelonephritis ---------- */
+  /* ---------- 10.2 Interstitial nephritis & pyelonephritis ---------- */
   {
     id: 'k10-22', sec: '10.2', p: 33, type: 'kprim', alt: '2010',
     q: 'Welche der folgenden sind Erreger bzw. Ursachen einer interstitiellen Nephritis?',
@@ -299,7 +299,7 @@ PQ.registerChapter(10, [
     ex: 'Abakteriell akut medikamentös-allergisch: NSAR, Penicilline, PPI; Eosinophile. Eitrige Pyelonephritis: Neutrophile; Tbc: verkäsende Granulome.'
   },
 
-  /* ---------- 10.3 Zystische Nierenerkrankungen & Fehlbildungen ---------- */
+  /* ---------- 10.3 Cystic kidney diseases & malformations ---------- */
   {
     id: 'k10-32', sec: '10.3', p: '33–34', type: 'single', alt: '2012, 2016, 2020',
     q: 'Zystische Nierenerkrankungen – welche Aussage ist FALSCH?',
@@ -380,7 +380,7 @@ PQ.registerChapter(10, [
     ex: 'Die Hydronephrose (Harnstauungsniere) verursacht keine Rindenzysten (Altfrage). Erweiterte papilläre Sammelrohre → Markschwammniere.'
   },
 
-  /* ---------- 10.4 Vaskuläre Nierenschäden, chronische NI, Steine ---------- */
+  /* ---------- 10.4 Vascular kidney damage, chronic kidney failure, stones ---------- */
   {
     id: 'k10-39', sec: '10.4', p: 34, type: 'single', alt: '2009, 2022, 2023, 2024',
     q: 'Was ist KEIN typischer Bestandteil von Nierensteinen?',
@@ -444,7 +444,7 @@ PQ.registerChapter(10, [
     ex: 'End-Stage-Niere: Schrumpfnieren, globale Glomerulosklerose, Tubulusatrophie (Thyreoidisation), interstitielle Fibrose, Arteriosklerose; Ursache oft nicht mehr erkennbar. Blasse Rinde/dunkles Mark → Schockniere.'
   },
 
-  /* ---------- 10.5 Nierentumoren ---------- */
+  /* ---------- 10.5 Kidney tumors ---------- */
   {
     id: 'k10-45', sec: '10.5', p: '34–35', type: 'single', alt: '2008',
     q: 'Nierentumoren – welche Aussage ist FALSCH?',
@@ -631,7 +631,7 @@ PQ.registerChapter(10, [
     ex: 'Onkozytom (~5 %, Schaltzellen): immer benigne.'
   },
 
-  /* ---------- Richtig/Falsch-Aussagen ---------- */
+  /* ---------- True/false statements ---------- */
   { id: 'k10-t01', sec: '10.1', p: 32, type: 'tf', a: true, q: 'Erythrozytenzylinder entstehen in den Tubuli.', ex: 'Erythrozytenzylinder entstehen in den Tubuli und sind pathognomonisch für eine entzündliche glomeruläre Erkrankung.' },
   { id: 'k10-t02', sec: '10.1', p: 32, type: 'tf', a: false, q: 'Die Poststreptokokken-GN tritt typischerweise 1–2 Tage nach dem Infekt auf.', ex: '1–3 (1–4) Wochen nach dem Infekt (Altfrage 2010).' },
   { id: 'k10-t03', sec: '10.1', p: 32, type: 'tf', a: true, q: 'Bei der Poststreptokokken-GN ist das Serum-C3 erniedrigt.', ex: 'Poststreptokokken-GN: C3 ↓, subepitheliale „Humps“.' },

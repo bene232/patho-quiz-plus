@@ -1,5 +1,5 @@
-# Quell-PDF (Skript-Inhalte) nicht veröffentlichen
+# Never publish the source PDF (script content)
 *.pdf
 
-# Entwicklernotizen bleiben lokal (Repo ist öffentlich)
+# Developer notes stay local (the repo is public)
 HANDOFF.md

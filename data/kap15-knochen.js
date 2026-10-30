@@ -1,7 +1,7 @@
-/* Kapitel 15 – Knochen, Gelenke, Weichgewebe (PDF S. 47–51) */
+/* Chapter 15 – Bone, joints, soft tissue (PDF pp. 47–51) */
 PQ.registerChapter(15, [
 
-  /* ---------- 15.1 Arthrose ---------- */
+  /* ---------- 15.1 Osteoarthritis ---------- */
   {
     id: 'k15-01', sec: '15.1', p: 47, type: 'kprim', alt: '2022, 2024',
     q: 'Arthrose – welche Aussagen treffen zu?',
@@ -88,7 +88,7 @@ PQ.registerChapter(15, [
     ex: 'Arthrose: Knie, Hüfte, Schulter, Fingerendgelenke (Heberden). MCP/PIP symmetrisch → RA; Podagra → Gicht; Meniskusverkalkung → Chondrokalzinose.'
   },
 
-  /* ---------- 15.2 Gelenkendoprothesenpathologie ---------- */
+  /* ---------- 15.2 Joint replacement pathology ---------- */
   {
     id: 'k15-09', sec: '15.2', p: 47, type: 'single', alt: '2013B, 2015, 2016',
     q: 'Periprothetische Membran – welche Aussage ist FALSCH?',
@@ -132,7 +132,7 @@ PQ.registerChapter(15, [
     ex: 'Typ I: Polyethylen-, Metall-, Zement-, Keramikpartikel → Makrophagenaktivierung, Freisetzung proinflammatorischer Mediatoren → Osteolysen, Pseudotumoren.'
   },
 
-  /* ---------- 15.3 Arthritiden ---------- */
+  /* ---------- 15.3 Arthritides ---------- */
   {
     id: 'k15-13', sec: '15.3', p: 48, type: 'kprim', alt: '2022',
     q: 'Chronische Polyarthritis (RA) – welche Aussagen treffen zu?',
@@ -398,7 +398,7 @@ PQ.registerChapter(15, [
     ex: 'Spondylitis tuberculosa: Wirbelkörperdestruktion → Gibbus, Senkungsabszess (Psoas), perifokale Osteoporose. Der metaphysäre abgekapselte Abszess ist der Brodie-Abszess.'
   },
 
-  /* ---------- 15.5 Osteopathien, Fraktur, Knochenzysten ---------- */
+  /* ---------- 15.5 Osteopathies, fractures, bone cysts ---------- */
   {
     id: 'k15-40', sec: '15.5', p: 49, type: 'kprim', alt: '2021',
     q: 'Osteopathien – welche Zuordnungen treffen zu?',
@@ -540,7 +540,7 @@ PQ.registerChapter(15, [
     ex: 'Renale Osteopathie/Osteodystrophie bei HPT: Fibroosteoklasie, Osteitis fibrosa cystica (braune Tumoren). Mosaikstruktur → M. Paget; Milchglas → fibröse Dysplasie.'
   },
 
-  /* ---------- 15.6 Knochentumoren ---------- */
+  /* ---------- 15.6 Bone tumors ---------- */
   {
     id: 'k15-53', sec: '15.6', p: 50, type: 'single', alt: '2008, 2016',
     q: 'Osteosarkom – welche Aussage ist FALSCH?',
@@ -720,7 +720,7 @@ PQ.registerChapter(15, [
     ex: 'Osteochondrom: Entartung selten; eine Knorpelkappe > 1–2 cm ist verdächtig.'
   },
 
-  /* ---------- 15.7 Weichgewebe & Sehnen ---------- */
+  /* ---------- 15.7 Soft tissue & tendons ---------- */
   {
     id: 'k15-71', sec: '15.7', p: 51, type: 'kprim', alt: '2010, 2013B',
     q: 'Myogene Tumoren – welche Aussagen treffen zu?',
@@ -848,7 +848,7 @@ PQ.registerChapter(15, [
     ex: 'Ganglion: mukoide Zyste ohne Epithelauskleidung, v. a. Handrücken; Ätiologie trotz typischer Histologie unklar.'
   },
 
-  /* ---------- Richtig/Falsch-Aussagen ---------- */
+  /* ---------- True/false statements ---------- */
   { id: 'k15-t01', sec: '15.1', p: 47, type: 'tf', a: false, q: 'Die Arthrose geht primär von der Synovialis aus.', ex: 'Die Arthrose geht vom Gelenkknorpel aus (Altfrage 2022, 2024).' },
   { id: 'k15-t02', sec: '15.1', p: 47, type: 'tf', a: true, q: 'Die physiologische Alterung des Gelenkknorpels bleibt asymptomatisch.', ex: 'Physiologische Alterung (Wasserverlust, schlechtere Ernährung) bleibt asymptomatisch.' },
   { id: 'k15-t03', sec: '15.1', p: 47, type: 'tf', a: true, q: 'Die Heberden-Arthrose betrifft die Fingerendgelenke.', ex: 'Arthrose: große belastete Gelenke und Fingerendgelenke (Heberden).' },

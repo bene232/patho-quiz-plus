@@ -10,7 +10,7 @@
 <div id="app"></div>
 <pre id="ui-out" style="white-space:pre-wrap;font-size:12px;padding:16px">läuft …</pre>
 <script>
-  // Sauberer Start; ?shot=… hält an einem Kontrollpunkt an (für Screenshots), ?theme=dark|light erzwingt das Farbschema
+  // Clean start; ?shot=… stops at a checkpoint (for screenshots), ?theme=dark|light forces the color scheme
   try { localStorage.clear(); } catch (e) {}
   history.replaceState(null, '', location.pathname + location.search);
   window.__errors = [];
@@ -101,7 +101,7 @@
   }
 
   try {
-    /* ---------- Startseite ---------- */
+    /* ---------- Home ---------- */
     await sleep(50);
     ok($('.logo') && $('.hero'), 'Startseite mit Tagesziel');
     ok($$('.quick-btn').length === 3, '3 Schnellzugriffe');
@@ -112,7 +112,7 @@
     await imgsOk('Startseite (alle 17 Kapitelbilder + Schnellzugriffe)');
     cp('home-empty');
 
-    /* ---------- Eigene Runde ---------- */
+    /* ---------- Custom round ---------- */
     PQ.store.pref('practice', { sections: ALL, types: ['single', 'kprim', 'match', 'tf'], count: 20 });
     await nav('#/practice');
     ok($$('.pick-ch').length === avail, 'Themenauswahl mit ' + avail + ' Kapiteln');
@@ -127,7 +127,7 @@
     btn('Alle Fragen').click();
     ok(/\d+ Fragen/.test(altText), 'Filter Altfragen: ' + altText);
 
-    /* ---------- Üben: jede Frageart einmal richtig, einmal falsch ---------- */
+    /* ---------- Practice: each question type once right, once wrong ---------- */
     PQ.app.startSession('practice', ['k4-02', 'k4-43', 'k4-11', 'k4-t10', 'k4-09', 'k5-08', 'k5-01', 'k5-t02'].map(id => PQ.byId[id]), { origin: { kind: 'custom' } });
     await sleep(40);
     ok($('.q-text'), 'Quiz zeigt Frage');
@@ -163,7 +163,7 @@
     cp('result');
     ok(PQ.store.points() > 0, 'Punkte vergeben: ' + PQ.store.points());
 
-    /* ---------- Startseite mit Fortschritt → Wiederholen ---------- */
+    /* ---------- Home with progress → review ---------- */
     await nav('#/');
     const link = $('.hero-link');
     ok(link && /4 Fehler wiederholen/.test(link.textContent), 'Hero bietet 4 Fehler an: ' + (link && link.textContent));
@@ -178,7 +178,7 @@
     await nav('#/');
     ok(!$('.hero-link'), 'Keine offenen Fehler mehr');
 
-    /* ---------- Weiterlernen ---------- */
+    /* ---------- Continue learning ---------- */
     btn('Weiterlernen').click();
     await sleep(40);
     ok(session().origin.kind === 'smart' && session().ids.length === 10, 'Lektion mit 10 Fragen');
@@ -188,7 +188,7 @@
     ok(btn('Nächste Lektion'), 'Auswertung bietet „Nächste Lektion“');
     ok($('.confetti'), 'Konfetti bei 100 %');
 
-    /* ---------- Kapitelseite: Themen, Anzahl, Reihenfolge ---------- */
+    /* ---------- Chapter page: topics, count, order ---------- */
     const herz = PQ.questions.filter(q => q.chapter === 4);
     const summary = () => $('.setup-summary').textContent;
     const seg = text => $$('.seg-btn').find(b => b.textContent === text);
@@ -216,7 +216,7 @@
     ok(secs.join() === secs.slice().sort().join(), 'Nach Themen: erst 4.2, dann 4.8');
     ok($('.q-count').textContent === '1/25', 'Zähler 1/25');
 
-    /* ---------- X: weiterüben, pausieren, vorzeitig auswerten ---------- */
+    /* ---------- X: keep practicing, pause, score early ---------- */
     await playThrough(3, true);
     ok($('.q-count').textContent === '4/25', 'Zähler nach 3 Antworten: 4/25');
     $('.quiz-top .icon-btn').click();
@@ -250,7 +250,7 @@
     btn('Antworten ansehen').click();
     ok($$('.res-row').length === 3, '3 Antworten gelistet');
 
-    /* ---------- Nur offene Fragen ---------- */
+    /* ---------- Open questions only ---------- */
     await nav('#/chapter/4');
     btn('Nur offene').click();
     const openTwo = PQ.quiz.filter({ sections: ['4.2', '4.8'], types: ['single', 'kprim', 'match', 'tf'], openOnly: true }).length;
@@ -264,7 +264,7 @@
     await sleep(30);
     ok(!PQ.store.loadSession() && location.hash === '#/', 'Ohne Antwort: „Runde beenden“ verwirft die Runde');
 
-    /* ---------- Klausur ---------- */
+    /* ---------- Exam ---------- */
     PQ.store.pref('exam', { chapters: [4, 5], count: 20, perQ: 90 });
     await nav('#/exam');
     ok($('.setup-summary').textContent === '20 Fragen · 30 Minuten', 'Klausur-Setup: ' + $('.setup-summary').textContent);
@@ -293,7 +293,7 @@
     ok($('.rstat-val').textContent === '3/20' && $('.rstat-label').textContent === 'Punkte', 'Klausur 3/20 Punkte');
     ok(btn('Neue Klausur'), 'Neue Klausur anbieten');
 
-    /* ---------- Blitzrunde ---------- */
+    /* ---------- Speed round ---------- */
     PQ.store.pref('blitz', { chapters: [4, 5], count: 20 });
     await nav('#/blitz');
     ok($('.setup-summary').textContent === '20 Aussagen', 'Blitz-Setup');
@@ -315,7 +315,7 @@
     }
     ok(location.hash === '#/result' && $('.rstat-val').textContent === '15/20', 'Blitzrunde 15/20');
 
-    /* ---------- Statistik & Einstellungen ---------- */
+    /* ---------- Statistics & settings ---------- */
     await nav('#/stats');
     ok($$('.big-stat').length === 3 && $$('.legend li').length === 4 && $$('.week-day').length === 7, 'Statistik: Zahlen, Woche, Legende');
     ok($('.week-day.today .week-val').textContent !== '', 'Heute ist beschriftet');
@@ -341,7 +341,7 @@
     $('.import-panel .btn-primary').click();
     ok(PQ.store.points() === pts, 'Import stellt Punkte wieder her');
 
-    /* ---------- Zuordnen per Ziehen (Maus und Finger) ---------- */
+    /* ---------- Matching by dragging (mouse and finger) ---------- */
     PQ.app.startSession('practice', [PQ.byId['k5-08']], { origin: { kind: 'custom' } });
     await sleep(40);
     const mq = cur();
@@ -357,7 +357,7 @@
       await sleep(20);
       const [x0, y0] = center(from);
       const [x1, y1] = center(to);
-      // Wie am Gerät: Touch trifft das innere <span>, das die Erfassung beim Umlegen auf den Knopf wieder abgibt
+      // As on the device: touch hits the inner <span>, which releases the capture when it is moved to the button
       const hit = pointerType === 'touch' ? from.querySelector('span:last-child') || from : from;
       pe('pointerdown', hit, x0, y0, pointerType);
       for (let s = 1; s <= 6; s++) {
@@ -395,7 +395,7 @@
     btn('Runde beenden').click();
     await sleep(30);
 
-    /* ---------- Speicherstand und offene Runde der Vorversion ---------- */
+    /* ---------- Saved state and open round of the previous version ---------- */
     const oldState = {
       v: 1, points: 120, days: { '2026-10-26': 40 },
       q: { 'k4-01': { b: 3, d: 0, n: 2, c: 2, l: 1, t: 1 }, 'k6-01': { b: 1, d: 0, n: 1, c: 0, l: 0, t: 2 } },
@@ -403,7 +403,7 @@
       prefs: { practice: { sections: ['4.1'], types: ['single'], count: 20 } }
     };
     PQ.store.importData(JSON.stringify(oldState));
-    // Kapitelrunde, wie die Vorversion sie gespeichert hat (ohne Themen/Anzahl im origin)
+    // Chapter round as the previous version saved it (no topics/count in origin)
     PQ.store.saveSession(PQ.quiz.createSession('practice', ['k4-03', 'k4-04'].map(id => PQ.byId[id]), { origin: { kind: 'chapter', id: 4, altOnly: false } }));
     await nav('#/chapter/4');
     ok($$('.topic.on').length === 9 && summary() === herz.length + ' Fragen', 'Ohne gespeicherte Kapitel-Auswahl: alle Themen, alle Fragen');

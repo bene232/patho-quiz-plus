@@ -1,7 +1,7 @@
-/* Kapitel 3 – Hämatopathologie: Knochenmark, Leukämien, Lymphome (PDF S. 10–11) */
+/* Chapter 3 – Hematopathology: bone marrow, leukemias, lymphomas (PDF pp. 10–11) */
 PQ.registerChapter(3, [
 
-  /* ---------- 3.1 Knochenmark ---------- */
+  /* ---------- 3.1 Bone marrow ---------- */
   {
     id: 'k3-01', sec: '3.1', p: 10, type: 'single',
     q: 'In welchem Verhältnis stehen Granulopoese und Erythropoese im normalen Knochenmark?',
@@ -50,7 +50,7 @@ PQ.registerChapter(3, [
     ex: 'Alle vier treffen zu. Weitere Indikationen: unklare Zytose, V. a. Leukämie, MDS, MPN, unklares Fieber, Speicherkrankheiten.'
   },
 
-  /* ---------- 3.2 Myeloische Neoplasien ---------- */
+  /* ---------- 3.2 Myeloid neoplasms ---------- */
   {
     id: 'k3-06', sec: '3.2', p: 10, type: 'kprim', alt: '2010, 2013',
     q: 'CML und CLL – welche Aussagen treffen zu?',
@@ -203,7 +203,7 @@ PQ.registerChapter(3, [
     ex: 'CML: Megakaryopoese variabel, kleine „Zwergformen“. Riesenformen → ET; atypische geclusterte Megakaryozyten → PMF.'
   },
 
-  /* ---------- 3.3 Lymphome ---------- */
+  /* ---------- 3.3 Lymphomas ---------- */
   {
     id: 'k3-21', sec: '3.3', p: 11, type: 'single', alt: '2016, 2024',
     q: 'Welche Reihenfolge der Non-Hodgkin-Lymphome nach Häufigkeit trifft zu?',
@@ -329,7 +329,7 @@ PQ.registerChapter(3, [
     ex: 'Lymphom = klonale (monoklonale) Neoplasie lymphatischer Zellen, meist von Lymphknoten/lymphatischem Gewebe ausgehend.'
   },
 
-  /* ---------- Richtig/Falsch-Aussagen ---------- */
+  /* ---------- True/false statements ---------- */
   { id: 'k3-t01', sec: '3.1', p: 10, type: 'tf', a: true, q: 'Beim Erwachsenen besteht das Knochenmark zu etwa 50 % aus Zellen und 50 % aus Fett.', ex: 'Zellularität altersabhängig: Erwachsene etwa 50 : 50, im Alter fettreicher.' },
   { id: 'k3-t02', sec: '3.1', p: 10, type: 'tf', a: false, q: 'Im normalen Knochenmark machen Blasten bis zu 20 % aus.', ex: 'Normal: Blasten < 5 %. Ab ≥ 20 % Blasten → AML.' },
   { id: 'k3-t03', sec: '3.1', p: 10, type: 'tf', a: true, q: 'Die Beckenkammstanze erlaubt die Beurteilung von Zellularität, Fasern und Architektur.', ex: 'Beckenkammstanze (Histologie): Zellularität, Fasern, Architektur.' },

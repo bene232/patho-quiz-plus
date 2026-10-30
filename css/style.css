@@ -1,7 +1,7 @@
-/* Patho-Quiz – verspielt, aufgeräumt, mobil zuerst.
-   Farben als Tokens; Dunkelmodus über System (prefers-color-scheme) oder Schalter (data-theme). */
+/* Patho-Quiz – playful, tidy, mobile first.
+   Colors as tokens; dark mode via the system (prefers-color-scheme) or a toggle (data-theme). */
 
-/* Nunito (SIL OFL 1.1, siehe fonts/OFL.txt) ist eingebettet, damit sie auch beim Öffnen per Doppelklick (file://) lädt. */
+/* Nunito (SIL OFL 1.1, see fonts/OFL.txt) is embedded so it also loads when opened by double-click (file://). */
 @font-face {
   font-family: 'Nunito';
   font-style: normal;
@@ -173,7 +173,7 @@ h1, h2, h3, p { margin: 0; }
 .ico-muted { color: var(--text-3); }
 .ico-inline { width: 18px; height: 18px; vertical-align: -3px; color: var(--accent-ink); }
 
-/* Eigene Bilder (img/*.svg) */
+/* Own images (img/*.svg) */
 .art { display: block; flex: none; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; }
 .art-xs { display: inline-block; width: 17px; height: 17px; vertical-align: -3px; }
 .art-sm { width: 28px; height: 28px; }
@@ -183,7 +183,7 @@ h1, h2, h3, p { margin: 0; }
 .toast .art-xs { width: 18px; height: 18px; }
 .upcoming-row .art { width: 24px; height: 24px; }
 
-/* ---------- Kopfzeilen ---------- */
+/* ---------- Headers ---------- */
 .home-head { display: flex; align-items: center; gap: 4px; min-height: 48px; }
 .logo { font-size: 24px; font-weight: 900; letter-spacing: -.02em; }
 .logo b { color: var(--accent-ink); font-weight: 900; }
@@ -211,7 +211,7 @@ h1, h2, h3, p { margin: 0; }
 .link-center { align-self: center; }
 .note { font-size: 13px; font-weight: 600; color: var(--text-3); }
 
-/* ---------- Buttons (3D-Stil) ---------- */
+/* ---------- Buttons (3D style) ---------- */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   min-height: 52px; padding: 12px 20px; border-radius: 16px;
@@ -243,7 +243,7 @@ h1, h2, h3, p { margin: 0; }
 .footer-col { flex-direction: column; gap: 8px; }
 .setup-summary { text-align: center; font-weight: 800; font-size: 14px; color: var(--text-2); }
 
-/* ---------- Startseite ---------- */
+/* ---------- Home ---------- */
 .hero {
   color: #fff;
   background: linear-gradient(140deg, #8d70ff 0%, #6c4cf5 55%, #5636e0 100%);
@@ -298,7 +298,7 @@ h1, h2, h3, p { margin: 0; }
 .upcoming-label { font-size: 12px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--text-3); }
 .upcoming-row { display: flex; flex-wrap: wrap; gap: 6px; filter: grayscale(.75); opacity: .6; }
 
-/* ---------- Fortschrittsringe ---------- */
+/* ---------- Progress rings ---------- */
 .ring { --c: var(--accent); --w: 6px; position: relative; flex: none; display: inline-grid; place-items: center; border-radius: 50%; }
 .ring::before {
   content: ''; position: absolute; inset: 0; border-radius: 50%;
@@ -312,7 +312,7 @@ h1, h2, h3, p { margin: 0; }
 .ring-label { position: relative; font-weight: 900; font-size: 14px; line-height: 1; }
 .ring-sm .ring-label .ico { width: 18px; height: 18px; stroke-width: 3.2; color: var(--c); }
 
-/* ---------- Kapitelseite ---------- */
+/* ---------- Chapter page ---------- */
 .ch-hero { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; padding-bottom: 6px; }
 .art-hero { width: 104px; height: 104px; filter: drop-shadow(0 10px 14px color-mix(in srgb, var(--c) 35%, transparent)); }
 .ch-hero-title { font-size: 30px; font-weight: 900; letter-spacing: -.01em; }
@@ -335,7 +335,7 @@ h1, h2, h3, p { margin: 0; }
 .stars .ico { width: 12px; height: 12px; fill: currentColor; stroke: currentColor; stroke-width: 1.5; }
 .seg-btn .stars .ico { width: 13px; height: 13px; }
 
-/* ---------- Einstellungen der Modi ---------- */
+/* ---------- Mode settings ---------- */
 .setup-hero { display: flex; align-items: center; gap: 14px; }
 .setup-hero p { font-weight: 700; color: var(--text-2); }
 
@@ -462,7 +462,7 @@ h1, h2, h3, p { margin: 0; }
 .kp-row.bad .kp-btn.truth { border-color: var(--ok); color: var(--ok-ink); box-shadow: 0 3px 0 var(--ok); }
 
 .match { display: flex; flex-direction: column; gap: 16px; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
-/* Ziehen: Begriffe greifen den Finger (kein Scrollen), Beschreibungen bleiben scrollbar */
+/* Dragging: terms capture the finger (no scrolling), descriptions stay scrollable */
 .term { touch-action: none; }
 .term:not(:disabled), .target:not(:disabled) { cursor: grab; }
 .match.dragging, .match.dragging .term, .match.dragging .target { cursor: grabbing; }
@@ -509,7 +509,7 @@ h1, h2, h3, p { margin: 0; }
 .pc3 { background: var(--pc3); color: #0b0b0b; }
 .pc4 { background: var(--pc4); }
 
-/* ---------- Rückmeldung ---------- */
+/* ---------- Feedback ---------- */
 .fb { display: flex; flex-direction: column; gap: 10px; }
 .fb-title { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 900; }
 .fb-badge { width: 34px; height: 34px; border-radius: 50%; flex: none; display: grid; place-items: center; color: #fff; }
@@ -545,7 +545,7 @@ h1, h2, h3, p { margin: 0; }
 .fb-inline .fb-title { font-size: 17px; }
 .fb-inline .fb-badge { width: 28px; height: 28px; }
 
-/* ---------- Blitzrunde ---------- */
+/* ---------- Speed round ---------- */
 .screen.blitz { min-height: 100vh; min-height: 100dvh; }
 .swipe-stage { position: relative; flex: 1; display: grid; place-items: center; align-content: center; padding: 22px 4px 4px; }
 .swipe-sec { font-size: 13px; font-weight: 800; color: var(--text-3); }
@@ -590,7 +590,7 @@ h1, h2, h3, p { margin: 0; }
 .round-btn.bad { background: var(--bad); box-shadow: 0 5px 0 var(--bad-shade); }
 .round-wrap:active .round-btn { transform: translateY(5px); box-shadow: none; }
 
-/* ---------- Auswertung ---------- */
+/* ---------- Results ---------- */
 .result-hero { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; padding: 4px 0 8px; }
 .art-result { width: 112px; height: 112px; animation: bounce .7s ease; }
 .result-title { font-size: 30px; font-weight: 900; letter-spacing: -.01em; }
@@ -614,7 +614,7 @@ h1, h2, h3, p { margin: 0; }
 .res-row.open .res-chev { transform: rotate(180deg); }
 .res-detail { display: flex; flex-direction: column; gap: 12px; padding: 4px 0 18px; }
 
-/* ---------- Statistik ---------- */
+/* ---------- Statistics ---------- */
 .big-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .big-stat { display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center; }
 .big-stat-val { display: inline-flex; align-items: center; gap: 4px; font-size: 26px; font-weight: 900; }
@@ -649,7 +649,7 @@ h1, h2, h3, p { margin: 0; }
 .legend b { margin-left: auto; color: var(--text); font-variant-numeric: tabular-nums; }
 .swatch { width: 12px; height: 12px; border-radius: 3px; flex: none; }
 
-/* ---------- Einstellungen ---------- */
+/* ---------- Settings ---------- */
 .set-group { border: 2px solid var(--line); border-radius: 18px; overflow: hidden; }
 .set-row { display: flex; align-items: center; gap: 12px; width: 100%; padding: 14px 16px; text-align: left; font-weight: 800; }
 .set-row + .set-row { border-top: 2px solid var(--line); }
@@ -664,7 +664,7 @@ h1, h2, h3, p { margin: 0; }
 }
 .steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 4px; font-weight: 600; }
 
-/* ---------- Menü „Runde unterbrechen“ ---------- */
+/* ---------- „Runde unterbrechen“ menu (pause round) ---------- */
 .menu-wrap {
   position: fixed; inset: 0; z-index: 40;
   display: flex; align-items: flex-end; justify-content: center;
@@ -677,7 +677,7 @@ h1, h2, h3, p { margin: 0; }
 }
 .menu-title { font-size: 20px; font-weight: 900; }
 
-/* ---------- Toast & Konfetti ---------- */
+/* ---------- Toast & confetti ---------- */
 .toast {
   position: fixed; left: 50%; top: calc(var(--safe-top) + 14px); z-index: 50;
   transform: translate(-50%, -12px); opacity: 0;

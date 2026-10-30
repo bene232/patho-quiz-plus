@@ -1,7 +1,7 @@
-/* Kapitel 17 – Kopf-Hals: Speicheldrüsen, Mundhöhle, Kiefer (PDF S. 57) */
+/* Chapter 17 – Head & neck: salivary glands, oral cavity, jaw (PDF p. 57) */
 PQ.registerChapter(17, [
 
-  /* ---------- 17.1 Speicheldrüsen ---------- */
+  /* ---------- 17.1 Salivary glands ---------- */
   {
     id: 'k17-01', sec: '17.1', p: 57, type: 'single',
     q: 'Welche Speicheldrüse ist am häufigsten von einer Sialolithiasis betroffen?',
@@ -58,7 +58,7 @@ PQ.registerChapter(17, [
     ex: 'Adenoid-zystisches Ca: kribriform, Perineuralscheideninfiltration, späte Fernmetastasen Lunge; MYB.'
   },
 
-  /* ---------- 17.2 Mundhöhle & DD Halsschwellung ---------- */
+  /* ---------- 17.2 Oral cavity & differential diagnosis of neck swelling ---------- */
   {
     id: 'k17-07', sec: '17.2', p: 57, type: 'single',
     q: 'Was ist eine Leukoplakie?',
@@ -126,7 +126,7 @@ PQ.registerChapter(17, [
     ex: 'Systemerkrankungen: M. Crohn (Granulome), Lichen planus (Wickham-Streifen), Sarkoidose, Leukämie (Gingivahyperplasie), Wegener (Gingiva „strawberry“).'
   },
 
-  /* ---------- 17.3 Kiefer ---------- */
+  /* ---------- 17.3 Jaw ---------- */
   {
     id: 'k17-14', sec: '17.3', p: 57, type: 'match',
     q: 'Ordne die Kieferzyste ihrem Kennzeichen zu.',
@@ -182,7 +182,7 @@ PQ.registerChapter(17, [
     ex: 'Weitere Kieferläsionen: ossifizierendes Fibrom, ossäre und fibröse Dysplasie, zentrales Riesenzellgranulom, Knochenzysten, Osteoradionekrose, Bisphosphonat-assoziierte Kiefernekrose.'
   },
 
-  /* ---------- Richtig/Falsch-Aussagen ---------- */
+  /* ---------- True/false statements ---------- */
   { id: 'k17-t01', sec: '17.1', p: 57, type: 'tf', a: true, q: 'Ca. 80 % der Speicheldrüsentumoren liegen in der Parotis.', ex: 'Tumoren: ~80 % in der Parotis.' },
   { id: 'k17-t02', sec: '17.1', p: 57, type: 'tf', a: false, q: 'Der Warthin-Tumor betrifft typischerweise junge Frauen.', ex: 'Warthin-Tumor (Zystadenolymphom): ältere Raucher, Männer, bilateral.' },
   { id: 'k17-t03', sec: '17.1', p: 57, type: 'tf', a: true, q: 'Das Mukoepidermoidkarzinom kommt auch bei Kindern vor.', ex: 'Mukoepidermoid-Ca: häufigster maligner Speicheldrüsentumor, auch bei Kindern; MAML2.' },

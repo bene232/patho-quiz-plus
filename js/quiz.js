@@ -1,4 +1,4 @@
-/* Fragenauswahl, Runden-Erstellung und Bewertung – ohne DOM. */
+/* Question selection, round building and scoring – no DOM. */
 (function () {
   'use strict';
 
@@ -21,7 +21,7 @@
     return order;
   }
 
-  // openOnly: nur Fragen, die noch nicht sitzen (neu oder zuletzt falsch)
+  // openOnly: only questions not yet mastered (new or last answered wrong)
   function filter({ sections, types, altOnly, minStars, openOnly }) {
     const secs = new Set(sections);
     const typeSet = new Set(types);
@@ -30,7 +30,7 @@
       (!openOnly || isOpen(q.id)));
   }
 
-  // Offene Fehler zuerst, dann Neues und Fälliges gemischt, zuletzt der Rest.
+  // Open mistakes first, then new and due questions mixed, the rest last.
   function prioritize(list) {
     const now = Date.now();
     const mistakes = [], fresh = [], rest = [];
@@ -47,7 +47,7 @@
     return count ? list.slice(0, count) : list;
   }
 
-  // „Nach Themen“: Abschnitte in Skript-Reihenfolge, innerhalb eines Abschnitts bleibt die Reihenfolge erhalten
+  // „Nach Themen“ (by topic): sections in script order, the order within a section is kept
   function bySection(list) {
     const pos = {};
     PQ.chapters.flatMap(c => c.sections).forEach((s, i) => { pos[s.id] = i; });
@@ -63,7 +63,7 @@
     return mistakes.concat(due);
   }
 
-  // Lernstand einer Frage: neu → Fehler (Box 1) → in Arbeit (Box 2–3) → gefestigt (Box 4–5)
+  // Learning state of a question: new → mistake (box 1) → in progress (box 2–3) → consolidated (box 4–5)
   function mastery(id) {
     const s = PQ.store.get(id);
     if (!s) return 'new';
@@ -76,7 +76,7 @@
     return m === 'new' || m === 'mistake';
   }
 
-  // pct = Anteil der Fragen, deren letzte Antwort richtig war („sitzt“)
+  // pct = share of questions whose last answer was correct (“mastered”)
   function progress(questions) {
     const r = { total: questions.length, seen: 0, known: 0, solid: 0, pct: 0 };
     questions.forEach(q => {
@@ -89,7 +89,7 @@
     return r;
   }
 
-  // „Weiterlernen“: bis zur Hälfte Fehler/Fälliges, Rest neue Fragen in Kapitel- und Themenreihenfolge
+  // „Weiterlernen“ (continue learning): up to half mistakes/due questions, the rest new questions in chapter and topic order
   function smartLesson(size) {
     const lesson = reviewPool().slice(0, Math.ceil(size / 2));
     const taken = new Set(lesson.map(q => q.id));
@@ -134,8 +134,8 @@
     return false;
   }
 
-  /* K-prim wie in der Klausur: 4 richtig = 1 Punkt, 3 richtig = ½ Punkt, sonst 0.
-     Zuordnen: anteilig pro richtigem Paar. Als „richtig“ (Lernkartei) zählt nur die volle Lösung. */
+  /* K-prim as in the exam: 4 correct = 1 point, 3 correct = ½ point, otherwise 0.
+     Matching: partial credit per correct pair. Only a fully correct answer counts as “correct” for the flashcards. */
   function evaluate(q, r) {
     switch (q.type) {
       case 'single':
