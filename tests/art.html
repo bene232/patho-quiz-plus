@@ -1,0 +1,10 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Bilder-Vorschau</title>
+<style>body{margin:0;font:12px system-ui}.row{display:flex;flex-wrap:wrap;gap:6px;padding:10px}.cell{width:112px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px;border-radius:14px}.light{background:#fff}.dark{background:#13121b;color:#eee}.tint .cell{background:#fde7ec}img.b{width:72px;height:72px}img.s{width:24px;height:24px}</style></head><body>
+<script>
+const names='microscope shield cells heart vessel lungs stomach colon liver kidney drop thyroid ribbon uterus bone brain tooth bolt stopwatch chart trophy medal target books flame check star scroll '.trim().split(/\s+/);
+for (const mode of ['light','dark','tint']) {
+  const row=document.createElement('div'); row.className='row '+(mode==='dark'?'dark':'light')+(mode==='tint'?' tint':'');
+  for (const n of names) { const c=document.createElement('div'); c.className='cell'; c.innerHTML='<img class="b" src="../img/'+n+'.svg"><div><img class="s" src="../img/'+n+'.svg"></div><span>'+n+'</span>'; row.append(c); }
+  document.body.append(row);
+}
+</script></body></html>

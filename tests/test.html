@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><title>Patho-Quiz – Daten- & Logiktests</title></head>
+<body>
+<pre id="out">läuft …</pre>
+<script>try { localStorage.clear(); } catch (e) {}</script>
+<script src="../data/chapters.js"></script>
+<script src="../data/kap01-tumor.js"></script>
+<script src="../data/kap02-immun.js"></script>
+<script src="../data/kap03-haemato.js"></script>
+<script src="../data/kap04-herz.js"></script>
+<script src="../data/kap05-gefaesse.js"></script>
+<script src="../data/kap06-lunge.js"></script>
+<script src="../data/kap07-magen.js"></script>
+<script src="../data/kap08-kolon.js"></script>
+<script src="../data/kap09-leber.js"></script>
+<script src="../data/kap10-niere.js"></script>
+<script src="../data/kap11-uro.js"></script>
+<script src="../data/kap12-schilddruese.js"></script>
+<script src="../data/kap13-mamma.js"></script>
+<script src="../data/kap14-gyn.js"></script>
+<script src="../data/kap15-knochen.js"></script>
+<script src="../data/kap16-neuro.js"></script>
+<script src="../data/kap17-kopf-hals.js"></script>
+<script src="../js/store.js"></script>
+<script src="../js/quiz.js"></script>
+<script>
+(function () {
+  const lines = [];
+  let fails = 0;
+  function ok(cond, msg) { if (!cond) fails++; lines.push((cond ? 'PASS ' : 'FAIL ') + msg); }
+  window.onerror = (m, src, l) => { fails++; lines.push('FAIL JS-Fehler: ' + m + ' @' + src + ':' + l); };
+
+  /* ---------- Daten ---------- */
+  const pageRange = { 1: [4, 6], 2: [7, 9], 3: [10, 11], 4: [12, 15], 5: [16, 18], 6: [19, 22], 7: [23, 25], 8: [26, 28], 9: [29, 31], 10: [32, 35], 11: [36, 38], 12: [39, 41], 13: [42, 43], 14: [44, 46], 15: [47, 51], 16: [52, 56], 17: [57, 57] };
+  const ids = new Set();
+  const problems = [];
+  const quotesBalanced = s => (s.match(/„/g) || []).length === (s.match(/“/g) || []).length;
+  const texts = q => [q.q, q.ex, q.dis || ''].concat(q.opts || [], (q.st || []).map(x => x[0]), (q.pairs || []).flat());
+
+  PQ.questions.forEach(q => {
+    const p = msg => problems.push(q.id + ': ' + msg);
+    if (ids.has(q.id)) p('doppelte ID');
+    ids.add(q.id);
+    const sec = PQ.sections[q.sec];
+    if (!sec) p('unbekannter Abschnitt ' + q.sec);
+    else if (sec.chapter !== q.chapter) p('Abschnitt gehört nicht zum Kapitel');
+    if (!q.q || !q.ex) p('Fragetext oder Erklärung fehlt');
+    const pages = String(q.p).split('–').map(Number);
+    const [lo, hi] = pageRange[q.chapter];
+    if (pages.some(n => !(n >= lo && n <= hi))) p('Seite ' + q.p + ' außerhalb ' + lo + '–' + hi);
+    texts(q).forEach(t => {
+      if (typeof t !== 'string') return;
+      if (!quotesBalanced(t)) p('Anführungszeichen unausgeglichen: ' + t);
+      if (/\s{2,}/.test(t)) p('doppeltes Leerzeichen: ' + t);
+      if (t !== t.trim()) p('Leerzeichen am Rand: ' + t);
+    });
+    switch (q.type) {
+      case 'single':
+        if (!Array.isArray(q.opts) || q.opts.length < 3 || q.opts.length > 5) p('3–5 Optionen erwartet');
+        else {
+          if (!(Number.isInteger(q.a) && q.a >= 0 && q.a < q.opts.length)) p('Lösungsindex ungültig');
+          if (new Set(q.opts).size !== q.opts.length) p('doppelte Optionen');
+        }
+        break;
+      case 'kprim':
+        if (!Array.isArray(q.st) || q.st.length !== 4) p('K-prim braucht 4 Aussagen');
+        else {
+          q.st.forEach((s, i) => { if (typeof s[0] !== 'string' || typeof s[1] !== 'boolean') p('Aussage ' + (i + 1) + ' ungültig'); });
+          if (new Set(q.st.map(s => s[0])).size !== 4) p('doppelte Aussagen');
+        }
+        break;
+      case 'match':
+        if (!Array.isArray(q.pairs) || q.pairs.length < 3 || q.pairs.length > 5) p('3–5 Paare erwartet');
+        else {
+          if (new Set(q.pairs.map(x => x[0])).size !== q.pairs.length) p('doppelte Begriffe');
+          if (new Set(q.pairs.map(x => x[1])).size !== q.pairs.length) p('doppelte Zuordnungen');
+        }
+        break;
+      case 'tf':
+        if (typeof q.a !== 'boolean') p('Richtig/Falsch-Lösung fehlt');
+        break;
+      default:
+        p('unbekannter Typ ' + q.type);
+    }
+  });
+  ok(problems.length === 0, 'Datenprüfung (' + PQ.questions.length + ' Fragen)' + (problems.length ? ':\n  ' + problems.join('\n  ') : ''));
+
+  const byType = {};
+  PQ.questions.forEach(q => { const k = 'Kap. ' + q.chapter + ' ' + q.type; byType[k] = (byType[k] || 0) + 1; });
+  lines.push('INFO ' + JSON.stringify(byType));
+  const tfBalance = PQ.questions.filter(q => q.type === 'tf').reduce((a, q) => (a[q.a] = (a[q.a] || 0) + 1, a), {});
+  lines.push('INFO Richtig/Falsch-Verteilung ' + JSON.stringify(tfBalance));
+  const kpBalance = PQ.questions.filter(q => q.type === 'kprim').flatMap(q => q.st.map(s => s[1])).reduce((a, v) => (a[v] = (a[v] || 0) + 1, a), {});
+  lines.push('INFO K-prim-Aussagen ' + JSON.stringify(kpBalance));
+  lines.push('INFO Altfragen: ' + PQ.questions.filter(q => q.alt).length + ', umstritten: ' + PQ.questions.filter(q => q.dis).length);
+  PQ.chapters.filter(c => c.available).forEach(c => c.sections.forEach(s => {
+    const n = PQ.questions.filter(q => q.sec === s.id).length;
+    ok(n >= 3, 'Abschnitt ' + s.id + ' hat ' + n + ' Fragen');
+  }));
+
+  /* ---------- Bewertung ---------- */
+  const Q = PQ.quiz;
+  const single = PQ.questions.find(q => q.type === 'single');
+  ok(Q.evaluate(single, single.a).correct && Q.evaluate(single, single.a).score === 1, 'Einfachauswahl richtig');
+  ok(!Q.evaluate(single, (single.a + 1) % single.opts.length).correct, 'Einfachauswahl falsch');
+  const kp = PQ.questions.find(q => q.type === 'kprim');
+  const truth = kp.st.map(s => s[1]);
+  ok(Q.evaluate(kp, truth).score === 1 && Q.evaluate(kp, truth).correct, 'K-prim 4/4 = 1 Punkt');
+  const three = truth.slice(); three[0] = !three[0];
+  ok(Q.evaluate(kp, three).score === 0.5 && !Q.evaluate(kp, three).correct, 'K-prim 3/4 = ½ Punkt');
+  const two = three.slice(); two[1] = !two[1];
+  ok(Q.evaluate(kp, two).score === 0, 'K-prim 2/4 = 0 Punkte');
+  const m = PQ.questions.find(q => q.type === 'match');
+  const ident = m.pairs.map((_, i) => i);
+  ok(Q.evaluate(m, ident).correct && Q.evaluate(m, ident).score === 1, 'Zuordnen komplett richtig');
+  const swapped = ident.slice(); [swapped[0], swapped[1]] = [swapped[1], swapped[0]];
+  const r = Q.evaluate(m, swapped);
+  ok(!r.correct && r.hits === m.pairs.length - 2, 'Zuordnen teilweise richtig');
+  const tf = PQ.questions.find(q => q.type === 'tf');
+  ok(Q.evaluate(tf, tf.a).correct && !Q.evaluate(tf, !tf.a).correct, 'Richtig/Falsch-Bewertung');
+
+  ok(!Q.isComplete(kp, [true, false, null, true]) && Q.isComplete(kp, [true, false, false, true]), 'K-prim vollständig erst mit 4 Antworten');
+  ok(!Q.isComplete(m, [0, null, 2, 3, 4].slice(0, m.pairs.length)) && Q.isComplete(m, ident), 'Zuordnen vollständig erst mit allen Paaren');
+  ok(Q.isComplete(single, 0) && !Q.isComplete(single, null), 'Einfachauswahl vollständig');
+  ok(Q.isComplete(tf, false) && !Q.isComplete(tf, null), 'Richtig/Falsch vollständig (auch bei false)');
+
+  /* ---------- Filter & Runden ---------- */
+  const allSecs = Object.keys(PQ.sections);
+  const alt = Q.filter({ sections: allSecs, types: ['single', 'kprim', 'match', 'tf'], altOnly: true });
+  ok(alt.length > 0 && alt.every(q => q.alt), 'Filter „Nur Altfragen“');
+  const s3 = Q.filter({ sections: allSecs, types: ['single', 'kprim', 'match', 'tf'], minStars: 3 });
+  ok(s3.length > 0 && s3.every(q => q.stars === 3), 'Filter „Nur ★★★“');
+  const onlyKp = Q.filter({ sections: ['4.2'], types: ['kprim'] });
+  ok(onlyKp.length > 0 && onlyKp.every(q => q.sec === '4.2' && q.type === 'kprim'), 'Filter Abschnitt + Typ');
+  const order4 = PQ.chapters.find(c => c.id === 4).sections.map(s => s.id);
+  const bs = Q.bySection(Q.shuffle(PQ.questions.filter(q => q.chapter === 4)));
+  ok(bs.length === PQ.questions.filter(q => q.chapter === 4).length &&
+    bs.every((q, i) => i === 0 || order4.indexOf(bs[i - 1].sec) <= order4.indexOf(q.sec)), '„Nach Themen“: Abschnitte in Skript-Reihenfolge');
+  const cross = Q.bySection([PQ.byId['k10-01'], PQ.byId['k9-01']]);
+  ok(cross[0].id === 'k9-01', '„Nach Themen“: Kapitel 9 vor 10 (nicht alphabetisch)');
+
+  let identical = 0;
+  for (let i = 0; i < 200; i++) {
+    const sess = Q.createSession('practice', [m, single]);
+    if (sess.views[0].order.every((v, j) => v === j)) identical++;
+  }
+  ok(identical === 0, 'Zuordnungen werden nie in Originalreihenfolge gezeigt');
+  const firstPos = {};
+  for (let i = 0; i < 400; i++) {
+    const pos = Q.createSession('practice', [single]).views[0].order.indexOf(single.a);
+    firstPos[pos] = (firstPos[pos] || 0) + 1;
+  }
+  ok(Object.keys(firstPos).length === single.opts.length, 'Richtige Antwort landet auf allen Positionen ' + JSON.stringify(firstPos));
+
+  /* ---------- Lernkartei ---------- */
+  const S = PQ.store;
+  const id = 'k4-01';
+  S.record(id, true, 10);
+  ok(S.get(id).b === 2 && S.get(id).d > Date.now() && !S.isDue(id), 'Neu + richtig → Box 2, morgen fällig');
+  S.record(id, true, 10);
+  ok(S.get(id).b === 3, 'Richtig → Box 3');
+  S.record(id, false, 0);
+  ok(S.get(id).b === 1 && S.isMistake(id), 'Falsch → zurück in Box 1 (offener Fehler)');
+  S.record(id, true, 10);
+  ok(S.get(id).b === 2 && !S.isMistake(id), 'Fehler korrigiert → Box 2');
+  for (let i = 0; i < 6; i++) S.record(id, true, 0);
+  ok(S.get(id).b === 5, 'Box-Maximum 5');
+  ok(S.get(id).n === 10 && S.get(id).c === 9, 'Zähler Versuche/richtig');
+  ok(S.points() === 30, 'Punkte summiert');
+  ok(S.streak() === 1 && S.todayCount() === 10, 'Serie und Tageszähler');
+
+  S.record('k4-02', false, 0);
+  const pool = Q.reviewPool();
+  ok(pool.length === 1 && pool[0].id === 'k4-02', 'Wiederholen enthält offene Fehler');
+  const prio = Q.prioritize(PQ.questions.filter(q => q.chapter === 4));
+  ok(prio[0].id === 'k4-02', 'Üben: offene Fehler zuerst');
+  const open = Q.filter({ sections: allSecs, types: ['single', 'kprim', 'match', 'tf'], openOnly: true });
+  ok(open.length === PQ.questions.length - 1 && !open.some(q => q.id === id) && open.some(q => q.id === 'k4-02'),
+    'Filter „Nur offene“: neu + Fehler, ohne Gesessenes');
+
+  const code = S.exportCode();
+  const file = S.exportData();
+  S.reset();
+  ok(!S.get(id) && S.points() === 0, 'Zurücksetzen');
+  S.importData(code);
+  ok(S.get(id) && S.get(id).b === 5 && S.points() === 30, 'Import per Code');
+  S.reset();
+  S.importData(file);
+  ok(S.get(id) && S.get(id).b === 5, 'Import per Datei');
+  let threw = false;
+  try { S.importData('Unsinn'); } catch (e) { threw = true; }
+  ok(threw && S.get(id), 'Ungültiger Import wird abgelehnt, Daten bleiben');
+
+  S.saveSession({ mode: 'practice', ids: ['k4-01'] });
+  ok(S.loadSession().ids[0] === 'k4-01', 'Runde wird zwischengespeichert');
+  S.saveSession(null);
+  ok(S.loadSession() === null, 'Zwischenspeicher gelöscht');
+
+  lines.unshift(fails ? 'ERGEBNIS: ' + fails + ' Fehler' : 'ERGEBNIS: alles grün');
+  document.getElementById('out').textContent = lines.join('\n');
+  try { localStorage.clear(); } catch (e) {}
+})();
+</script>
+</body>
+</html>

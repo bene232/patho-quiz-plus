@@ -1,0 +1,5 @@
+# Quell-PDF (Skript-Inhalte) nicht veröffentlichen
+*.pdf
+
+# Entwicklernotizen bleiben lokal (Repo ist öffentlich)
+HANDOFF.md

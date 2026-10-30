@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Handy-Rahmen</title>
+  <style>
+    html, body { margin: 0; background: #808080; }
+    iframe { display: block; border: 0; width: 390px; }
+  </style>
+</head>
+<body>
+  <!-- Rendert ui.html in iPhone-Breite (Headless-Edge erzwingt sonst ≥ 492 px). Aufruf: phone.html?h=844&q=shot=quiz-single -->
+  <iframe id="f"></iframe>
+  <script>
+    const p = new URLSearchParams(location.search);
+    const f = document.getElementById('f');
+    f.style.height = (p.get('h') || 844) + 'px';
+    f.src = 'ui.html?' + (p.get('q') || '');
+  </script>
+</body>
+</html>

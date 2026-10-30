@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Patho-Quiz – UI-Test</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="app"></div>
+<pre id="ui-out" style="white-space:pre-wrap;font-size:12px;padding:16px">läuft …</pre>
+<script>
+  // Sauberer Start; ?shot=… hält an einem Kontrollpunkt an (für Screenshots), ?theme=dark|light erzwingt das Farbschema
+  try { localStorage.clear(); } catch (e) {}
+  history.replaceState(null, '', location.pathname + location.search);
+  window.__errors = [];
+  window.addEventListener('error', e => window.__errors.push(e.message + ' @' + (e.filename || '').split('/').pop() + ':' + e.lineno));
+  window.confirm = () => true;
+</script>
+<script src="../data/chapters.js"></script>
+<script src="../data/kap01-tumor.js"></script>
+<script src="../data/kap02-immun.js"></script>
+<script src="../data/kap03-haemato.js"></script>
+<script src="../data/kap04-herz.js"></script>
+<script src="../data/kap05-gefaesse.js"></script>
+<script src="../data/kap06-lunge.js"></script>
+<script src="../data/kap07-magen.js"></script>
+<script src="../data/kap08-kolon.js"></script>
+<script src="../data/kap09-leber.js"></script>
+<script src="../data/kap10-niere.js"></script>
+<script src="../data/kap11-uro.js"></script>
+<script src="../data/kap12-schilddruese.js"></script>
+<script src="../data/kap13-mamma.js"></script>
+<script src="../data/kap14-gyn.js"></script>
+<script src="../data/kap15-knochen.js"></script>
+<script src="../data/kap16-neuro.js"></script>
+<script src="../data/kap17-kopf-hals.js"></script>
+<script src="../js/store.js"></script>
+<script src="../js/quiz.js"></script>
+<script>
+  PQ.ASSET_BASE = '../';
+  if (new URLSearchParams(location.search).get('theme')) PQ.store.setting('theme', new URLSearchParams(location.search).get('theme'));
+</script>
+<script src="../js/app.js"></script>
+<script>
+(async function () {
+  const params = new URLSearchParams(location.search);
+  const shot = params.get('shot');
+  const out = document.getElementById('ui-out');
+  const lines = [];
+  let fails = 0;
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const $ = (sel, root) => (root || document).querySelector(sel);
+  const $$ = (sel, root) => [...(root || document).querySelectorAll(sel)];
+  const ok = (c, m) => { if (!c) fails++; lines.push((c ? 'PASS ' : 'FAIL ') + m); };
+  const btn = text => $$('button').find(b => b.textContent.trim().startsWith(text));
+  const nav = async hash => { location.hash = hash; await sleep(40); };
+  const cp = name => { if (shot === name) { out.hidden = true; throw 'STOP'; } };
+  const session = () => PQ.app.getSession();
+  const cur = () => PQ.byId[session().ids[session().idx]];
+  const ALL = Object.keys(PQ.sections);
+  const next = () => (btn('Weiter') || btn('Zur Auswertung')).click();
+  const imgsOk = async label => {
+    await sleep(80);
+    const imgs = $$('img.art');
+    const bad = imgs.filter(i => !i.complete || !i.naturalWidth).map(i => i.getAttribute('src'));
+    ok(imgs.length > 0 && !bad.length, label + ': ' + imgs.length + ' Bilder geladen' + (bad.length ? ', fehlen: ' + bad.join(', ') : ''));
+  };
+
+  async function answer(correct) {
+    const q = cur();
+    if (q.type === 'single') {
+      const target = correct ? q.opts[q.a] : q.opts.find((o, i) => i !== q.a);
+      $$('.opt').find(b => $('.opt-text', b).textContent === target).click();
+    } else if (q.type === 'tf') {
+      const want = correct ? q.a : !q.a;
+      $$('.tf-btn').find(b => b.textContent.includes(want ? 'Richtig' : 'Falsch')).click();
+    } else if (q.type === 'kprim') {
+      q.st.forEach((st, i) => {
+        const want = correct || i > 0 ? st[1] : !st[1];
+        $$('.kp-btn', $$('.kp-row')[i])[want ? 0 : 1].click();
+      });
+    } else if (q.type === 'match') {
+      q.pairs.forEach((p, i) => {
+        $$('.term')[i].click();
+        const ri = correct ? i : i === 0 ? 1 : i === 1 ? 0 : i;
+        $$('.target').find(t => $('.target-text', t).textContent.startsWith(q.pairs[ri][1])).click();
+      });
+    }
+    await sleep(10);
+  }
+
+  async function playThrough(n, correct) {
+    for (let i = 0; i < n; i++) {
+      await answer(correct);
+      btn('Prüfen').click();
+      await sleep(10);
+      next();
+      await sleep(20);
+    }
+  }
+
+  try {
+    /* ---------- Startseite ---------- */
+    await sleep(50);
+    ok($('.logo') && $('.hero'), 'Startseite mit Tagesziel');
+    ok($$('.quick-btn').length === 3, '3 Schnellzugriffe');
+    const avail = PQ.chapters.filter(c => c.available).length;
+    ok($$('.tile').length === avail, avail + ' Kapitel-Kacheln');
+    ok($$('.upcoming-row img').length === 17 - avail, (17 - avail) + ' kommende Kapitel als Bilder');
+    ok(btn('Los geht') && !$('.hero-link'), 'Start-Button, keine Wiederholungen offen');
+    await imgsOk('Startseite (alle 17 Kapitelbilder + Schnellzugriffe)');
+    cp('home-empty');
+
+    /* ---------- Eigene Runde ---------- */
+    PQ.store.pref('practice', { sections: ALL, types: ['single', 'kprim', 'match', 'tf'], count: 20 });
+    await nav('#/practice');
+    ok($$('.pick-ch').length === avail, 'Themenauswahl mit ' + avail + ' Kapiteln');
+    ok(/^20 Fragen von \d+$/.test($('.setup-summary').textContent), 'Zusammenfassung: ' + $('.setup-summary').textContent);
+    $('.pick-toggle').click();
+    await sleep(10);
+    ok(!$('.pick-secs').hidden, 'Themen aufklappbar');
+    cp('practice-setup');
+    btn('Nur Altfragen').click();
+    await sleep(10);
+    const altText = $('.setup-summary').textContent;
+    btn('Alle Fragen').click();
+    ok(/\d+ Fragen/.test(altText), 'Filter Altfragen: ' + altText);
+
+    /* ---------- Üben: jede Frageart einmal richtig, einmal falsch ---------- */
+    PQ.app.startSession('practice', ['k4-02', 'k4-43', 'k4-11', 'k4-t10', 'k4-09', 'k5-08', 'k5-01', 'k5-t02'].map(id => PQ.byId[id]), { origin: { kind: 'custom' } });
+    await sleep(40);
+    ok($('.q-text'), 'Quiz zeigt Frage');
+    const plan = [true, true, true, true, false, false, false, false];
+    for (let i = 0; i < plan.length; i++) {
+      const q = cur();
+      ok(btn('Prüfen').disabled, q.id + ': Prüfen gesperrt vor Antwort');
+      cp('quiz-' + q.type + (plan[i] ? '' : '-wrong'));
+      await answer(plan[i]);
+      ok(!btn('Prüfen').disabled, q.id + ': Prüfen aktiv nach Antwort');
+      btn('Prüfen').click();
+      await sleep(30);
+      const fb = $('.sheet');
+      const want = plan[i] ? 'ok' : q.type === 'kprim' || q.type === 'match' ? 'part' : 'bad';
+      ok(fb && fb.classList.contains(want), q.id + ' (' + q.type + '): Rückmeldung ' + (fb && fb.className));
+      ok(fb && $('.src', fb).textContent.includes('S. ' + q.p), q.id + ': Quelle mit Seite');
+      ok(!btn('Prüfen'), q.id + ': Prüfen-Button ersetzt');
+      if (q.dis) ok($('.dis', fb), q.id + ': Hinweis „umstritten“ sichtbar');
+      cp('feedback-' + q.type + (plan[i] ? '' : '-wrong'));
+      next();
+      await sleep(30);
+    }
+    ok(location.hash === '#/result', 'Auswertung nach letzter Frage');
+    ok($('.rstat-val').textContent === '4/8', 'Ergebnis 4/8: ' + ($('.rstat-val') && $('.rstat-val').textContent));
+    ok($('.res-list').hidden, 'Antwortliste zunächst eingeklappt');
+    btn('Antworten ansehen').click();
+    ok(!$('.res-list').hidden && $$('.res-row').length === 8, '8 Antworten gelistet');
+    $$('.res-row')[5].click();
+    await sleep(10);
+    ok(!$$('.res-detail')[5].hidden && $('.res-detail .target-sol'), 'Detail zeigt richtige Zuordnung');
+    ok(btn('Neue Runde') && btn('Fehler (4)'), 'Aktionen: Neue Runde + Fehler (4)');
+    await imgsOk('Auswertung');
+    cp('result');
+    ok(PQ.store.points() > 0, 'Punkte vergeben: ' + PQ.store.points());
+
+    /* ---------- Startseite mit Fortschritt → Wiederholen ---------- */
+    await nav('#/');
+    const link = $('.hero-link');
+    ok(link && /4 Fehler wiederholen/.test(link.textContent), 'Hero bietet 4 Fehler an: ' + (link && link.textContent));
+    ok(btn('Weiterlernen'), 'Hero-Button heißt jetzt „Weiterlernen“');
+    ok(/8\s*\/300/.test($('.hero .ring-label').textContent), 'Tagesziel-Ring 8/300: ' + $('.hero .ring-label').textContent);
+    cp('home-progress');
+    link.click();
+    await sleep(40);
+    ok(session().mode === 'review' && session().ids.length === 4, 'Wiederholungsrunde mit 4 Fragen');
+    await playThrough(4, true);
+    ok($('.rstat-val').textContent === '4/4', 'Wiederholung 4/4');
+    await nav('#/');
+    ok(!$('.hero-link'), 'Keine offenen Fehler mehr');
+
+    /* ---------- Weiterlernen ---------- */
+    btn('Weiterlernen').click();
+    await sleep(40);
+    ok(session().origin.kind === 'smart' && session().ids.length === 10, 'Lektion mit 10 Fragen');
+    ok(session().ids.every(id => !PQ.store.get(id) || PQ.store.isMistake(id) || PQ.store.isDue(id)), 'Lektion enthält nur Neues/Fälliges');
+    await playThrough(10, true);
+    await sleep(300);
+    ok(btn('Nächste Lektion'), 'Auswertung bietet „Nächste Lektion“');
+    ok($('.confetti'), 'Konfetti bei 100 %');
+
+    /* ---------- Kapitelseite: Themen, Anzahl, Reihenfolge ---------- */
+    const herz = PQ.questions.filter(q => q.chapter === 4);
+    const summary = () => $('.setup-summary').textContent;
+    const seg = text => $$('.seg-btn').find(b => b.textContent === text);
+    await nav('#/chapter/4');
+    ok($('.ch-hero-title').textContent === 'Herz' && $$('.topic').length === 9, 'Kapitel Herz mit 9 Themen');
+    ok($$('.topic.on').length === 9 && seg('Alle').classList.contains('on') && seg('Gemischt').classList.contains('on'), 'Standard: alle Themen, alle Fragen, gemischt');
+    ok(summary() === herz.length + ' Fragen', 'Ganzes Kapitel: ' + summary());
+    ok(btn('Nur offene') && btn('Nur Altfragen ('), 'Filter „Nur offene“ und „Nur Altfragen“');
+    await imgsOk('Kapitelseite');
+    cp('chapter');
+    btn('Alle abwählen').click();
+    ok(summary() === 'Bitte mindestens ein Thema wählen' && btn('Starten').disabled, 'Ohne Thema kein Start');
+    $$('.topic')[1].click();
+    $$('.topic')[7].click();
+    const two = herz.filter(q => q.sec === '4.2' || q.sec === '4.8').length;
+    ok(summary() === two + ' Fragen' && btn('Alle auswählen'), 'Themen 4.2 + 4.8: ' + summary());
+    seg('25').click();
+    seg('Nach Themen').click();
+    ok(summary() === '25 Fragen von ' + two, 'Anzahl 25: ' + summary());
+    cp('chapter-pick');
+    btn('Starten').click();
+    await sleep(40);
+    const secs = session().ids.map(id => PQ.byId[id].sec);
+    ok(session().origin.kind === 'chapter' && secs.length === 25 && secs.every(x => x === '4.2' || x === '4.8'), '25 Fragen aus 4.2 + 4.8 gestartet');
+    ok(secs.join() === secs.slice().sort().join(), 'Nach Themen: erst 4.2, dann 4.8');
+    ok($('.q-count').textContent === '1/25', 'Zähler 1/25');
+
+    /* ---------- X: weiterüben, pausieren, vorzeitig auswerten ---------- */
+    await playThrough(3, true);
+    ok($('.q-count').textContent === '4/25', 'Zähler nach 3 Antworten: 4/25');
+    $('.quiz-top .icon-btn').click();
+    await sleep(10);
+    ok($('.menu') && /3 von 25 Fragen beantwortet/.test($('.menu').textContent), 'Menü: 3 von 25 beantwortet');
+    cp('quiz-menu');
+    btn('Weiterüben').click();
+    ok(!$('.menu') && location.hash === '#/quiz', 'Weiterüben schließt das Menü');
+    $('.quiz-top .icon-btn').click();
+    btn('Pause').click();
+    await sleep(30);
+    ok(location.hash === '#/' && PQ.store.loadSession() && btn('Fortsetzen') && /Üben 3\/25/.test($('.hero-link').textContent), 'Pause: Startseite bietet Fortsetzen (Üben 3/25)');
+
+    window.confirm = () => false;
+    await nav('#/chapter/4');
+    ok($$('.topic.on').length === 2 && seg('25').classList.contains('on') && seg('Nach Themen').classList.contains('on'), 'Kapitelseite merkt sich die Auswahl');
+    const before = session().ids.join();
+    btn('Starten').click();
+    await sleep(30);
+    ok(session().ids.join() === before && location.hash === '#/chapter/4', 'Offene Runde wird nicht ohne Rückfrage überschrieben');
+    window.confirm = () => true;
+
+    await nav('#/');
+    btn('Fortsetzen').click();
+    await sleep(30);
+    ok(location.hash === '#/quiz' && $('.q-count').textContent === '4/25', 'Fortsetzen öffnet die Runde bei Frage 4');
+    $('.quiz-top .icon-btn').click();
+    btn('Beenden und auswerten').click();
+    await sleep(40);
+    ok(location.hash === '#/result' && $('.rstat-val').textContent === '3/3' && !PQ.store.loadSession(), 'Vorzeitig beendet: Auswertung der 3 beantworteten Fragen');
+    btn('Antworten ansehen').click();
+    ok($$('.res-row').length === 3, '3 Antworten gelistet');
+
+    /* ---------- Nur offene Fragen ---------- */
+    await nav('#/chapter/4');
+    btn('Nur offene').click();
+    const openTwo = PQ.quiz.filter({ sections: ['4.2', '4.8'], types: ['single', 'kprim', 'match', 'tf'], openOnly: true }).length;
+    const k = Math.min(25, openTwo);
+    ok(openTwo <= two - 3 && summary() === k + ' Fragen' + (k < openTwo ? ' von ' + openTwo : ''), 'Nur offene: ' + summary());
+    btn('Starten').click();
+    await sleep(40);
+    ok(session().ids.length === k && session().ids.every(id => PQ.quiz.isOpen(id)), 'Runde enthält nur offene Fragen');
+    $('.quiz-top .icon-btn').click();
+    btn('Runde beenden').click();
+    await sleep(30);
+    ok(!PQ.store.loadSession() && location.hash === '#/', 'Ohne Antwort: „Runde beenden“ verwirft die Runde');
+
+    /* ---------- Klausur ---------- */
+    PQ.store.pref('exam', { chapters: [4, 5], count: 20, perQ: 90 });
+    await nav('#/exam');
+    ok($('.setup-summary').textContent === '20 Fragen · 30 Minuten', 'Klausur-Setup: ' + $('.setup-summary').textContent);
+    await imgsOk('Klausur-Setup');
+    cp('exam-setup');
+    btn('Klausur starten').click();
+    await sleep(40);
+    ok(session().mode === 'exam' && session().ids.every(id => ['single', 'kprim'].includes(PQ.byId[id].type)), 'Klausur nur Einfachauswahl + K-prim');
+    ok($('.timer') && /^(29|30):/.test($('.timer').textContent), 'Timer läuft: ' + ($('.timer') && $('.timer').textContent));
+    for (let i = 0; i < 3; i++) {
+      await answer(true);
+      ok(!$('.sheet'), 'Klausur: keine Rückmeldung vor Abgabe');
+      btn('Weiter').click();
+      await sleep(20);
+    }
+    $$('.quiz-top .icon-btn')[1].click();
+    await sleep(10);
+    ok($$('.nav-cell.done').length === 3, 'Übersicht markiert 3 beantwortete Fragen');
+    cp('exam-grid');
+    $$('.nav-cell')[19].click();
+    await sleep(20);
+    ok(session().idx === 19 && btn('Abgeben'), 'Sprung zur letzten Frage');
+    btn('Abgeben').click();
+    await sleep(40);
+    ok(location.hash === '#/result' && /Klausur ausgewertet/.test($('.result-hero').textContent), 'Klausur-Auswertung');
+    ok($('.rstat-val').textContent === '3/20' && $('.rstat-label').textContent === 'Punkte', 'Klausur 3/20 Punkte');
+    ok(btn('Neue Klausur'), 'Neue Klausur anbieten');
+
+    /* ---------- Blitzrunde ---------- */
+    PQ.store.pref('blitz', { chapters: [4, 5], count: 20 });
+    await nav('#/blitz');
+    ok($('.setup-summary').textContent === '20 Aussagen', 'Blitz-Setup');
+    btn('Start').click();
+    await sleep(40);
+    ok($('.swipe-card') && $$('.round-btn').length === 2, 'Karte und runde Buttons');
+    cp('blitz');
+    for (let i = 0; i < 20; i++) {
+      const q = cur();
+      const correct = i % 4 !== 3;
+      btn((correct ? q.a : !q.a) ? 'Richtig' : 'Falsch').click();
+      await sleep(20);
+      if (!correct) {
+        ok($('.swipe-card.flash-bad') && $('.sheet .fb-truth'), 'Blitz: falsche Antwort wird erklärt');
+        if (i === 3) cp('blitz-wrong');
+        next();
+      }
+      await sleep(400);
+    }
+    ok(location.hash === '#/result' && $('.rstat-val').textContent === '15/20', 'Blitzrunde 15/20');
+
+    /* ---------- Statistik & Einstellungen ---------- */
+    await nav('#/stats');
+    ok($$('.big-stat').length === 3 && $$('.legend li').length === 4 && $$('.week-day').length === 7, 'Statistik: Zahlen, Woche, Legende');
+    ok($('.week-day.today .week-val').textContent !== '', 'Heute ist beschriftet');
+    await imgsOk('Statistik');
+    cp('stats');
+    await nav('#/settings');
+    btn('Dunkel').click();
+    ok(document.documentElement.getAttribute('data-theme') === 'dark', 'Dunkelmodus schaltbar');
+    btn('Hell').click();
+    ok(document.documentElement.getAttribute('data-theme') === 'light', 'Hellmodus schaltbar');
+    btn('System').click();
+    ok(!document.documentElement.hasAttribute('data-theme'), 'Systemmodus');
+    btn('400').click();
+    ok(PQ.store.setting('dailyGoal') === 400, 'Tagesziel änderbar');
+    cp('settings');
+    const pts = PQ.store.points();
+    const code = PQ.store.exportCode();
+    btn('Fortschritt löschen').click();
+    ok(PQ.store.points() === 0, 'Fortschritt gelöscht');
+    btn('Importieren').click();
+    ok(!$('.import-panel').hidden, 'Import-Feld klappt auf');
+    $('textarea.code').value = code;
+    $('.import-panel .btn-primary').click();
+    ok(PQ.store.points() === pts, 'Import stellt Punkte wieder her');
+
+    /* ---------- Zuordnen per Ziehen (Maus und Finger) ---------- */
+    PQ.app.startSession('practice', [PQ.byId['k5-08']], { origin: { kind: 'custom' } });
+    await sleep(40);
+    const mq = cur();
+    const pe = (type, el, x, y, pointerType) => el.dispatchEvent(new PointerEvent(type, {
+      bubbles: true, cancelable: true, isPrimary: true, button: 0, clientX: x, clientY: y,
+      pointerId: pointerType === 'mouse' ? 1 : 7, pointerType
+    }));
+    const center = el => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+    const targetFor = ri => $$('.target').find(t => $('.target-text', t).textContent.startsWith(mq.pairs[ri][1]));
+    const slotOf = ri => $('.slot', targetFor(ri)).textContent;
+    async function dragTo(from, to, pointerType) {
+      to.scrollIntoView({ block: 'center' });
+      await sleep(20);
+      const [x0, y0] = center(from);
+      const [x1, y1] = center(to);
+      // Wie am Gerät: Touch trifft das innere <span>, das die Erfassung beim Umlegen auf den Knopf wieder abgibt
+      const hit = pointerType === 'touch' ? from.querySelector('span:last-child') || from : from;
+      pe('pointerdown', hit, x0, y0, pointerType);
+      for (let s = 1; s <= 6; s++) {
+        pe('pointermove', from, x0 + (x1 - x0) * s / 6, y0 + (y1 - y0) * s / 6, pointerType);
+        if (s === 1 && hit !== from) pe('lostpointercapture', hit, x0, y0, pointerType);
+      }
+      const seen = { ghost: !!$('.drag-ghost'), over: to.classList.contains('drop-over') };
+      pe('pointerup', from, x1, y1, pointerType);
+      await sleep(20);
+      return seen;
+    }
+    let d = await dragTo($$('.term')[0], targetFor(0), 'mouse');
+    ok(d.ghost && d.over && slotOf(0) === '1', 'Maus: Begriff 1 auf Beschreibung gezogen (Zieh-Bild, Markierung, Zuordnung)');
+    ok(!$('.drag-ghost') && !$('.drag-src') && !$('.drop-over'), 'Nach dem Ablegen aufgeräumt');
+    d = await dragTo($$('.term')[1], targetFor(1), 'touch');
+    ok(d.ghost && slotOf(1) === '2', 'Finger: Begriff 2 auf Beschreibung gezogen');
+    d = await dragTo(targetFor(2), $$('.term')[2], 'mouse');
+    ok(slotOf(2) === '3', 'Maus: Beschreibung auf Begriff 3 gezogen');
+    d = await dragTo(targetFor(3), $$('.term')[3], 'touch');
+    ok(!d.ghost && slotOf(3) === '', 'Finger auf Beschreibung startet kein Ziehen (Scrollen bleibt möglich)');
+    await dragTo($$('.term')[0], targetFor(3), 'mouse');
+    ok(slotOf(3) === '1' && slotOf(0) === '', 'Umziehen: Begriff 1 wandert zur neuen Beschreibung');
+    $$('.term')[3].click();
+    targetFor(3).click();
+    await sleep(10);
+    ok(slotOf(3) === '4' && slotOf(0) === '', 'Antippen funktioniert nach dem Ziehen weiter');
+    const outside = $('.q-text');
+    const [ox, oy] = center($$('.term')[4]);
+    pe('pointerdown', $$('.term')[4], ox, oy, 'mouse');
+    pe('pointermove', $$('.term')[4], ox, oy - 300, 'mouse');
+    pe('pointerup', $$('.term')[4], ox, oy - 300, 'mouse');
+    await sleep(20);
+    ok(!$('.drag-ghost') && $$('.target').every(t => !$('.slot', t).textContent.includes('5')) && outside, 'Ablegen daneben ändert nichts');
+    $('.quiz-top .icon-btn').click();
+    btn('Runde beenden').click();
+    await sleep(30);
+
+    /* ---------- Speicherstand und offene Runde der Vorversion ---------- */
+    const oldState = {
+      v: 1, points: 120, days: { '2026-10-26': 40 },
+      q: { 'k4-01': { b: 3, d: 0, n: 2, c: 2, l: 1, t: 1 }, 'k6-01': { b: 1, d: 0, n: 1, c: 0, l: 0, t: 2 } },
+      settings: { theme: 'auto', dailyGoal: 300 },
+      prefs: { practice: { sections: ['4.1'], types: ['single'], count: 20 } }
+    };
+    PQ.store.importData(JSON.stringify(oldState));
+    // Kapitelrunde, wie die Vorversion sie gespeichert hat (ohne Themen/Anzahl im origin)
+    PQ.store.saveSession(PQ.quiz.createSession('practice', ['k4-03', 'k4-04'].map(id => PQ.byId[id]), { origin: { kind: 'chapter', id: 4, altOnly: false } }));
+    await nav('#/chapter/4');
+    ok($$('.topic.on').length === 9 && summary() === herz.length + ' Fragen', 'Ohne gespeicherte Kapitel-Auswahl: alle Themen, alle Fragen');
+    await nav('#/');
+    ok(btn('Fortsetzen') && /Üben 0\/2/.test($('.hero-link').textContent), 'Offene Runde der Vorversion wird angeboten');
+    btn('Fortsetzen').click();
+    await sleep(30);
+    await playThrough(2, true);
+    ok(location.hash === '#/result' && $('.rstat-val').textContent === '2/2', 'Runde der Vorversion lässt sich zu Ende spielen');
+    btn('Noch eine Runde').click();
+    await sleep(40);
+    ok(session().origin.kind === 'chapter' && session().ids.length === herz.length, '„Noch eine Runde“ startet das ganze Kapitel');
+    const kept = JSON.parse(PQ.store.exportData()).data;
+    ok(kept.q['k4-01'].b === 3 && kept.q['k6-01'].b === 1 && kept.points === 140 && kept.days['2026-10-26'] === 40 &&
+      kept.prefs.practice.count === 20 && kept.settings.dailyGoal === 300, 'Lernstand der Vorversion bleibt erhalten');
+  } catch (e) {
+    if (e !== 'STOP') { fails++; lines.push('FAIL Abbruch: ' + (e && e.stack || e)); }
+  }
+
+  window.__errors.forEach(m => { fails++; lines.push('FAIL JS-Fehler: ' + m); });
+  lines.unshift(fails ? 'UI-ERGEBNIS: ' + fails + ' Fehler' : 'UI-ERGEBNIS: alles grün');
+  if (!shot) out.textContent = lines.join('\n');
+})();
+</script>
+</body>
+</html>
