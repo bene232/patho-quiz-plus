@@ -33,12 +33,13 @@ Every question needs a section (`sec`), page (`p`) and explanation (`ex`). Conte
 
 ## Learning plan
 
-Plus 2.0 is tuned for a few days before the exam (exam date under Einstellungen → Persönlich, default 2 Nov 2026):
+Plus 2.x is tuned for a few days before the exam (exam date under Einstellungen → Persönlich, default 2 Nov 2026):
 
 - **„Weiterlernen“ (continue learning):** lessons of 10 questions. While new questions remain, 7 are new (chapter and topic order) and 3 are reviews (mistakes, shaky ones, due ones), spread over the lesson and never first. When everything has been seen, a lesson has at most 4 mistakes and is filled up with shaky, due and already known questions.
 - **Boxes:** wrong → box 1 (open mistake). Right on the first try → box 3. A corrected mistake or a right answer marked „Geraten?“ (guessed) → box 2 („wackelig“, shaky). Intervals from the last answer: box 2 after 3 h, box 3 after 20 h, box 4 after 2 days, box 5 after 5 days. Older progress (also from Patho-Quiz) is rescheduled once on loading (`sched: 2`).
 - **Repeat in the round:** a wrong answer comes back once after 3 other questions, with a new answer order (not in the exam simulation).
-- **Motivation:** mascot „Zelli“ (inline SVG with moods), encouragement with the name, badges, a plan strip until the exam, a pause reminder after 45 minutes of learning in a row (10 minutes without an answer count as a break).
+- **Mascot „Zelli“** (inline SVG with moods): sits on the progress bar of every round, moves along, reacts to each answer and comments on the start, middle and end of a round, on repeated questions and on corrected mistakes. Tapping her shows tips and encouragement. She gets an outfit at 70 / 85 / 100 % of the questions seen (stethoscope, glasses, graduation cap); a new outfit and completed chapters are celebrated in a dialog.
+- **Motivation:** encouragement with the name, badges, messages with Zelli for streaks and daily milestones, a plan strip until the exam, a pause reminder after 45 minutes of learning in a row (10 minutes without an answer count as a break).
 - **First start:** asks for the name and offers to take over the progress code from Patho-Quiz, because a home screen app on the iPhone usually has its own storage.
 
 ## Tests

@@ -9,7 +9,7 @@ param(
   [string]$OutDir = (Join-Path $env:TEMP 'patho-iphone'),
   [string[]]$Shots = @('welcome', 'home-empty', 'practice-setup', 'quiz-single', 'quiz-kprim', 'quiz-tf', 'feedback-single', 'feedback-kprim-wrong',
     'quiz-again', 'result', 'home-progress', 'chapter', 'chapter-pick', 'quiz-menu', 'exam-setup', 'exam-grid', 'blitz', 'blitz-wrong',
-    'stats', 'badges', 'pause', 'settings'),
+    'stats', 'badges', 'pause', 'celebrate', 'settings'),
   [ValidateSet('light', 'dark')][string]$Theme = 'light',
   [switch]$NoNotch,
   [int]$Port = 9333
@@ -141,7 +141,8 @@ try {
   foreach ($shot in $Shots) {
     if (-not (Open-Shot $shot)) { $results += "FAIL $shot`: nicht erreicht"; continue }
     $o = Invoke-Js $overflowJs | ConvertFrom-Json
-    if ($o.sw -gt $o.w -or $o.wide.Count) { $results += "FAIL $shot`: zu breit (scrollWidth $($o.sw) > $($o.w)) " + ($o.wide -join ', ') }
+    # Content that sticks out can also widen the viewport itself (then the page is zoomed out), hence the 390 check
+    if ($o.w -ne 390 -or $o.sw -gt $o.w -or $o.wide.Count) { $results += "FAIL $shot`: zu breit (Seite $($o.w) px, scrollWidth $($o.sw)) " + ($o.wide -join ', ') }
     else { $results += "PASS $shot`: passt in $($o.w) px" }
     Save-Shot $shot
   }

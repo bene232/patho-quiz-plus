@@ -113,9 +113,9 @@
     ok($('.logo') && $('.hero .mascot'), 'Startseite mit Maskottchen');
     ok($('.hero-kicker') && $('.hero-kicker').textContent === 'Noch 3 Tage bis zur Klausur', 'Countdown: ' + ($('.hero-kicker') && $('.hero-kicker').textContent));
     ok(/Mia/.test($('.bubble').textContent), 'Begrüßung mit Namen: ' + $('.bubble').textContent);
-    ok($('.hero-title').textContent === 'Noch ' + PQ.questions.length + ' neue Fragen' && /^0 % einmal gesehen · noch ca\. \d+ h/.test($('.hero-meta').textContent),
+    ok($('.hero-title').textContent === 'Noch ' + PQ.questions.length + ' neue Fragen' && /^0 % einmal gekreuzt · noch ca\. \d+ h/.test($('.hero-meta').textContent),
       'Plan: ' + $('.hero-title').textContent + ' · ' + $('.hero-meta').textContent);
-    ok($$('.plan-day').length === 4 && $('.plan-day.today .plan-count').textContent === '0 Fragen' && $$('.plan-day')[3].classList.contains('exam') &&
+    ok($$('.plan-day').length === 4 && $('.plan-day.today .plan-count').textContent === '0 gekreuzt' && $$('.plan-day')[3].classList.contains('exam') &&
       $$('.plan-task').map(t => t.textContent).join() === 'Neues lernen,Alles einmal,Festigen,Klausur', 'Plan bis zur Klausur: ' + $$('.plan-task').map(t => t.textContent).join(' → '));
     ok($$('.quick-btn').length === 3, '3 Schnellzugriffe');
     const avail = PQ.chapters.filter(c => c.available).length;
@@ -145,6 +145,7 @@
     PQ.app.startSession('practice', ['k4-02', 'k4-43', 'k4-t10', 'k4-03', 'k4-09', 'k5-02', 'k5-01', 'k5-t02'].map(id => PQ.byId[id]), { origin: { kind: 'custom' } });
     await sleep(40);
     ok($('.q-text'), 'Quiz zeigt Frage');
+    ok($('.quiz-top .mascot-runner') && $('.runner-say') && /Los geht|Auf geht|schaffst|[Kk]reuzen/.test($('.runner-say').textContent), 'Zelli sitzt auf dem Fortschrittsbalken und feuert an: ' + ($('.runner-say') && $('.runner-say').textContent));
     const plan = [true, true, true, true, false, false, false, false];
     for (let i = 0; i < plan.length; i++) {
       const q = cur();
@@ -156,6 +157,8 @@
       await sleep(30);
       const fb = $('.sheet');
       const want = plan[i] ? 'ok' : q.type === 'kprim' ? 'part' : 'bad';
+      const mood = plan[i] ? 'cheer' : q.type === 'kprim' ? 'happy' : 'comfort';
+      ok($('.quiz-top .mascot-runner.mood-' + mood), q.id + ': Zelli auf dem Fortschrittsbalken reagiert (' + mood + ')');
       ok(fb && fb.classList.contains(want) && $('.mascot-fb', fb), q.id + ' (' + q.type + '): Rückmeldung mit Maskottchen ' + (fb && fb.className));
       ok(fb && $('.src', fb).textContent.includes('S. ' + q.p), q.id + ': Quelle mit Seite');
       ok(!btn('Prüfen'), q.id + ': Prüfen-Button ersetzt');
@@ -167,6 +170,7 @@
       await sleep(30);
     }
     ok(location.hash === '#/quiz' && $('.q-count').textContent === '9/12' && $('.q-again'), 'Danach die 4 falschen nochmal, markiert mit „Nochmal“');
+    ok(/Die kennst du schon/.test($('.runner-say').textContent), 'Zelli kündigt die Wiederholung an: ' + $('.runner-say').textContent);
     cp('quiz-again');
     for (let i = 0; i < 4; i++) {
       await answer(false);
@@ -197,8 +201,12 @@
     const link = $('.hero-link');
     ok(link && link.textContent === 'Lieber erst Fehler üben', 'Hero bietet Fehler an, ohne Zahl: ' + (link && link.textContent));
     ok(btn('Weiterlernen'), 'Hero-Button heißt jetzt „Weiterlernen“');
-    ok($('.plan-day.today .plan-count').textContent === '12 Fragen', 'Plan zählt heute 12 Antworten');
+    ok($('.plan-day.today .plan-count').textContent === '12 gekreuzt', 'Plan zählt heute 12 gekreuzte Fragen');
     ok(Number($('.pill-btn').textContent) >= 1, 'Abzeichen-Zähler: ' + $('.pill-btn').textContent);
+    const greet = $('.hero .bubble').textContent;
+    ok(/Tipp mich an!$/.test(greet), 'Zelli lädt zum Antippen ein');
+    $('.hero .zelli-btn').click();
+    ok($('.hero .bubble').textContent !== greet && $('.hero .zelli-btn .mood-cheer') && PQ.store.pref('zelliTapped'), 'Antippen: Zelli hüpft und sagt etwas: ' + $('.hero .bubble').textContent);
     cp('home-progress');
     link.click();
     await sleep(40);
@@ -290,7 +298,7 @@
     ok($('.q-count').textContent === '4/25', 'Zähler nach 3 Antworten: 4/25');
     $('.quiz-top .icon-btn').click();
     await sleep(10);
-    ok($('.menu') && /3 von 25 Fragen beantwortet/.test($('.menu').textContent), 'Menü: 3 von 25 beantwortet');
+    ok($('.menu') && /3 von 25 Fragen gekreuzt/.test($('.menu').textContent), 'Menü: 3 von 25 gekreuzt');
     cp('quiz-menu');
     btn('Weiterüben').click();
     ok(!$('.menu') && location.hash === '#/quiz', 'Weiterüben schließt das Menü');
@@ -451,6 +459,30 @@
     const kept = JSON.parse(PQ.store.exportData()).data;
     ok(kept.q['k4-01'].b === 3 && kept.q['k6-01'].b === 1 && kept.points === 140 && kept.days['2026-10-26'] === 40 &&
       kept.prefs.practice.count === 20 && kept.settings.dailyGoal === 300, 'Lernstand der Vorversion bleibt erhalten');
+
+    /* ---------- Zelli's outfit at 70 % seen, celebrated after the round ---------- */
+    await nav('#/quiz');
+    $('.quiz-top .icon-btn').click();
+    btn('Runde beenden').click();
+    await sleep(30);
+    PQ.store.reset();
+    PQ.store.pref('welcomed', true);
+    PQ.store.pref('outfit', 0);
+    const share = Math.ceil(PQ.questions.length * 0.7) - 5;
+    PQ.questions.slice(0, share).forEach(q => PQ.store.record(q.id, true, 0));
+    PQ.app.route();
+    await sleep(30);
+    ok(/Noch 5 Fragen kreuzen, dann bekommt Zelli ein Stethoskop/.test($('.hero-next').textContent) && !$('.hero .m-stetho'), 'Startseite: nächstes Outfit in Sicht: ' + $('.hero-next').textContent);
+    btn('Weiterlernen').click();
+    await sleep(40);
+    await playThrough(10, true);
+    await sleep(1100);
+    ok($('.celebrate') && /Zelli hat ein Stethoskop bekommen!/.test($('.celebrate-title').textContent) && $('.celebrate .m-stetho'), 'Feier: Zelli bekommt ein Stethoskop');
+    cp('celebrate');
+    $('.celebrate .btn-primary').click();
+    await sleep(20);
+    await nav('#/');
+    ok($('.hero .m-stetho') && /Brille/.test($('.hero-next').textContent), 'Zelli trägt jetzt ein Stethoskop, als Nächstes kommt die Brille');
   } catch (e) {
     if (e !== 'STOP') { fails++; lines.push('FAIL Abbruch: ' + (e && e.stack || e)); }
   }

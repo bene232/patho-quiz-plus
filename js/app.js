@@ -13,7 +13,7 @@
   const MILESTONES = [3, 5, 10, 15, 20, 30];
   const DAY_MILESTONES = [50, 100, 150, 200, 250, 300, 400, 500];
   // Encouragement; {n} becomes the name (or disappears with the comma before it)
-  const CHEER_OK = ['Weiter so, {n}!', 'Läuft bei dir!', 'Du bist richtig gut drin.', 'Stark, {n}!', 'Genau so!', 'Das hast du drauf, {n}.'];
+  const CHEER_OK = ['Gut gekreuzt!', 'Weiter so, {n}!', 'Läuft bei dir!', 'Du bist richtig gut drin.', 'Stark, {n}!', 'Genau so!', 'Das hast du drauf, {n}.'];
   const CHEER_BAD = [
     'Nicht schlimm – genau so lernt das Gehirn.',
     'Gut, dass es jetzt auffällt und nicht in der Klausur.',
@@ -209,9 +209,46 @@
     return el;
   }
 
+  // Zelli's outfit grows with the share of questions seen at least once
+  const OUTFITS = [
+    { at: 0.7, name: 'ein Stethoskop' },
+    { at: 0.85, name: 'eine Brille' },
+    { at: 1, name: 'einen Doktorhut' }
+  ];
+
+  function seenShare() {
+    return PQ.questions.filter(q => S.get(q.id)).length / (PQ.questions.length || 1);
+  }
+
+  function outfitLevel() {
+    const share = seenShare();
+    return OUTFITS.filter(o => share >= o.at).length;
+  }
+
+  function outfit(level, ink) {
+    return [
+      level >= 1 ? svg('g', { class: 'm-stetho' },
+        svg('path', { d: 'M26 74 Q60 112 94 74', fill: 'none', stroke: '#56657f', 'stroke-width': 4, 'stroke-linecap': 'round' }),
+        svg('path', { d: 'M60 93 V98', stroke: '#56657f', 'stroke-width': 4 }),
+        svg('circle', { cx: 60, cy: 104, r: 6, fill: '#d6dde8', stroke: '#56657f', 'stroke-width': 3 })) : null,
+      level >= 2 ? svg('g', { class: 'm-glasses', fill: 'none', stroke: ink, 'stroke-width': 3, 'stroke-linecap': 'round' },
+        svg('circle', { cx: 45, cy: 58, r: 11, fill: 'rgba(255,255,255,.25)' }),
+        svg('circle', { cx: 75, cy: 58, r: 11, fill: 'rgba(255,255,255,.25)' }),
+        svg('path', { d: 'M56 56 Q60 52 64 56 M34 56 L25 52 M86 56 L95 52' })) : null,
+      level >= 3 ? svg('g', { class: 'm-cap' },
+        svg('path', { d: 'M40 17 L40 27 Q60 35 80 27 L80 17 Z', fill: '#3b2d57' }),
+        svg('path', { d: 'M60 0 L98 13 L60 26 L22 13 Z', fill: '#2b2140' }),
+        svg('path', { d: 'M98 13 Q100 24 98 33', fill: 'none', stroke: '#ffb800', 'stroke-width': 3 }),
+        svg('circle', { cx: 60, cy: 13, r: 3, fill: '#ffb800' }),
+        svg('circle', { cx: 98, cy: 35, r: 3.5, fill: '#ffb800' })) : null
+    ];
+  }
+
   /* Mascot „Zelli“, a little cell. Inline SVG so CSS can animate it (float, blink, jump, wave).
-     mood: happy | cheer (jumps, arms up) | comfort (sways, holds a heart) | wave | sleepy */
-  function mascot(mood, cls) {
+     mood: happy | cheer (jumps, arms up) | comfort (sways, holds a heart) | wave | sleepy
+     level: outfit (0–3), by default from the progress */
+  function mascot(mood, cls, level) {
+    if (level === undefined) level = outfitLevel();
     const skin = '#ff8fb8';
     const ink = '#3a2147';
     const arm = d => svg('path', { d, fill: 'none', stroke: '#f06f9f', 'stroke-width': 9, 'stroke-linecap': 'round' });
@@ -241,8 +278,108 @@
         svg('ellipse', { cx: 35, cy: 71, rx: 8, ry: 5, fill: '#ff5c8a', opacity: 0.45 }),
         svg('ellipse', { cx: 85, cy: 71, rx: 8, ry: 5, fill: '#ff5c8a', opacity: 0.45 }),
         eye(45), eye(75), mouth,
+        outfit(level, ink),
         mood === 'comfort' ? svg('path', { class: 'm-heart', d: 'M60 108 C48 99 44 93 48 88 C51 84 57 85 60 90 C63 85 69 84 72 88 C76 93 72 99 60 108 Z', fill: '#ef4b6b' }) : null,
         mood === 'sleepy' ? svg('text', { class: 'm-z', x: 92, y: 26, fill: ink, 'font-size': 18, 'font-weight': 900 }, 'z') : null));
+  }
+
+  // Message with Zelli (combos, milestones, badges)
+  function zelliToast(text, mood) {
+    toast(mascot(mood || 'cheer', 'mascot-toast'), h('span', {}, text));
+  }
+
+  // Tips and encouragement when Zelli is tapped; {n} = name, {seen} = questions seen, {today} = answered today
+  const ZELLI_LINES = [
+    'Kreuzen schlägt Lesen: Jede gekreuzte Frage festigt mehr als nochmal durchlesen.',
+    'Was du erst falsch und dann richtig hattest, merkst du dir besonders gut.',
+    'Lies die Erklärung auch bei richtigen Antworten kurz – das verknüpft das Wissen.',
+    'Unsicher gewesen? Tipp auf „Geraten?“, dann kommt die Frage nochmal.',
+    'Pausen sind Lernzeit: In der Pause sortiert das Gehirn, was du gelernt hast.',
+    'Schlaf speichert das Gelernte – heute Nacht arbeitet dein Kopf für dich.',
+    'Du musst nicht alles perfekt können. Jede gekreuzte Frage bringt dich näher an die Punkte.',
+    'Trink mal einen Schluck Wasser!',
+    'Ich glaub an dich, {n}!',
+    'Du hast schon {seen} Fragen gekreuzt – das ist richtig viel!',
+    'Heute schon {today} Fragen gekreuzt. Ich bin beeindruckt!',
+    'Kreuzen, kreuzen, kreuzen – so bleibt’s hängen!',
+    'Kleine Schritte: 10 Fragen kreuzen dauert nur ein paar Minuten.',
+    'Fehler heißen nur: Hier lernst du gerade was.',
+    'Altfragen sind Gold wert – die kamen schon in Klausuren dran.'
+  ];
+
+  // Zelli as a button: tapping makes her jump and say something new into the given bubble
+  function talkingZelli(mood, cls, bubble) {
+    let last = null;
+    const btn = h('button', {
+      class: 'zelli-btn', 'aria-label': 'Zelli antippen',
+      onclick: () => {
+        if (!S.pref('zelliTapped')) S.pref('zelliTapped', true);
+        btn.replaceChildren(mascot('cheer', cls));
+        const lines = ZELLI_LINES.filter(l => l !== last);
+        last = pick(lines);
+        const seen = PQ.questions.filter(q => S.get(q.id)).length;
+        bubble.textContent = say(last.replace('{seen}', seen).replace('{today}', S.todayCount()));
+      }
+    }, mascot(mood, cls));
+    return btn;
+  }
+
+  // Zelli with a speech bubble at the top of a screen (tap her for more)
+  function zelliHello(mood, text) {
+    const bubble = h('p', { class: 'bubble bubble-light' }, text);
+    return h('div', { class: 'zelli-hello' }, talkingZelli(mood, 'mascot-sm', bubble), bubble);
+  }
+
+  function statsLine(attempts, hits) {
+    if (!attempts) return say('Hier siehst du bald, wie viel du schon geschafft hast, {n}!');
+    const pct = Math.round((hits / attempts) * 100);
+    const today = S.todayCount();
+    return today
+      ? say('Heute schon ' + plural(today, 'Frage', 'Fragen') + ' gekreuzt! Insgesamt ' + pct + ' % richtig – weiter so, {n}.')
+      : say(pct + ' % richtig bisher. Bereit für die nächste Kreuzrunde, {n}?');
+  }
+
+  /* Zelli sits on the progress bar of a round, moves along with it and comments now and then.
+     set(pct, mood) moves her (and changes her mood), say(text) shows a short speech bubble. */
+  function zelliTrack(pct, mood) {
+    const fill = h('span', { style: 'width:' + pct + '%' });
+    const bar = h('div', { class: 'progress', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': String(Math.round(pct)) }, fill);
+    let zelli = mascot(mood || 'happy', 'mascot-runner');
+    let bubble = null;
+    const el = h('div', { class: 'track', style: '--p:' + pct }, bar, zelli);
+    return {
+      el,
+      set(p, m) {
+        fill.style.width = p + '%';
+        el.style.setProperty('--p', p);
+        bar.setAttribute('aria-valuenow', String(Math.round(p)));
+        if (m) {
+          const z = mascot(m, 'mascot-runner');
+          zelli.replaceWith(z);
+          zelli = z;
+        }
+      },
+      say(text) {
+        if (bubble) bubble.remove();
+        const b = bubble = h('span', { class: 'runner-say', role: 'status' }, text);
+        el.append(b);
+        setTimeout(() => b.remove(), 2600);
+      }
+    };
+  }
+
+  // Big moments (chapter complete, new outfit): card with Zelli and confetti; then() runs after closing
+  function celebrate(title, text, then) {
+    confetti();
+    const close = () => { wrap.remove(); if (then) then(); };
+    const wrap = h('div', { class: 'celebrate-wrap', onclick: e => { if (e.target === wrap) close(); } },
+      h('div', { class: 'celebrate', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'celebrate-title' },
+        mascot('cheer', 'mascot-celebrate'),
+        h('h2', { class: 'celebrate-title', id: 'celebrate-title' }, title),
+        h('p', { class: 'muted' }, text),
+        h('button', { class: 'btn btn-primary btn-block btn-xl', onclick: close }, 'Weiter so!')));
+    // Inside #app so the next screen (mount) removes it too
+    root.append(wrap);
   }
 
   // Progress ring: fill in the chapter color, track in a light tint of the same color
@@ -455,6 +592,11 @@
     const events = [s.mode === 'exam' ? 'exam' : s.mode === 'blitz' ? 'blitz' : 'start'];
     if (s.ids.length >= 5 && s.results.every(r => r && r.correct)) events.push('perfect');
     unlock(events, s);
+    // New outfit for Zelli: celebrated on the results screen (the first check only remembers the level)
+    const level = outfitLevel();
+    const had = S.pref('outfit');
+    if (had !== undefined && level > had) s.newOutfit = level;
+    if (had === undefined || level > had) S.pref('outfit', level);
     checkBadges(s);
     lastResult = s;
     session = null;
@@ -474,12 +616,13 @@
     S.record(q.id, res.correct, Q.points(res.score));
     // Wrong → the same question once more a few questions later (except in the exam)
     if (!res.correct && s.mode !== 'exam') res.again = Q.requeue(s, s.idx);
-    if (res.correct && before && before.b === 1) count('fixed');
+    res.fixed = res.correct && !!before && before.b === 1;
+    if (res.fixed) count('fixed');
     trackTime(s, q);
     persist();
     const today = S.todayCount();
-    if (DAY_MILESTONES.includes(today)) toast(art('star', 'art-xs'), say(today + ' Fragen heute – stark, {n}!'));
-    else if (res.correct && MILESTONES.includes(s.combo)) toast(art('flame', 'art-xs'), s.combo + ' in Folge!');
+    if (DAY_MILESTONES.includes(today)) zelliToast(say(today + ' Fragen heute gekreuzt – stark, {n}!'));
+    else if (res.correct && MILESTONES.includes(s.combo)) zelliToast(s.combo + ' in Folge!' + (s.combo >= 10 ? ' Unglaublich!' : ''));
     checkBadges(s);
     return res;
   }
@@ -509,24 +652,24 @@
   /* ================= Badges ================= */
 
   const BADGES = [
-    { id: 'start', art: 'star', title: 'Losgelegt', desc: 'Die erste Runde in Patho-Quiz+' },
+    { id: 'start', art: 'star', title: 'Losgelegt', desc: 'Die erste Runde gekreuzt' },
     { id: 'perfect', art: 'medal', title: 'Fehlerfrei', desc: 'Eine Runde ohne Fehler' },
     { id: 'combo10', art: 'flame', title: 'Heiße Serie', desc: '10 richtig in Folge' },
     { id: 'combo25', art: 'flame', title: 'Unaufhaltsam', desc: '25 richtig in Folge' },
-    { id: 'day100', art: 'target', title: 'Hundert', desc: '100 Fragen an einem Tag' },
-    { id: 'day250', art: 'medal', title: 'Marathon', desc: '250 Fragen an einem Tag' },
-    { id: 'day400', art: 'trophy', title: 'Mega-Tag', desc: '400 Fragen an einem Tag' },
+    { id: 'day100', art: 'target', title: 'Hundert', desc: '100 Fragen an einem Tag gekreuzt' },
+    { id: 'day250', art: 'medal', title: 'Marathon', desc: '250 Fragen an einem Tag gekreuzt' },
+    { id: 'day400', art: 'trophy', title: 'Mega-Tag', desc: '400 Fragen an einem Tag gekreuzt' },
     { id: 'fix10', art: 'check', title: 'Ausgebügelt', desc: '10 Fehler korrigiert' },
     { id: 'fix50', art: 'check', title: 'Fehler-Jagd', desc: '50 Fehler korrigiert' },
     { id: 'fix150', art: 'trophy', title: 'Aus Fehlern gelernt', desc: '150 Fehler korrigiert' },
-    { id: 'seen75', art: 'books', title: 'Dreiviertel', desc: '75 % aller Fragen gesehen' },
-    { id: 'seen100', art: 'trophy', title: 'Einmal alles', desc: 'Jede Frage mindestens einmal gesehen' },
+    { id: 'seen75', art: 'books', title: 'Dreiviertel', desc: '75 % aller Fragen gekreuzt' },
+    { id: 'seen100', art: 'trophy', title: 'Einmal alles', desc: 'Jede Frage mindestens einmal gekreuzt' },
     { id: 'pause', art: 'star', title: 'Pausen-Profi', desc: 'Eine Lernpause gemacht' },
     { id: 'night', art: 'star', title: 'Nachteule', desc: 'Nach 22 Uhr gelernt' },
     { id: 'early', art: 'bolt', title: 'Früher Vogel', desc: 'Vor 8 Uhr gelernt' },
     { id: 'blitz', art: 'bolt', title: 'Blitzschnell', desc: 'Eine Blitzrunde beendet' },
     { id: 'exam', art: 'stopwatch', title: 'Generalprobe', desc: 'Eine Klausur-Simulation abgegeben' }
-  ].concat(PQ.chapters.map(ch => ({ id: 'ch' + ch.id, art: ch.art, title: ch.short, desc: 'Alle Fragen des Kapitels gesehen', chapter: ch.id })));
+  ].concat(PQ.chapters.map(ch => ({ id: 'ch' + ch.id, art: ch.art, title: ch.short, desc: 'Alle Fragen des Kapitels gekreuzt', chapter: ch.id })));
 
   function unlock(ids, s) {
     const have = S.pref('badges') || {};
@@ -537,7 +680,7 @@
     if (s) s.newBadges = (s.newBadges || []).concat(fresh);
     const b = BADGES.find(x => x.id === fresh[0]);
     if (s && s.ended) return; // shown on the results screen
-    toast(art(b.art, 'art-xs'), fresh.length > 1 ? fresh.length + ' neue Abzeichen!' : 'Abzeichen: ' + b.title);
+    zelliToast(fresh.length > 1 ? fresh.length + ' neue Abzeichen!' : 'Abzeichen: ' + b.title);
   }
 
   function checkBadges(s) {
@@ -568,8 +711,8 @@
     const hour = new Date().getHours();
     if (!p.fresh && !p.mistakes && !p.shaky) return say('Alles sitzt, {n}! Du bist bereit.');
     if (hour >= 23 || hour < 4) return say('Schon spät, {n}. Schlaf hilft beim Merken – vielleicht noch eine kleine Runde?');
-    if (!today) return say(hour < 11 ? 'Guten Morgen, {n}! Schön, dass du da bist.' : 'Hallo {n}! Schön, dass du da bist.');
-    return say(pick(['Weiter geht’s, {n}!', 'Du machst das großartig, {n}.', 'Jede Frage bringt dich näher ans Ziel.', 'Ich bin stolz auf dich, {n}!']));
+    if (!today) return say(hour < 11 ? 'Guten Morgen, {n}! Bereit zum Kreuzen?' : 'Hallo {n}! Schön, dass du da bist – lass uns kreuzen!');
+    return say(pick(['Weiter geht’s, {n}!', 'Lass uns weiterkreuzen, {n}!', 'Du machst das großartig, {n}.', 'Jede gekreuzte Frage bringt dich näher ans Ziel.', 'Ich bin stolz auf dich, {n}!']));
   }
 
   // Phase of the plan: first see everything once, then consolidate mistakes and shaky ones
@@ -577,11 +720,11 @@
     const seenPct = Math.round(((p.total - p.fresh) / p.total) * 100);
     if (p.fresh) {
       return { title: 'Noch ' + plural(p.fresh, 'neue Frage', 'neue Fragen'), pct: seenPct,
-        meta: seenPct + ' % einmal gesehen · noch ca. ' + fmtDuration(p.minutes) };
+        meta: seenPct + ' % einmal gekreuzt · noch ca. ' + fmtDuration(p.minutes) };
     }
     if (p.mistakes + p.shaky) {
       const knownPct = Math.round(((p.total - p.mistakes - p.shaky) / p.total) * 100);
-      return { title: 'Alles einmal gesehen!', pct: knownPct,
+      return { title: 'Alles einmal gekreuzt!', pct: knownPct,
         meta: [p.mistakes ? plural(p.mistakes, 'Fehler', 'Fehler') : null, p.shaky ? p.shaky + ' wackelige' : null].filter(Boolean).join(' + ') +
           ' festigen · ca. ' + fmtDuration(p.reviewMinutes) };
     }
@@ -602,7 +745,7 @@
       cells.push(h('div', { class: 'plan-day' + (i === 0 ? ' today' : '') + (left === 0 ? ' exam' : '') },
         h('span', { class: 'plan-name' }, i === 0 ? 'Heute' : names[d.getDay()]),
         h('span', { class: 'plan-task' }, task),
-        i === 0 ? h('span', { class: 'plan-count' }, plural(today, 'Frage', 'Fragen')) : null));
+        i === 0 ? h('span', { class: 'plan-count' }, today + ' gekreuzt') : null));
     }
     return h('section', { class: 'plan', 'aria-label': 'Plan bis zur Klausur' }, cells);
   }
@@ -638,17 +781,25 @@
       if (p.fresh && p.mistakes) actions.push(h('button', { class: 'hero-link', onclick: startReview }, icon('repeat'), 'Lieber erst Fehler üben'));
     }
 
+    const bubble = h('p', { class: 'bubble' }, greeting(p, today) + (S.pref('zelliTapped') ? '' : ' Tipp mich an!'));
+    const level = outfitLevel();
+    const next = OUTFITS[level];
+    const seenCount = p.total - p.fresh;
+    const nextLine = next
+      ? 'Noch ' + plural(Math.ceil(next.at * p.total) - seenCount, 'Frage', 'Fragen') + ' kreuzen, dann bekommt Zelli ' + next.name + '!'
+      : 'Zelli ist bereit für die Klausur – und du auch!';
     const hero = h('section', { class: 'hero' },
       h('div', { class: 'hero-top' },
-        mascot(p.fresh || p.mistakes || p.shaky ? 'wave' : 'cheer', 'mascot-hero'),
+        talkingZelli(p.fresh || p.mistakes || p.shaky ? 'wave' : 'cheer', 'mascot-hero', bubble),
         h('div', { class: 'hero-hello' },
           examKicker(days) ? h('p', { class: 'hero-kicker' }, examKicker(days)) : null,
-          h('p', { class: 'bubble' }, greeting(p, today)))),
+          bubble)),
       h('div', { class: 'hero-plan' },
         h('p', { class: 'hero-title' }, sum.title),
         h('span', { class: 'hero-bar', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': String(sum.pct) },
           h('span', { style: 'width:' + sum.pct + '%' })),
-        h('p', { class: 'hero-meta' }, sum.meta)),
+        h('p', { class: 'hero-meta' }, sum.meta),
+        h('p', { class: 'hero-next' }, nextLine)),
       actions);
 
     const quick = h('div', { class: 'quick' },
@@ -1037,6 +1188,10 @@
     return res.correct ? 'ok' : res.score > 0 ? 'part' : 'bad';
   }
 
+  function moodOf(res) {
+    return res.correct ? 'cheer' : res.score > 0 ? 'happy' : 'comfort';
+  }
+
   function resultTitle(q, res) {
     if (res.skipped) return 'Nicht beantwortet';
     if (res.correct) return pick(PRAISE);
@@ -1074,7 +1229,7 @@
     return h('section', { class: 'fb sheet ' + tone, 'aria-live': 'polite' },
       h('div', { class: 'sheet-inner' },
         h('div', { class: 'fb-head' },
-          mascot(tone === 'ok' ? 'cheer' : tone === 'part' ? 'happy' : 'comfort', 'mascot-fb'),
+          mascot(moodOf(res), 'mascot-fb'),
           h('div', { class: 'grow' }, title, cheer ? h('p', { class: 'fb-cheer' }, cheer) : null),
           guess),
         h('div', { class: 'sheet-body' }, body),
@@ -1090,8 +1245,8 @@
       h('div', { class: 'menu', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'menu-title' },
         h('h2', { class: 'menu-title', id: 'menu-title' }, 'Runde unterbrechen?'),
         h('p', { class: 'muted small' }, n
-          ? n + ' von ' + plural(s.ids.length, 'Frage', 'Fragen') + ' beantwortet. Die Antworten sind schon gespeichert.'
-          : 'Noch keine Frage beantwortet.'),
+          ? n + ' von ' + plural(s.ids.length, 'Frage', 'Fragen') + ' gekreuzt. Die Antworten sind schon gespeichert.'
+          : 'Noch keine Frage gekreuzt.'),
         n
           ? h('button', { class: 'btn btn-primary btn-block btn-xl', onclick: () => finishSession() }, 'Beenden und auswerten')
           : h('button', { class: 'btn btn-primary btn-block btn-xl', onclick: () => { abortSession(); go('#/'); } }, 'Runde beenden'),
@@ -1133,13 +1288,13 @@
 
     const answeredAt = i => (exam ? Q.isComplete(PQ.byId[s.ids[i]], s.responses[i]) : s.results[i] !== null);
     const doneCount = () => s.ids.filter((id, i) => answeredAt(i)).length;
-    const bar = h('span', { style: 'width:' + (doneCount() / total()) * 100 + '%' });
+    const track = zelliTrack((doneCount() / total()) * 100, result ? moodOf(result) : 'happy');
     const combo = h('span', { class: 'combo' + (s.combo >= 2 ? '' : ' hidden') }, icon('flame', 'ico-flame'), h('b', {}, s.combo));
     const timeEl = s.endsAt ? h('span', { class: 'timer' }, icon('clock'), h('span', {}, fmtTime(s.endsAt - Date.now()))) : null;
     const navGrid = exam ? h('div', { class: 'nav-grid', hidden: true }) : null;
     const countEl = h('span', { class: 'q-count' });
     function updateCount() {
-      bar.style.width = (doneCount() / total()) * 100 + '%';
+      track.set((doneCount() / total()) * 100);
       countEl.textContent = (s.idx + 1) + '/' + total();
       countEl.setAttribute('aria-label', 'Frage ' + (s.idx + 1) + ' von ' + total());
     }
@@ -1162,7 +1317,7 @@
           else if (confirm('Klausur abbrechen? Deine Antworten gehen verloren.')) { abortSession(); go('#/'); }
         }
       }, icon('x')),
-      h('div', { class: 'progress', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': String(total()), 'aria-valuenow': String(doneCount()) }, bar),
+      track.el,
       countEl,
       exam ? timeEl : combo,
       exam ? h('button', { class: 'icon-btn', 'aria-label': 'Fragenübersicht', onclick: () => { navGrid.hidden = !navGrid.hidden; } }, icon('grid')) : null);
@@ -1210,6 +1365,8 @@
       ctx.locked = ctx.solved = true;
       ctx.repaint();
       updateCount();
+      track.set((doneCount() / total()) * 100, moodOf(result));
+      if (result.correct && (view.again || result.fixed)) track.say(view.again ? 'Diesmal sitzt’s!' : 'Fehler ausgebügelt!');
       combo.classList.toggle('hidden', s.combo < 2);
       combo.lastChild.textContent = s.combo;
       showSheet();
@@ -1238,6 +1395,15 @@
     main.append(head, navGrid || '', questionHead(q, view), answer, footer);
     mount(main);
     if (result) showSheet();
+    else if (!exam) {
+      // Zelli comments on the start, the middle and the end of a round and on a question that comes back
+      const n = total();
+      const remark = view.again ? 'Die kennst du schon – diesmal klappt’s!'
+        : s.idx === 0 ? say(pick(['Los geht’s!', 'Ab ans Kreuzen!', 'Auf geht’s, {n}!', 'Lass uns kreuzen, {n}!', 'Du schaffst das!']))
+          : n >= 8 && s.idx === Math.floor(n / 2) ? 'Halbzeit!'
+            : n >= 5 && last() ? 'Letzte Frage!' : null;
+      if (remark) track.say(remark);
+    }
 
     if (s.endsAt) {
       const tick = () => {
@@ -1270,6 +1436,8 @@
     const q = PQ.byId[s.ids[s.idx]];
     const ch = chapterOf(q);
     const done = s.results.filter(r => r !== null).length;
+    const prev = s.idx > 0 ? s.results[s.idx - 1] : null;
+    const track = zelliTrack((done / total) * 100, prev ? moodOf(prev) : 'happy');
     let busy = false;
 
     const card = h('div', { class: 'swipe-card', tabindex: '0', style: '--c:' + ch.color },
@@ -1287,7 +1455,7 @@
         class: 'icon-btn', 'aria-label': 'Runde beenden',
         onclick: () => exitMenu(s)
       }, icon('x')),
-      h('div', { class: 'progress' }, h('span', { style: 'width:' + (done / total) * 100 + '%' })),
+      track.el,
       h('span', { class: 'q-count', 'aria-label': 'Aussage ' + (s.idx + 1) + ' von ' + total }, (s.idx + 1) + '/' + total),
       h('span', { class: 'combo' }, icon('flame', 'ico-flame'), h('b', {}, s.combo)));
 
@@ -1304,9 +1472,11 @@
       const res = answerCurrent(val);
       card.style.transform = '';
       if (res.correct) {
+        track.set(((done + 1) / s.ids.length) * 100, 'cheer');
         card.classList.add(val ? 'fly-right' : 'fly-left', 'flash-ok');
         setTimeout(nextCard, 320);
       } else {
+        track.set(((done + 1) / s.ids.length) * 100, 'comfort');
         card.classList.add('flash-bad');
         const sheet = feedback(q, res, nextCard, s.idx >= s.ids.length - 1 ? 'Zur Auswertung' : 'Weiter');
         footer.replaceWith(sheet);
@@ -1375,6 +1545,8 @@
     const p = Q.plan();
     const sum = planSummary(p);
     const newBadges = (r.newBadges || []).map(id => BADGES.find(b => b.id === id)).filter(Boolean);
+    const crossed = r.mode === 'blitz' ? plural(total, 'Aussage', 'Aussagen') : plural(total, 'Frage', 'Fragen');
+    const resultLine = h('p', { class: 'muted' }, exam ? 'Klausur ausgewertet · ' + pct + ' %' : say(crossed + ' gekreuzt. ' + sub));
 
     const list = h('div', { class: 'res-list', hidden: true }, r.ids.map((id, i) => {
       const q = PQ.byId[id];
@@ -1417,9 +1589,9 @@
       h('header', { class: 'topbar' },
         h('button', { class: 'icon-btn', 'aria-label': 'Zur Startseite', onclick: () => go('#/') }, icon('x'))),
       h('section', { class: 'result-hero' },
-        mascot(mood, 'mascot-result'),
+        talkingZelli(mood, 'mascot-result', resultLine),
         h('h1', { class: 'result-title' }, verdict),
-        h('p', { class: 'muted' }, exam ? 'Klausur ausgewertet · ' + pct + ' %' : say(sub))),
+        resultLine),
       h('div', { class: 'result-stats' },
         rstat('check', exam ? fmtNum(score) + '/' + total : correct + '/' + total, exam ? 'Punkte' : 'Richtig'),
         rstat('star', '+' + earned, 'XP'),
@@ -1437,7 +1609,25 @@
       list,
       footer));
     if (pct >= 80 || newBadges.length) setTimeout(confetti, 200);
-    if (needsPause()) setTimeout(pauseDialog, newBadges.length ? 900 : 400);
+    // Big moments one after another, then the pause reminder
+    const moments = [];
+    if (r.newOutfit) {
+      const o = OUTFITS[r.newOutfit - 1];
+      moments.push(['Zelli hat ' + o.name + ' bekommen!', say(Math.round(o.at * 100) + ' % aller Fragen hast du schon gekreuzt. Stark, {n}!')]);
+    }
+    const chapters = newBadges.filter(b => b.chapter);
+    if (chapters.length) {
+      moments.push(chapters.length === 1
+        ? ['Kapitel ' + chapters[0].title + ' komplett!', 'Alle Fragen einmal gekreuzt – ein Kapitel weniger bis zur Klausur.']
+        : [chapters.length + ' Kapitel komplett!', chapters.map(b => b.title).join(', ') + ': alle Fragen einmal gekreuzt.']);
+    }
+    const show = () => {
+      if (location.hash !== '#/result') return;
+      const m = moments.shift();
+      if (m) celebrate(m[0], m[1], show);
+      else if (needsPause()) pauseDialog();
+    };
+    if (moments.length || needsPause()) setTimeout(show, newBadges.length ? 900 : 400);
   }
 
   /* ================= Pause reminder ================= */
@@ -1460,7 +1650,7 @@
       body.replaceChildren(
         mascot('sleepy', 'mascot-pause'),
         h('h2', { class: 'menu-title', id: 'pause-title' }, 'Zeit für eine Pause'),
-        h('p', { class: 'muted' }, say('Du lernst seit ' + mins + ' Minuten am Stück, {n}. 5–10 Minuten Pause helfen dem Gehirn, das Gelernte abzuspeichern: Wasser trinken, kurz bewegen, aus dem Fenster schauen.')),
+        h('p', { class: 'muted' }, say('Du kreuzt seit ' + mins + ' Minuten am Stück, {n}. 5–10 Minuten Pause helfen dem Gehirn, das Gelernte abzuspeichern: Wasser trinken, kurz bewegen, aus dem Fenster schauen.')),
         h('button', { class: 'btn btn-primary btn-block btn-xl', onclick: start }, 'Pause starten · 5 min'),
         h('button', {
           class: 'link link-center',
@@ -1506,12 +1696,10 @@
       h('span', { class: 'badge-desc' }, b.desc));
     mount(h('main', { class: 'screen badges' },
       topbar('Abzeichen'),
-      h('div', { class: 'setup-hero' },
-        mascot(got ? 'cheer' : 'wave', 'mascot-sm'),
-        h('p', {}, got + ' von ' + BADGES.length + ' gesammelt. ' + (got ? say('Stark, {n}!') : 'Das erste kommt gleich!'))),
+      zelliHello(got ? 'cheer' : 'wave', got + ' von ' + BADGES.length + ' gesammelt. ' + (got ? say('Stark, {n}!') : 'Das erste kommt gleich!')),
       h('h2', { class: 'label' }, 'Erfolge'),
       h('div', { class: 'badge-grid' }, BADGES.filter(b => !b.chapter).map(card)),
-      h('h2', { class: 'label' }, 'Kapitel komplett gesehen'),
+      h('h2', { class: 'label' }, 'Kapitel komplett gekreuzt'),
       h('div', { class: 'badge-grid' }, BADGES.filter(b => b.chapter).map(card))));
   }
 
@@ -1552,7 +1740,7 @@
       h('section', { class: 'welcome-hero' },
         mascot('wave', 'mascot-welcome'),
         h('h1', { class: 'result-title' }, 'Hallo! Ich bin Zelli.'),
-        h('p', { class: 'muted' }, 'Ich begleite dich bis zur Klausur: kurze Lektionen, Fehler kommen clever verteilt wieder, und ich feuere dich an.')),
+        h('p', { class: 'muted' }, 'Ich kreuze mit dir bis zur Klausur: kurze Lektionen, Fehler kommen clever verteilt wieder, und ich feuere dich an.')),
       h('h2', { class: 'label' }, 'Wie heißt du?'),
       nameBox,
       h('h2', { class: 'label' }, 'Schon im alten Patho-Quiz gelernt?'),
@@ -1615,7 +1803,7 @@
         ring(cp.pct, 'sm', ch.color, false),
         h('span', { class: 'grow' },
           h('span', { class: 'topic-title' }, art(ch.art, 'art-xs'), ' ', ch.short),
-          h('span', { class: 'topic-meta' }, cp.pct + ' % sitzen · ' + cp.seen + ' von ' + cp.total + ' gesehen')),
+          h('span', { class: 'topic-meta' }, cp.pct + ' % sitzen · ' + cp.seen + ' von ' + cp.total + ' gekreuzt')),
         icon('right', 'ico-muted'));
     });
 
@@ -1635,10 +1823,11 @@
 
     mount(h('main', { class: 'screen stats' },
       topbar('Statistik'),
+      zelliHello('happy', statsLine(attempts, hits)),
       h('div', { class: 'big-stats' },
         bigStat('flame', S.streak(), S.streak() === 1 ? 'Tag Serie' : 'Tage Serie'),
         bigStat('target', attempts ? Math.round((hits / attempts) * 100) + '%' : '–', 'Trefferquote'),
-        bigStat('books', p.seen, 'von ' + all.length + ' gesehen')),
+        bigStat('books', p.seen, 'von ' + all.length + ' gekreuzt')),
       h('section', { class: 'panel' },
         h('div', { class: 'panel-head' }, h('h2', { class: 'h3' }, 'Diese Woche'), h('span', { class: 'muted small' }, 'Ziel ' + goal + '/Tag')),
         week),
