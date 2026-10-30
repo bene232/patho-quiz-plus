@@ -45,18 +45,6 @@ PQ.registerChapter(6, [
     ex: 'Alle vier sind Pneumonie-Erreger (Altfrage: alle ✓).'
   },
   {
-    id: 'k6-05', sec: '6.1', p: 19, type: 'match',
-    q: 'Ordne den Tag der unbehandelten Lobärpneumonie ihrem Stadium zu.',
-    pairs: [
-      ['Tag 1–2', 'Anschoppung (serös)'],
-      ['Tag 3–4', 'Rote Hepatisation (hämorrhagisch-fibrinös)'],
-      ['Tag 5–6', 'Graue Hepatisation (fibrinös)'],
-      ['Tag 6–9', 'Gelbe Hepatisation (eitrig)'],
-      ['Ab ca. Tag 9–10', 'Lyse (resorptiv)']
-    ],
-    ex: 'Anschoppung: Hyperämie, Ödem, Erreger · rote Hepatisation: Erythrozyten + Fibrin, leberartig fest · graue: Erythrozytenzerfall, Fibrin + Granulozyten · gelbe: Granulozyten-Exsudat · Lyse durch Makrophagen → Restitutio (~14 d).'
-  },
-  {
     id: 'k6-06', sec: '6.1', p: 19, type: 'single',
     q: 'Welcher Erreger ist der häufigste der ambulant erworbenen Pneumonie?',
     opts: ['Streptococcus pneumoniae', 'Pseudomonas aeruginosa', 'Pneumocystis jirovecii', 'Aspergillus'],
@@ -88,16 +76,6 @@ PQ.registerChapter(6, [
     ex: 'Lobärpneumonie: synchroner Verlauf in einem Lappen. Bronchopneumonie: herdförmig, asynchron, vom Bronchus ausgehend (Sonderformen: Friedländer-/Klebsiellen-, Staphylokokken-, Aspirations-, septische Pneumonie).'
   },
   {
-    id: 'k6-09', sec: '6.1', p: 19, type: 'match',
-    q: 'Ordne den Begriff der Ursache der Lungenentzündung zu.',
-    pairs: [
-      ['Pneumonie', 'Infektiös'],
-      ['Pneumonitis', 'Physikalisch-chemisch'],
-      ['Alveolitis', 'Allergisch-toxisch']
-    ],
-    ex: 'Pneumonie = akute oder chronische Entzündung im Alveolarraum und/oder Interstitium. Einteilung anatomisch (alveolär vs. interstitiell), nach Erreger, Histologie, Verlauf und Setting.'
-  },
-  {
     id: 'k6-10', sec: '6.1', p: 19, type: 'single',
     q: 'Was bezeichnet die Karnifikation als Komplikation einer Pneumonie?',
     opts: [
@@ -120,17 +98,6 @@ PQ.registerChapter(6, [
     ],
     a: 0,
     ex: 'PcP: Immunsuppression (HIV, CD4 < 200), schaumiges, eosinophiles intraalveoläres Exsudat, Erregernachweis mit Grocott. Hyaline Membranen → DAD; nicht verkäsende Granulome → Sarkoidose; Hepatisation → Lobärpneumonie.'
-  },
-  {
-    id: 'k6-12', sec: '6.1', p: 19, type: 'kprim',
-    q: 'Pneumonie – welche Zuordnungen treffen zu?',
-    st: [
-      ['Interstitielle Pneumonie: vorwiegend viral (RSV, Influenza, CMV)', true],
-      ['Nosokomiale Pneumonie: überwiegend Mykoplasmen', false],
-      ['Aspergillom: saprophytische Besiedlung einer Kaverne', true],
-      ['Rote Hepatisation: Tag 6–9', false]
-    ],
-    ex: 'Nosokomial > 60 % gramnegativ (Pseudomonas, Klebsiellen, E. coli). Die rote Hepatisation liegt an Tag 3–4; Tag 6–9 ist die gelbe Hepatisation.'
   },
 
   /* ---------- 6.2 Tuberculosis ---------- */
@@ -184,27 +151,6 @@ PQ.registerChapter(6, [
     a: 0,
     ex: 'Tbc: Typ-IV-Reaktion (Th1, IFN-γ = Basis des IGRA) → aktivierte Makrophagen = Epitheloidzellen + Langhans-Riesenzellen + Lymphozytenwall + zentrale Verkäsung.'
   },
-  {
-    id: 'k6-18', sec: '6.2', p: '19–20', type: 'match',
-    q: 'Ordne die Tbc-Form ihrem Kennzeichen zu.',
-    pairs: [
-      ['Primärkomplex', 'Ghon-Herd + Hilus-Lymphknoten'],
-      ['Hämatogene Streuung', 'Simon-Spitzenherde, Miliar-Tbc'],
-      ['Sepsis Landouzy', 'Nekrotisierende Entzündung ohne Granulome'],
-      ['Postprimäre Tbc', 'Endogene Reaktivierung, Oberlappenkaverne']
-    ],
-    ex: 'Postprimäre Tbc: meist bei Immunschwäche; 80 % Lunge (Oberlappen, Kaverne), 20 % extrapulmonal. Einbruch ins Bronchialsystem → „offene“ Tbc.'
-  },
-  {
-    id: 'k6-19', sec: '6.2', p: 20, type: 'match',
-    q: 'Ordne die extrapulmonale Tbc ihrem Befund zu.',
-    pairs: [
-      ['Urogenital-Tbc', 'Kittniere'],
-      ['Knochen-Tbc', 'Spondylitis mit Gibbus und Senkungsabszess'],
-      ['ZNS-Tbc', 'Meningitis']
-    ],
-    ex: 'Extrapulmonal (20 % der postprimären Tbc): Lymphknoten, Urogenital (Kittniere), Nebenniere, Knochen (Spondylitis tuberculosa), ZNS/Meningitis.'
-  },
 
   /* ---------- 6.3 Sarcoidosis ---------- */
   {
@@ -213,17 +159,6 @@ PQ.registerChapter(6, [
     opts: ['Epitheloidzellige, nicht verkäsende Granulome', 'Granulome mit zentraler Verkäsung', 'Hyaline Membranen', 'Hantelförmige Asbestkörperchen'],
     a: 0,
     ex: 'Sarkoidose: Multisystemerkrankung unklarer Ursache mit epitheloidzelligen, nicht verkäsenden Granulomen (CD4-Th1-Reaktion). Verkäsung → Tbc; hyaline Membranen → DAD.'
-  },
-  {
-    id: 'k6-21', sec: '6.3', p: 20, type: 'match',
-    q: 'Ordne den Röntgentyp der Sarkoidose seinem Befund zu.',
-    pairs: [
-      ['Typ I', 'Bihiläre Lymphadenopathie'],
-      ['Typ II', 'Bihiläre Lymphadenopathie + Lungeninfiltrate'],
-      ['Typ III', 'Nur Lungeninfiltrate'],
-      ['Typ IV', 'Fibrose']
-    ],
-    ex: 'Röntgen-Typen: 0 kein Befund · I bihiläre Lymphadenopathie · II + Lungeninfiltrate · III nur Lunge · IV Fibrose.'
   },
   {
     id: 'k6-22', sec: '6.3', p: 20, type: 'single',
@@ -235,17 +170,6 @@ PQ.registerChapter(6, [
     ],
     a: 0,
     ex: 'Sarkoidose: lymphozytäre Alveolitis, CD4/CD8 > 3,5. Bei exogen-allergischer Alveolitis und HIV ist der Quotient erniedrigt.'
-  },
-  {
-    id: 'k6-23', sec: '6.3', p: 20, type: 'kprim',
-    q: 'Sarkoidose – welche Aussagen treffen zu?',
-    st: [
-      ['In ca. 90 % sind Lunge und Hilus-Lymphknoten betroffen.', true],
-      ['In Riesenzellen finden sich Asteroid- und Schaumann-Körperchen.', true],
-      ['Die Granulome zeigen eine zentrale Verkäsung.', false],
-      ['Die Granulombildung ist eine CD8-T-Zell-Reaktion.', false]
-    ],
-    ex: 'Sarkoidose: nicht verkäsende Granulome durch eine CD4-Th1-Reaktion; Hyperkalzämie über die 1α-Hydroxylase der Makrophagen; Biopsie zum Ausschluss von Tbc, Fremdkörper, Hodgkin.'
   },
 
   /* ---------- 6.4 Diffuse alveolar damage ---------- */
@@ -266,13 +190,6 @@ PQ.registerChapter(6, [
     opts: ['Hyaline Membranen', 'Intraalveoläre neutrophile Granulozyten', 'Epitheloidzellige Granulome', 'Fibroblastenfoci'],
     a: 0,
     ex: 'DAD: akuter alveolokapillärer Schaden mit Pneumozyten- und Endothelnekrosen, Ödem und hyalinen Membranen (vorherrschend). Fibroblastenfoci kennzeichnen die UIP.'
-  },
-  {
-    id: 'k6-26', sec: '6.4', p: 20, type: 'single',
-    q: 'Welche Ursache ist typisch für einen diffusen Alveolarschaden?',
-    opts: ['Schock bzw. Sepsis', 'Asbestexposition', 'Schimmeliges Heu', 'α1-Antitrypsin-Mangel'],
-    a: 0,
-    ex: 'DAD-Ursachen: Schock, Sepsis, Infektion, Trauma, Aspiration, Drogen/Medikamente, Bestrahlung, metabolisch, hämatologisch. Asbest → Asbestose; Heu → Farmerlunge; α1-AT-Mangel → panlobuläres Emphysem.'
   },
   {
     id: 'k6-27', sec: '6.4', p: 20, type: 'single',
@@ -374,16 +291,6 @@ PQ.registerChapter(6, [
     ex: 'Laut Altklausur-Lösung: Aspiration ✓, Tbc ✓ (Langhans-Riesenzellen), Sarkoidose ✓ (Riesenzellen mit Asteroid-/Schaumann-Körperchen); Klebsiellen ✗.'
   },
   {
-    id: 'k6-35', sec: '6.5', p: 20, type: 'match',
-    q: 'Ordne die exogen-allergische Alveolitis ihrem Auslöser zu.',
-    pairs: [
-      ['Farmerlunge', 'Saccharopolyspora rectivirgula (schimmeliges Heu)'],
-      ['Vogelhalterlunge', 'Federn/Kot'],
-      ['Befeuchterlunge', 'Thermoactinomyceten']
-    ],
-    ex: 'EAA: lymphozytäre Alveolitis, kleine nicht verkäsende Granulome, Bronchiolitis; Therapie Antigenkarenz.'
-  },
-  {
     id: 'k6-36', sec: '6.5', p: 20, type: 'single',
     q: 'Welche Histologie passt zur exogen-allergischen Alveolitis?',
     opts: [
@@ -415,16 +322,6 @@ PQ.registerChapter(6, [
     ex: 'UIP: zeitlich und räumlich heterogen, subpleural/basal betont, Fibroblastenfoci, Pneumozyten-II-Hyperplasie → Wabenlunge. Hyaline Membranen → AIP (idiopathischer DAD).'
   },
   {
-    id: 'k6-39', sec: '6.5', p: 20, type: 'match',
-    q: 'Ordne die idiopathische interstitielle Pneumonie ihrem Kennzeichen zu.',
-    pairs: [
-      ['UIP/IPF', 'Ältere, Fibroblastenfoci, Kortison wirkungslos'],
-      ['DIP/RB-ILD', 'Rauchassoziiert, durch Rauchkarenz besserbar'],
-      ['AIP', 'Idiopathischer DAD mit hyalinen Membranen']
-    ],
-    ex: 'Andere idiopathische interstitielle Pneumonien (NSIP, DIP/RB-ILD, COP) sind teilweise durch Kortikoide und Rauchkarenz besserbar – anders als die UIP.'
-  },
-  {
     id: 'k6-40', sec: '6.5', p: 20, type: 'single',
     q: 'Welcher Befund ist typisch für die Silikose?',
     opts: [
@@ -435,17 +332,6 @@ PQ.registerChapter(6, [
     ],
     a: 0,
     ex: 'Silikose: Quarz → Makrophagen → Silikoseknötchen (hyalinisiert, zwiebelschalenartig, doppelbrechend), Schwielen, Hilus-LK mit Eierschalenverkalkung, Emphysem.'
-  },
-  {
-    id: 'k6-41', sec: '6.5', p: 20, type: 'kprim',
-    q: 'Silikose – welche Aussagen treffen zu?',
-    st: [
-      ['Die Hilus-Lymphknoten zeigen eine Eierschalenverkalkung.', true],
-      ['Die Silikoseknötchen enthalten keine doppelbrechenden Partikel.', false],
-      ['Das Lungenkrebsrisiko ist nicht erhöht.', false],
-      ['Das Caplan-Syndrom ist die Kombination aus Silikose und UIP.', false]
-    ],
-    ex: 'Silikoseknötchen enthalten doppelbrechende Partikel; Tbc- und Lungenkrebsrisiko sind erhöht. Caplan-Syndrom = RA + Pneumokoniose mit Rheumaknoten in der Lunge.'
   },
   {
     id: 'k6-42', sec: '6.5', p: 20, type: 'single',
@@ -480,16 +366,6 @@ PQ.registerChapter(6, [
     opts: ['Eisenhaltig, hantelförmig, Berliner-Blau-positiv', 'Doppelbrechend, in zwiebelschalenartigen Knötchen', 'Sternförmig in Riesenzellen', 'Kongophil'],
     a: 0,
     ex: 'Asbestkörperchen: eisenhaltig, hantelförmig (Berliner Blau). Zwiebelschalenartige Knötchen → Silikose; sternförmige Asteroid-Körperchen → Sarkoidose; kongophil → Amyloid.'
-  },
-  {
-    id: 'k6-45', sec: '6.6', p: 21, type: 'match',
-    q: 'Ordne die Berufskrankheit ihrer Erkrankung zu.',
-    pairs: [
-      ['BK 4103', 'Asbestose'],
-      ['BK 4104', 'Lungen-/Larynxkarzinom durch Asbest'],
-      ['BK 4105', 'Mesotheliom']
-    ],
-    ex: 'Berufskrankheiten: BK 4103 (Asbestose), 4104 (Lungen-/Larynx-Ca), 4105 (Mesotheliom).'
   },
   {
     id: 'k6-46', sec: '6.6', p: 21, type: 'single',
@@ -551,18 +427,6 @@ PQ.registerChapter(6, [
     dis: 'Im Original lautete eine weitere Option „entstehen durch Thrombemboli in Bronchialarterienästen“. Die ist streng genommen ebenfalls unpräzise, denn es sind Pulmonalarterienäste. Gesucht war laut Lösung aber „zentral“. Die Option wurde hier durch die korrekte Formulierung (Pulmonalarterienäste) ersetzt.'
   },
   {
-    id: 'k6-51', sec: '6.7', p: 21, type: 'match',
-    q: 'Ordne den Emphysemtyp seiner Ursache bzw. Lokalisation zu.',
-    pairs: [
-      ['Zentrilobulär', 'Rauchen, chronische Bronchitis; Oberlappen'],
-      ['Panlobulär', 'α1-Antitrypsin-Mangel; Unterlappen'],
-      ['Narbenemphysem', 'Um Narben (Tbc, Silikose)'],
-      ['Interstitielles Emphysem', 'Luft im Interstitium (Beatmung, Trauma)'],
-      ['Altersemphysem', '„Altersblähung“ ohne Destruktion']
-    ],
-    ex: 'Außerdem: Überdehnungsemphysem – kompensatorisch nach Teilresektion/Schrumpfung.'
-  },
-  {
     id: 'k6-52', sec: '6.7', p: 21, type: 'single',
     q: 'Wie ist die chronische Bronchitis definiert?',
     opts: [
@@ -584,17 +448,6 @@ PQ.registerChapter(6, [
     ],
     a: 0,
     ex: 'Stauungslunge: akut Lungenödem, chronisch braune Induration mit Herzfehlerzellen (Siderophagen, Berliner Blau).'
-  },
-  {
-    id: 'k6-54', sec: '6.7', p: 21, type: 'kprim',
-    q: 'Lungenemphysem – welche Aussagen treffen zu?',
-    st: [
-      ['Es ist eine irreversible Erweiterung der Lufträume distal der terminalen Bronchiolen mit Wandzerstörung.', true],
-      ['Der Klopfschall ist hypersonor.', true],
-      ['Das panlobuläre Emphysem betrifft bevorzugt die Oberlappen.', false],
-      ['Das Altersemphysem geht mit ausgeprägter Wanddestruktion einher.', false]
-    ],
-    ex: 'Emphysem-Klinik: Fassthorax, abgeschwächtes Atemgeräusch, hypersonorer Klopfschall, leise Herztöne, „Pink Puffer“. Panlobulär → Unterlappen; Altersemphysem = „Altersblähung“ ohne Destruktion.'
   },
 
   /* ---------- 6.8 Lung carcinoma ---------- */
@@ -646,27 +499,6 @@ PQ.registerChapter(6, [
     ex: 'Die nicht invasive Form ist rein lepidisch (früher „bronchioloalveolär“). Azinär, papillär, mikropapillär und solide sind Muster des invasiven Adenokarzinoms.'
   },
   {
-    id: 'k6-60', sec: '6.8', p: 22, type: 'match',
-    q: 'Ordne den Thoraxtumor seinen Immunmarkern zu.',
-    pairs: [
-      ['Adenokarzinom', 'TTF-1, Napsin A'],
-      ['Plattenepithelkarzinom', 'p40, CK5/6'],
-      ['Kleinzelliges Karzinom', 'Synaptophysin, Chromogranin, CD56'],
-      ['Pleuramesotheliom', 'Calretinin, WT1, D2-40']
-    ],
-    ex: 'Das Mesotheliom ist außerdem CK5/6-positiv und Adeno-Marker-negativ.'
-  },
-  {
-    id: 'k6-61', sec: '6.8', p: 22, type: 'match',
-    q: 'Ordne die Paraneoplasie des Lungenkarzinoms ihrem Mediator zu.',
-    pairs: [
-      ['Hyperkalzämie (Plattenepithel-Ca)', 'PTHrP'],
-      ['SIADH (SCLC)', 'ADH'],
-      ['Cushing-Syndrom (SCLC)', 'ACTH']
-    ],
-    ex: 'Das SCLC hat die häufigsten Paraneoplasien (SIADH, Cushing, Lambert-Eaton); beim Plattenepithel-Ca ist die Hyperkalzämie durch PTHrP typisch.'
-  },
-  {
     id: 'k6-62', sec: '6.8', p: 22, type: 'single',
     q: 'Welcher Typ ist heute der häufigste Lungenkarzinomtyp?',
     opts: ['Adenokarzinom', 'Plattenepithelkarzinom', 'Kleinzelliges Karzinom', 'Großzelliges Karzinom'],
@@ -696,13 +528,6 @@ PQ.registerChapter(6, [
     ex: 'Adenokarzinom: TTF-1, Napsin A (p40 → Plattenepithel-Ca). EGFR v. a. bei Adeno/Nichtrauchern/Asiaten, KRAS bei Rauchern.'
   },
   {
-    id: 'k6-65', sec: '6.8', p: 22, type: 'single',
-    q: 'Was ist der wichtigste Risikofaktor des Lungenkarzinoms?',
-    opts: ['Rauchen', 'Radon', 'Asbest', 'Dieselabgase'],
-    a: 0,
-    ex: 'Rauchen ist der wichtigste RF (Dauer > Menge; Aufhören senkt das Risiko); ferner Asbest, Radon, Dieselabgase, Arsen, Chrom, Nickel, Uran, Narben.'
-  },
-  {
     id: 'k6-66', sec: '6.8', p: '21–22', type: 'single',
     q: 'Welcher Thoraxtumor hat eine gute Prognose?',
     opts: ['Karzinoid (NET G1/G2)', 'Kleinzelliges Karzinom', 'Malignes Pleuramesotheliom'],
@@ -712,60 +537,31 @@ PQ.registerChapter(6, [
 
   /* ---------- True/false statements ---------- */
   { id: 'k6-t01', sec: '6.1', p: 19, type: 'tf', a: false, q: 'Die gelbe Hepatisation der Lobärpneumonie tritt am 1.–2. Tag auf.', ex: 'Gelbe Hepatisation (eitrig): Tag 6–9 (Altfrage 2008).' },
-  { id: 'k6-t02', sec: '6.1', p: 19, type: 'tf', a: true, q: 'Die rote Hepatisation entspricht einer hämorrhagisch-fibrinösen Entzündung.', ex: 'Rote Hepatisation (Tag 3–4): Erythrozyten + Fibrin, leberartig fest.' },
   { id: 'k6-t03', sec: '6.1', p: 19, type: 'tf', a: false, q: 'Die Lungenembolie ist eine typische Komplikation der Lobärpneumonie.', ex: 'Keine Lungenembolie (Altfrage 2015).' },
-  { id: 'k6-t04', sec: '6.1', p: 19, type: 'tf', a: true, q: 'Bei der Lobärpneumonie verläuft die Entzündung synchron in einem Lappen.', ex: 'Lobärpneumonie: synchron in einem Lappen; Bronchopneumonie: herdförmig, asynchron.' },
-  { id: 'k6-t05', sec: '6.1', p: 19, type: 'tf', a: false, q: 'Bei nosokomialen Pneumonien überwiegen grampositive Erreger.', ex: 'Nosokomial > 60 % gramnegativ (Pseudomonas, Klebsiellen, E. coli).' },
-  { id: 'k6-t06', sec: '6.1', p: 19, type: 'tf', a: true, q: 'Bei der Pneumocystis-Pneumonie gelingt der Erregernachweis mit der Grocott-Färbung.', ex: 'PcP: Erregernachweis mit Grocott.' },
   { id: 'k6-t07', sec: '6.1', p: 19, type: 'tf', a: false, q: 'Das Aspergillom ist eine invasive Form der Aspergillose.', ex: 'Aspergillus: allergisch, saprophytisch (= Aspergillom in Kaverne) oder invasiv.' },
-  { id: 'k6-t08', sec: '6.1', p: 19, type: 'tf', a: true, q: 'Eine septikopyämische Pneumonie entsteht durch hämatogene Streuung, z. B. bei Endokarditis.', ex: 'Septikopyämische Pneumonie: hämatogene Streuung, z. B. von Osteomyelitis oder Endokarditis.' },
-  { id: 'k6-t09', sec: '6.2', p: 19, type: 'tf', a: true, q: 'Mykobakterien sind säurefest und werden mit der Ziehl-Neelsen-Färbung dargestellt.', ex: 'M. tuberculosis: säurefest, Ziehl-Neelsen.' },
-  { id: 'k6-t10', sec: '6.2', p: 19, type: 'tf', a: true, q: 'Die Th1-Reaktion mit IFN-γ ist die Grundlage des IGRA.', ex: 'Typ-IV-Reaktion (Th1, IFN-γ = Basis des IGRA).' },
-  { id: 'k6-t11', sec: '6.2', p: 19, type: 'tf', a: false, q: 'Der Ghon-Herd liegt typischerweise in der Lungenspitze.', ex: 'Ghon-Herd: Mittel-/Untergeschoss, subpleural. Spitzenherde (Simon) entstehen durch hämatogene Streuung.' },
   { id: 'k6-t12', sec: '6.2', p: 19, type: 'tf', a: false, q: 'Simon-Spitzenherde entsprechen dem Primärherd der Erstinfektion.', ex: 'Primärherd = Ghon-Herd. Simon-Spitzenherde entstehen durch hämatogene Streuung bei Progression.' },
   { id: 'k6-t13', sec: '6.2', p: 20, type: 'tf', a: false, q: 'Bei der Sepsis Landouzy entstehen zahlreiche kleine Granulome.', ex: 'Sepsis Landouzy: nekrotisierende Entzündung OHNE Granulombildung (Altfrage 2008).' },
-  { id: 'k6-t14', sec: '6.2', p: 20, type: 'tf', a: true, q: 'Die postprimäre Tbc betrifft zu ca. 80 % die Lunge, v. a. den Oberlappen.', ex: 'Postprimäre Tbc: 80 % Lunge (Oberlappen, Kaverne), 20 % extrapulmonal.' },
   { id: 'k6-t15', sec: '6.2', p: 20, type: 'tf', a: true, q: 'Die Kittniere ist eine Manifestation der Urogenital-Tbc.', ex: 'Extrapulmonal: Urogenital (Kittniere), Nebenniere, Knochen, ZNS.' },
-  { id: 'k6-t16', sec: '6.2', p: 19, type: 'tf', a: false, q: 'Die Primär-Tbc verläuft meist mit schwerer Symptomatik.', ex: 'Die Erstinfektion heilt meist unbemerkt (wie ein grippaler Infekt) aus.' },
   { id: 'k6-t17', sec: '6.2', p: 20, type: 'tf', a: true, q: 'Die Spondylitis tuberculosa kann zu Gibbus und Senkungsabszess führen.', ex: 'Knochen-Tbc: Spondylitis tuberculosa mit Gibbus und Senkungsabszess.' },
-  { id: 'k6-t18', sec: '6.3', p: 20, type: 'tf', a: false, q: 'Die Granulome der Sarkoidose sind verkäsend.', ex: 'Sarkoidose: epitheloidzellige, nicht verkäsende Granulome.' },
-  { id: 'k6-t19', sec: '6.3', p: 20, type: 'tf', a: true, q: 'Bei der Sarkoidose ist der CD4/CD8-Quotient in der BAL erhöht.', ex: 'Sarkoidose: CD4/CD8 > 3,5.' },
   { id: 'k6-t20', sec: '6.3', p: 20, type: 'tf', a: false, q: 'Bei der exogen-allergischen Alveolitis ist der CD4/CD8-Quotient in der BAL erhöht.', ex: 'Bei EAA und HIV ist der CD4/CD8-Quotient erniedrigt.' },
   { id: 'k6-t21', sec: '6.3', p: 20, type: 'tf', a: true, q: 'Röntgen-Typ I der Sarkoidose ist die bihiläre Lymphadenopathie.', ex: 'Typ I: bihiläre Lymphadenopathie; II + Lungeninfiltrate; III nur Lunge; IV Fibrose.' },
-  { id: 'k6-t22', sec: '6.4', p: 20, type: 'tf', a: true, q: 'Beim DAD sind hyaline Membranen der vorherrschende Befund der exsudativen Phase.', ex: 'DAD: Pneumozyten- und Endothelnekrosen, Ödem, hyaline Membranen (vorherrschend).' },
   { id: 'k6-t23', sec: '6.4', p: 20, type: 'tf', a: false, q: 'Beim DAD dominieren intraalveoläre neutrophile Granulozyten.', ex: 'Vorherrschend sind hyaline Membranen, nicht Neutrophile (Altfrage).' },
   { id: 'k6-t24', sec: '6.4', p: 20, type: 'tf', a: true, q: 'Der DAD beginnt akut innerhalb von 24–48 h.', ex: 'Akuter Beginn innerhalb von 24–48 h → respiratorisches Versagen (ARDS).' },
-  { id: 'k6-t25', sec: '6.4', p: 20, type: 'tf', a: false, q: 'Nach überlebter Akutphase eines DAD kommt es nur selten zur Restitutio ad integrum.', ex: 'In der Mehrzahl kommt es zur Restitutio ad integrum, teils zur Wabenlunge.' },
-  { id: 'k6-t26', sec: '6.4', p: 20, type: 'tf', a: true, q: 'Ein Schock kann Spätursache einer Lungenfibrose sein.', ex: 'Über den DAD kann ein Schock zur Wabenlunge führen.' },
-  { id: 'k6-t27', sec: '6.5', p: 20, type: 'tf', a: true, q: 'Interstitielle Lungenerkrankungen führen zu einer restriktiven Ventilationsstörung.', ex: 'Restriktiv mit Erniedrigung aller Lungenvolumina und normaler bis erhöhter FEV1/VC.' },
   { id: 'k6-t28', sec: '6.5', p: 20, type: 'tf', a: false, q: 'Der Fassthorax ist das morphologische Korrelat interstitieller Lungenerkrankungen.', ex: 'Der Fassthorax gehört zum Emphysem (Altfrage 2020).' },
   { id: 'k6-t29', sec: '6.5', p: 20, type: 'tf', a: false, q: 'Die UIP spricht gut auf Kortison an.', ex: 'UIP: Kortison wirkungslos; heute Antifibrotika (Altfrage 2013).' },
-  { id: 'k6-t30', sec: '6.5', p: 20, type: 'tf', a: true, q: 'Die Wabenlunge ist das Endstadium vieler Lungenfibrosen.', ex: 'Wabenlunge = Endstadium vieler Fibrosen; die Ätiologie ist dann oft nicht mehr bestimmbar.' },
   { id: 'k6-t31', sec: '6.5', p: 20, type: 'tf', a: true, q: 'Amiodaron kann eine Lungenfibrose auslösen.', ex: 'Medikamente: Amiodaron, Bleomycin, Methotrexat, Nitrofurantoin.' },
   { id: 'k6-t32', sec: '6.5', p: 20, type: 'tf', a: false, q: 'Die exogen-allergische Alveolitis wird typischerweise durch Viren wie EBV oder CMV ausgelöst.', ex: 'EAA nicht durch Viren (Altfrage 2019).' },
-  { id: 'k6-t33', sec: '6.5', p: 20, type: 'tf', a: true, q: 'Die Therapie der exogen-allergischen Alveolitis ist die Antigenkarenz.', ex: 'EAA: Therapie Antigenkarenz.' },
   { id: 'k6-t34', sec: '6.5', p: 20, type: 'tf', a: true, q: 'Bei der Silikose zeigen die Hilus-Lymphknoten eine Eierschalenverkalkung.', ex: 'Silikose: Hilus-LK mit Eierschalenverkalkung.' },
   { id: 'k6-t35', sec: '6.5', p: 20, type: 'tf', a: false, q: 'Das Caplan-Syndrom ist eine Komplikation der UIP.', ex: 'Caplan = RA + Pneumokoniose mit Rheumaknoten; kein Zusammenhang mit der UIP (Altfrage 2008).' },
-  { id: 'k6-t36', sec: '6.5', p: 20, type: 'tf', a: false, q: 'Die akute interstitielle Pneumonie (AIP) ist lymphozytenbetont und zeigt keine hyalinen Membranen.', ex: 'AIP = idiopathischer DAD: hyaline Membranen, granulozytenbetont.' },
   { id: 'k6-t37', sec: '6.6', p: 21, type: 'tf', a: false, q: 'Pleuraplaques sind eine Präkanzerose des Mesothelioms.', ex: 'Pleuraplaques: „Marker der Exposition“, keine Präkanzerose (Altfrage 2020).' },
   { id: 'k6-t38', sec: '6.6', p: 21, type: 'tf', a: true, q: 'Die häufigste Pleurakomplikation der Asbestexposition ist die Asbestpleuritis mit rezidivierenden Ergüssen.', ex: 'Pleura: Plaques, diffuse Pleurafibrose, Asbestpleuritis/rezidivierende Ergüsse (häufigste Komplikation).' },
   { id: 'k6-t39', sec: '6.6', p: 21, type: 'tf', a: true, q: 'Rauchen und Asbest wirken beim Lungenkrebsrisiko überadditiv.', ex: 'Rauchen + Asbest wirken überadditiv (multiplikativ).' },
-  { id: 'k6-t40', sec: '6.6', p: 21, type: 'tf', a: true, q: 'Das Pleuramesotheliom-Risiko ist schon ab ≤ 1 Faserjahr erhöht.', ex: 'Mesotheliom schon ab ≤ 1 Faserjahr; Bronchial-Ca ×2 nach 25 Faserjahren.' },
-  { id: 'k6-t41', sec: '6.6', p: 21, type: 'tf', a: false, q: 'Asbestassoziierte Tumoren treten typischerweise innerhalb von 1–2 Jahren nach der Exposition auf.', ex: 'Latenz 15–40 Jahre.' },
-  { id: 'k6-t42', sec: '6.6', p: 21, type: 'tf', a: false, q: 'Das maligne Pleuramesotheliom hat eine gute Prognose.', ex: 'Sehr schlechte Prognose (Monate).' },
-  { id: 'k6-t43', sec: '6.6', p: 21, type: 'tf', a: false, q: 'Die Asbestose betrifft vor allem die Lungenoberfelder.', ex: 'Asbestose: interstitielle Fibrose der Unterfelder, subpleural.' },
   { id: 'k6-t44', sec: '6.7', p: 21, type: 'tf', a: false, q: 'Das panlobuläre Emphysem ist typisch für die chronische Bronchitis des Rauchers.', ex: 'Rauchen/chronische Bronchitis → zentrilobulär (Altfrage 2022).' },
   { id: 'k6-t45', sec: '6.7', p: 21, type: 'tf', a: false, q: 'Der α1-Antitrypsin-Mangel verursacht ein zentrilobuläres Emphysem der Oberlappen.', ex: 'α1-AT-Mangel → panlobuläres Emphysem der Unterlappen.' },
   { id: 'k6-t46', sec: '6.7', p: 21, type: 'tf', a: true, q: 'Lungeninfarkte sind hämorrhagisch, keilförmig und liegen subpleural.', ex: 'Lungeninfarkt: hämorrhagisch, keilförmig, subpleural/peripher, Pleuritis.' },
-  { id: 'k6-t47', sec: '6.7', p: 21, type: 'tf', a: true, q: 'Ohne zusätzliche Lungenstauung reicht nach einer Lungenembolie meist die bronchialarterielle Versorgung aus.', ex: 'Ein Infarkt entsteht v. a. bei zusätzlicher Lungenstauung (Linksherzinsuffizienz).' },
-  { id: 'k6-t48', sec: '6.7', p: 21, type: 'tf', a: true, q: 'Herzfehlerzellen sind Siderophagen bei chronischer Lungenstauung.', ex: 'Chronische Stauung: braune Induration mit Herzfehlerzellen (Berliner Blau).' },
-  { id: 'k6-t49', sec: '6.8', p: 22, type: 'tf', a: false, q: 'Das Lungenkarzinom zeigt typische Frühsymptome.', ex: 'Keine Frühsymptome; Husten, Hämoptysen, Rekurrensparese, Horner, Einflussstauung sind spät.' },
   { id: 'k6-t50', sec: '6.8', p: 22, type: 'tf', a: true, q: 'Das Plattenepithelkarzinom der Lunge liegt typischerweise zentral.', ex: 'Plattenepithel-Ca: zentral (Hilus).' },
   { id: 'k6-t51', sec: '6.8', p: 22, type: 'tf', a: false, q: 'Das kleinzellige Karzinom macht ca. 70 % der Lungenkarzinome aus.', ex: 'SCLC ~15–25 %, NSCLC ~75–85 % (Altfrage 2008).' },
-  { id: 'k6-t52', sec: '6.8', p: 22, type: 'tf', a: true, q: 'Beim Lungenkarzinom ist die Rauchdauer wichtiger als die Rauchmenge.', ex: 'Rauchen: Dauer > Menge; Aufhören senkt das Risiko.' },
   { id: 'k6-t53', sec: '6.8', p: 22, type: 'tf', a: true, q: 'KRAS-Mutationen finden sich beim NSCLC v. a. bei Rauchern.', ex: 'EGFR v. a. bei Adeno/Nichtrauchern/Asiaten; KRAS bei Rauchern.' },
   { id: 'k6-t54', sec: '6.8', p: 22, type: 'tf', a: false, q: 'Das kleinzellige Karzinom ist primär chemoresistent.', ex: 'SCLC: initial chemosensibel, Prognose trotzdem sehr schlecht.' },
-  { id: 'k6-t55', sec: '6.8', p: 22, type: 'tf', a: true, q: 'Das großzellige Lungenkarzinom ist eine Ausschlussdiagnose.', ex: 'Großzelliges Karzinom: peripher, undifferenziert, Ausschlussdiagnose.' },
   { id: 'k6-t56', sec: '6.8', p: 22, type: 'tf', a: false, q: 'Das Lambert-Eaton-Syndrom ist eine typische Paraneoplasie des Adenokarzinoms.', ex: 'Lambert-Eaton, SIADH und Cushing sind typische Paraneoplasien des SCLC.' },
-  { id: 'k6-t57', sec: '6.8', p: 22, type: 'tf', a: true, q: 'Lungenmetastasen eines Mammakarzinoms können sich als Lymphangiosis carcinomatosa zeigen.', ex: 'Mamma-Ca in der Lunge: Rundherde, Lymphangiosis carcinomatosa (retikuläre Zeichnung, Dyspnoe), Pleurakarzinose mit Erguss.' }
 ]);

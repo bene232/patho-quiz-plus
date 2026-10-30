@@ -22,18 +22,6 @@ PQ.registerChapter(1, [
     ex: 'ZNS-Tumoren: WHO-Grad 1–4, kein TNM; Grad 1 = benigne – anders als bei Karzinomen, wo G1 trotzdem maligne ist.'
   },
   {
-    id: 'k1-03', sec: '1.1', p: 4, type: 'match',
-    q: 'Ordne das Organ seinem Grading-System zu.',
-    pairs: [
-      ['Mamma', 'Elston & Ellis'],
-      ['Prostata', 'Gleason/ISUP-Gradgruppen'],
-      ['Niere', 'ISUP/WHO (Nukleolengröße)'],
-      ['NET', 'Ki-67 + Mitosen'],
-      ['Sarkome', 'FNCLCC']
-    ],
-    ex: 'Außerdem: Endometrium Typ I nach soliden Anteilen; Harnblase WHO (PUNLMP/low/high grade); ZNS WHO-Grad 1–4.'
-  },
-  {
     id: 'k1-04', sec: '1.1', p: 4, type: 'single',
     q: 'Bei welchem Tumor erfolgt KEIN histologisches Grading?',
     opts: ['Schilddrüsenkarzinom', 'Mammakarzinom', 'Prostatakarzinom', 'Nierenzellkarzinom'],
@@ -96,29 +84,6 @@ PQ.registerChapter(1, [
     ],
     a: 0,
     ex: 'R2 = makroskopischer Residualtumor (R2a makroskopisch, R2b makroskopisch + mikroskopisch bestätigt). In einer Altfrage war „erst mit IHC nachweisbar“ falsch.'
-  },
-  {
-    id: 'k1-11', sec: '1.2', p: 4, type: 'match',
-    q: 'Ordne die R-Klassifikation ihrer Bedeutung zu.',
-    pairs: [
-      ['RX', 'Nicht beurteilbar'],
-      ['R0', 'Kein Residualtumor'],
-      ['R1', 'Mikroskopischer Residualtumor am Rand'],
-      ['R2', 'Makroskopischer Residualtumor']
-    ],
-    ex: 'RX z. B., wenn der Tumor in mehreren Fragmenten eingesandt wurde.'
-  },
-  {
-    id: 'k1-12', sec: '1.2', p: 4, type: 'match',
-    q: 'Ordne das TNM-Präfix seiner Bedeutung zu.',
-    pairs: [
-      ['c', 'Klinisch (Bildgebung, intraoperativ)'],
-      ['p', 'Pathologisch (am Resektat)'],
-      ['y', 'Nach neoadjuvanter Therapie'],
-      ['r', 'Rezidiv'],
-      ['a', 'Autopsie']
-    ],
-    ex: 'T = Primärtumor, N = regionäre Lymphknoten, M = Fernmetastasen; optional L, V, Pn.'
   },
   {
     id: 'k1-13', sec: '1.2', p: 4, type: 'single',
@@ -186,28 +151,6 @@ PQ.registerChapter(1, [
     ],
     a: 0,
     ex: 'Prädiktiver Marker = Grundlage der „Targeted Therapy“. Aussagen über das Überleben macht ein prognostischer Marker (z. B. Stadium, Grading, Ki-67).'
-  },
-  {
-    id: 'k1-20', sec: '1.3', p: 4, type: 'match',
-    q: 'Ordne den Begriff seiner Definition zu.',
-    pairs: [
-      ['Biomarker', 'Objektiv messbares Merkmal, das auf einen normalen oder krankhaften Prozess hinweist'],
-      ['Prognostischer Marker', 'Aussage über progressionsfreies bzw. Gesamtüberleben'],
-      ['Prädiktiver Marker', 'Sagt das Ansprechen auf eine Therapie voraus']
-    ],
-    ex: 'Biomarker: Zellen, Gene, Genprodukte, Moleküle wie Enzyme/Hormone.'
-  },
-  {
-    id: 'k1-21', sec: '1.3', p: 5, type: 'match',
-    q: 'Ordne den Tumor seinem prädiktiven Faktor zu.',
-    pairs: [
-      ['Kolorektales Karzinom', 'RAS-Wildtyp → anti-EGFR-Antikörper'],
-      ['NSCLC', 'EGFR-Mutation, EML4-ALK, ROS1'],
-      ['Malignes Melanom', 'BRAF V600E'],
-      ['GIST', 'c-KIT/PDGFRA → Imatinib'],
-      ['Mammakarzinom', 'ER/PR, HER2']
-    ],
-    ex: 'KRK außerdem BRAF und MSI-H (→ Immuntherapie); NSCLC außerdem BRAF, KRAS G12C, PD-L1.'
   },
   {
     id: 'k1-22', sec: '1.3', p: 5, type: 'single',
@@ -295,40 +238,6 @@ PQ.registerChapter(1, [
     ex: 'Die ersten drei Aussagen stammen aus einer Altfrage (✓). Ki-67 = Proliferationsindex (Zellen außerhalb G0).'
   },
   {
-    id: 'k1-31', sec: '1.4', p: 5, type: 'match',
-    q: 'Ordne die Färbung ihrem Nachweis zu.',
-    pairs: [
-      ['PAS', 'Glykogen, Schleim, Pilze, M. Whipple'],
-      ['Grocott', 'Pilze, Pneumocystis'],
-      ['Warthin-Starry', 'Spirochäten, H. pylori, Bartonellen'],
-      ['Kongorot', 'Amyloid (apfelgrüne Doppelbrechung)'],
-      ['Berliner Blau', 'Eisen/Hämosiderin']
-    ],
-    ex: 'Weitere: Giemsa (Hämatologie, Mastzellen, H. pylori), Elastica-van-Gieson (elastische Fasern/Kollagen), Fettfärbung (z. B. NSD-Adenom).'
-  },
-  {
-    id: 'k1-32', sec: '1.4', p: 6, type: 'match',
-    q: 'Ordne den Immunmarker seiner Zuordnung zu.',
-    pairs: [
-      ['TTF-1, Napsin A', 'Lungen-Adenokarzinom'],
-      ['p40, CK5/6', 'Plattenepithelkarzinom'],
-      ['Synaptophysin, Chromogranin A', 'Neuroendokrine Tumoren'],
-      ['Calretinin, WT1, D2-40', 'Mesotheliom'],
-      ['CD30, CD15', 'Hodgkin-/Reed-Sternberg-Zellen']
-    ],
-    ex: 'TTF-1 auch Schilddrüse; CD56 ebenfalls neuroendokrin (SCLC, NET).'
-  },
-  {
-    id: 'k1-33', sec: '1.4', p: 6, type: 'match',
-    q: 'Ordne das CK7/CK20-Profil dem Tumor zu.',
-    pairs: [
-      ['CK7+/CK20−', 'Lunge, Mamma, Gallenwege'],
-      ['CK7−/CK20+', 'Kolorektales Karzinom'],
-      ['CK7−/CK20−', 'HCC']
-    ],
-    ex: 'CCC auch CK19; HCC: HepPar1, Glypican-3.'
-  },
-  {
     id: 'k1-34', sec: '1.4', p: 6, type: 'single',
     q: 'Welche Marker sprechen für ein Melanom?',
     opts: ['S100, SOX10, HMB45, Melan-A', 'CD31, CD34, ERG', 'Desmin, Myogenin'],
@@ -358,17 +267,6 @@ PQ.registerChapter(1, [
   },
 
   /* ---------- 1.5 Patterns of metastasis ---------- */
-  {
-    id: 'k1-38', sec: '1.5', p: 6, type: 'match',
-    q: 'Ordne die Metastase ihrem typischen Primärtumor zu.',
-    pairs: [
-      ['Krukenberg-Tumor (Ovar)', 'Siegelringzell-Ca des Magens'],
-      ['Osteoblastische Knochenmetastasen', 'Prostatakarzinom'],
-      ['Häufigste Hirnmetastasen', 'Bronchialkarzinom (v. a. SCLC)'],
-      ['Lebermetastasen (laut Altfrage am häufigsten)', 'Dickdarmkarzinom']
-    ],
-    ex: 'Nebenniere: v. a. kleinzelliges Bronchial-Ca, Mamma, Melanom. Ovar außerdem Mamma (lobulär), Kolon.'
-  },
   {
     id: 'k1-39', sec: '1.5', p: 6, type: 'single',
     q: 'In welchem Verhältnis stehen Lebermetastasen zu primären Lebertumoren?',

@@ -25,55 +25,11 @@ PQ.registerChapter(15, [
     ex: 'Stadium I: oberflächennaher Proteoglykanverlust, oberflächliche Fissuren (Fibrillation), noch kein Substanzverlust. Die Fibrillierung gehört also zu Stadium I.'
   },
   {
-    id: 'k15-03', sec: '15.1', p: 47, type: 'match',
-    q: 'Ordne das Arthrose-Stadium nach Otte seinem Befund zu.',
-    pairs: [
-      ['Stadium I', 'Oberflächliche Fissuren (Fibrillation), noch kein Substanzverlust'],
-      ['Stadium II', 'Fissuren bis in knochennahe Schichten, „Brutkapseln“'],
-      ['Stadium III', 'Fissuren bis zur knöchernen Gelenkfläche, Detritus-Synovialitis'],
-      ['Stadium IV', 'Knochenglatze, Eburnisierung, Osteophyten, Geröllzysten']
-    ],
-    ex: 'Stadium III: auch abgesprengte Knorpelfragmente im Gelenk. Stadium IV: vollständiger Knorpelverlust, subchondrale Sklerose, Osteophyten, Geröllzysten (subchondrale Pseudozysten).'
-  },
-  {
     id: 'k15-04', sec: '15.1', p: 47, type: 'single',
     q: 'Wovon geht die Arthrosis deformans aus?',
     opts: ['Vom Gelenkknorpel', 'Von der Synovialis', 'Vom subchondralen Knochen'],
     a: 0,
     ex: 'Arthrosis deformans = Gelenkverschleiß über das altersübliche Maß hinaus; geht vom Gelenkknorpel aus (nicht von der Synovialis!) und bezieht später Knochen und Synovialis ein.'
-  },
-  {
-    id: 'k15-05', sec: '15.1', p: 47, type: 'match',
-    q: 'Ordne die Ursache der sekundären Arthrose ihrer Gruppe zu.',
-    pairs: [
-      ['Fehlbelastung', 'Dysplasie, Achsenfehler'],
-      ['Trauma', 'Gelenkfraktur, Luxation'],
-      ['Metabolisch', 'Kristallarthropathie, Hämochromatose, Ochronose'],
-      ['Entzündlich', 'Bakterielle Arthritis, RA']
-    ],
-    ex: 'Primäre Arthrose: idiopathisch, minderwertiger Knorpel. Sekundär außerdem Hämophilie und Osteonekrose.'
-  },
-  {
-    id: 'k15-06', sec: '15.1', p: 47, type: 'single',
-    q: 'Welche Zellen bilden die Deckzellschicht der Synovialis?',
-    opts: [
-      'Typ A = Makrophagen, Typ B = Fibroblasten',
-      'Typ A = Fibroblasten, Typ B = Makrophagen',
-      'Typ A = Chondrozyten, Typ B = Osteoblasten'
-    ],
-    a: 0,
-    ex: 'Synovialis: Deckzellen Typ A = Makrophagen, Typ B = Fibroblasten; bildet die Synovia (Ernährung, Schmierung). Hyaliner Knorpel: Chondrozyten, Kollagen II, Proteoglykane.'
-  },
-  {
-    id: 'k15-07', sec: '15.1', p: 47, type: 'single',
-    q: 'Was versteht man unter einer Arthrosis deformans?',
-    opts: [
-      'Gelenkverschleiß über das altersübliche Maß hinaus',
-      'Physiologische, asymptomatische Gelenkalterung',
-      'Entzündliche Gelenkerkrankung, die in der Synovialis beginnt'
-    ],
-    a: 0,
-    ex: 'Arthrosis deformans: stadienhafter Verschleiß über das altersübliche Maß hinaus, vom Gelenkknorpel ausgehend. Die physiologische Alterung bleibt asymptomatisch; Arthritiden beginnen in der Synovialis. Therapie konservativ bzw. Endoprothese (einziger kurativer Ansatz im Spätstadium).'
   },
   {
     id: 'k15-08', sec: '15.1', p: 47, type: 'single',
@@ -101,17 +57,6 @@ PQ.registerChapter(15, [
     ],
     a: 0,
     ex: 'Konsensusklassifikation (Krenn/Morawietz): Typ I = abriebinduziert, Typ II = infektiös, Typ III = Mischtyp, Typ IV = indifferent (fibrös).'
-  },
-  {
-    id: 'k15-10', sec: '15.2', p: 47, type: 'match',
-    q: 'Ordne den Typ der periprothetischen Membran (Krenn/Morawietz) zu.',
-    pairs: [
-      ['Typ I', 'Abriebinduziert (aseptisch), mittlere Standzeit ~12 J'],
-      ['Typ II', 'Infektiös (Low-Grade), mittlere Standzeit ~2,5 J'],
-      ['Typ III', 'Mischtyp, mittlere Standzeit ~4,2 J'],
-      ['Typ IV', 'Indifferent (fibrös), mittlere Standzeit ~5,5 J']
-    ],
-    ex: 'Typen V–VII: Arthrofibrose, Allergie/Intoleranz, Osteopathie.'
   },
   {
     id: 'k15-11', sec: '15.2', p: 47, type: 'single',
@@ -172,16 +117,6 @@ PQ.registerChapter(15, [
     ex: 'Polymyositis: Infiltration des Muskels durch T-Lymphozyten (keine Dystrophin- oder Aktin-Mutation, keine Eosinophilen, kein Poliovirus).'
   },
   {
-    id: 'k15-17', sec: '15.3', p: 48, type: 'match',
-    q: 'Ordne die Kristallarthropathie ihrem Kristall zu.',
-    pairs: [
-      ['Gicht', 'Mononatriumurat (nadelförmig, negativ doppelbrechend)'],
-      ['Chondrokalzinose (Pseudogicht)', 'Kalziumpyrophosphat (rhomboid, schwach positiv doppelbrechend)'],
-      ['Oxalose', 'Oxalat bei primärer Hyperoxalurie/Niereninsuffizienz']
-    ],
-    ex: 'Weitere Kristallarthropathie: Hydroxylapatit-Synovialitis/Tendinitis (Schulter).'
-  },
-  {
     id: 'k15-18', sec: '15.3', p: 48, type: 'single',
     q: 'Wo tritt der akute Gichtanfall typischerweise auf?',
     opts: ['Großzehengrundgelenk (Podagra)', 'Kniegelenk mit Meniskusverkalkung', 'Fingerendgelenke (Heberden)', 'Schulter (Hydroxylapatit)'],
@@ -198,46 +133,6 @@ PQ.registerChapter(15, [
       ['Die Uratkristalle sind rhomboid und positiv doppelbrechend.', false]
     ],
     ex: 'Gicht: häufigste Arthritisform, assoziiert mit metabolischem Syndrom; Urat nadelförmig, negativ doppelbrechend. Rhomboid, schwach positiv doppelbrechend = Kalziumpyrophosphat (Chondrokalzinose).'
-  },
-  {
-    id: 'k15-20', sec: '15.3', p: 48, type: 'match',
-    q: 'Ordne die Phase der rheumatoiden Arthritis ihrem Befund zu.',
-    pairs: [
-      ['Exsudation', 'Gelenkerguss'],
-      ['Proliferation', 'Wucherung der Synovialis'],
-      ['Pannus', 'Granulationsgewebe zerstört Knorpel und Knochen (Erosionen)'],
-      ['Spätstadium', 'Fibrose/Ankylose']
-    ],
-    ex: 'Fehlstellungen: Ulnardeviation, Schwanenhals.'
-  },
-  {
-    id: 'k15-21', sec: '15.3', p: 48, type: 'single',
-    q: 'Welche Befunde kennzeichnen die AKTUELLE Aktivität der rheumatoiden Arthritis?',
-    opts: [
-      'Ödem, Fibrin, fibrinoide Nekrosen, Granulozyten',
-      'Lymphozyten, Plasmazellen und Makrophagen',
-      'Deckzellproliferation und Gefäßproliferation',
-      'Rheumatoide Granulome'
-    ],
-    a: 0,
-    ex: 'Aktuelle Aktivität: Ödem, Fibrin, fibrinoide Nekrosen, Granulozyten, nekrotisierende Vaskulitis. Basisaktivität: Lymphozyten, Plasmazellen, Makrophagen, Deckzell- und Gefäßproliferation, rheumatoide Granulome.'
-  },
-  {
-    id: 'k15-22', sec: '15.3', p: 48, type: 'single',
-    q: 'Was bedeutet ein Synovialitis-Score nach Krenn von ≥ 5?',
-    opts: ['High-grade-Synovialitis wie bei RA', 'Low-grade-Synovialitis wie bei Arthrose', 'Periprothetische Infektion'],
-    a: 0,
-    ex: 'Krenn-Score: Deckzellschicht + Stromazellularität + Infiltrat, je 0–3; ≥ 5 = high-grade wie bei RA, ≤ 4 = low-grade wie bei Arthrose.'
-  },
-  {
-    id: 'k15-23', sec: '15.3', p: 48, type: 'match',
-    q: 'Ordne die Komplikation der rheumatoiden Arthritis ihrer Definition zu.',
-    pairs: [
-      ['Felty-Syndrom', 'RA + Splenomegalie + Leukopenie'],
-      ['Caplan-Syndrom', 'RA + Pneumokoniose'],
-      ['Amyloidose bei RA', 'AA-Amyloidose']
-    ],
-    ex: 'Weitere Komplikationen: sekundäre Vaskulitis, Sjögren, Rheumaknoten, interstitielle Lungenerkrankung.'
   },
   {
     id: 'k15-24', sec: '15.3', p: 48, type: 'single',
@@ -324,27 +219,6 @@ PQ.registerChapter(15, [
     ex: 'Häufigste Form ist die exogene OM (~70 %; posttraumatisch, postoperativ, fortgeleitet). Die endogene (hämatogene) OM macht ~30 % aus.'
   },
   {
-    id: 'k15-33', sec: '15.4', p: 49, type: 'match',
-    q: 'Ordne das Lebensalter dem Befallsmuster der hämatogenen Osteomyelitis zu.',
-    pairs: [
-      ['Säugling', 'Meta- und Epiphyse (Gelenkeinbruch möglich)'],
-      ['Kind', 'Metaphyse (Wachstumsfuge als Barriere)'],
-      ['Erwachsener', 'Diaphyse bzw. Wirbelkörper']
-    ],
-    ex: 'Das Befallsmuster folgt der Gefäßversorgung: beim Säugling transepiphysäre Gefäße → septische Arthritis, Wachstumsstörung. Lange Röhrenknochen ~80 %.'
-  },
-  {
-    id: 'k15-34', sec: '15.4', p: 49, type: 'match',
-    q: 'Ordne den Begriff der Osteomyelitis seiner Bedeutung zu.',
-    pairs: [
-      ['Sequester', 'Toter Knochen'],
-      ['Totenlade', 'Reaktive Knochenneubildung'],
-      ['Kloaken', 'Fisteln'],
-      ['Brodie-Abszess', 'Metaphysärer, abgekapselter Abszess']
-    ],
-    ex: 'Chronische OM: Sequester, Totenlade, Kloaken/Fisteln, lymphoplasmazelluläres Infiltrat, Markraumfibrose, Sklerose. Weitere Sonderformen: plasmazellreiche OM, sklerosierende OM (Garré), CRMO.'
-  },
-  {
     id: 'k15-35', sec: '15.4', p: 49, type: 'single',
     q: 'Welcher histologische Befund ist typisch für die akute Osteomyelitis?',
     opts: [
@@ -384,18 +258,6 @@ PQ.registerChapter(15, [
       ['Staph. aureus ist ein Erreger der spezifischen OM.', false]
     ],
     ex: 'Die endogene (hämatogene) OM beginnt im Markraum; beim Erwachsenen v. a. Wirbelsäule (Spondylodiszitis). Staph. aureus verursacht eine unspezifische OM.'
-  },
-  {
-    id: 'k15-39', sec: '15.4', p: 49, type: 'single',
-    q: 'Was kennzeichnet die Spondylitis tuberculosa?',
-    opts: [
-      'Wirbelkörperdestruktion mit Gibbus und Senkungsabszess (Psoas)',
-      'Sklerosierende Osteomyelitis (Garré)',
-      'Multifokale, sterile Entzündung bei Kindern (CRMO)',
-      'Metaphysärer, abgekapselter Abszess'
-    ],
-    a: 0,
-    ex: 'Spondylitis tuberculosa: Wirbelkörperdestruktion → Gibbus, Senkungsabszess (Psoas), perifokale Osteoporose. Der metaphysäre abgekapselte Abszess ist der Brodie-Abszess.'
   },
 
   /* ---------- 15.5 Osteopathies, fractures, bone cysts ---------- */
@@ -437,29 +299,11 @@ PQ.registerChapter(15, [
     ex: 'Primäre (direkte) Heilung: stabile Fixierung, Kontakt/enger Spalt → Osteone überbrücken direkt, ohne Kallus. Kallus entsteht nur bei der sekundären Heilung.'
   },
   {
-    id: 'k15-43', sec: '15.5', p: 49, type: 'match',
-    q: 'Ordne die Osteopathie ihrer Definition zu.',
-    pairs: [
-      ['Osteoporose', 'Verminderte Knochenmasse bei normaler Mineralisation'],
-      ['Osteomalazie', 'Mineralisationsstörung mit vermehrtem Osteoid'],
-      ['Osteosklerose', 'Verbreiterung von Kortikalis und/oder Spongiosabälkchen'],
-      ['M. Paget', 'Überstürzter Umbau mit Mosaikstruktur']
-    ],
-    ex: 'Osteomalazie/Rachitis: Vitamin-D-Mangel, Phosphatmangel, renal; Looser-Umbauzonen. Osteosklerose: Osteopetrose, osteoblastische Metastasen, Fluorose, renale Osteopathie.'
-  },
-  {
     id: 'k15-44', sec: '15.5', p: 49, type: 'single',
     q: 'Welcher DXA-Wert definiert eine Osteoporose?',
     opts: ['T-Score ≤ −2,5', 'T-Score ≥ +2,5', 'T-Score ≤ −1,0'],
     a: 0,
     ex: 'Diagnose der Osteoporose mit DXA: T-Score ≤ −2,5.'
-  },
-  {
-    id: 'k15-45', sec: '15.5', p: 49, type: 'single',
-    q: 'Welche Osteoporose ist lokalisiert?',
-    opts: ['Perifokale Osteoporose bei Tuberkulose', 'Postmenopausale Osteoporose (Typ I)', 'Senile Osteoporose (Typ II)', 'Steroidinduzierte Osteoporose'],
-    a: 0,
-    ex: 'Lokalisiert: Immobilisation/Inaktivität, Sudeck (CRPS), perifokal bei Entzündung (Tbc!) und Tumoren. Postmenopausal, senil und steroidinduziert sind generalisiert.'
   },
   {
     id: 'k15-46', sec: '15.5', p: 49, type: 'kprim',
@@ -495,38 +339,6 @@ PQ.registerChapter(15, [
     ],
     a: 0,
     ex: 'McCune-Albright: fibröse Dysplasie + Café-au-lait-Flecken + Pubertas praecox. Enchondrome + Hämangiome → Maffucci; multiple Enchondrome → M. Ollier; multiple Exostosen → EXT1/2, autosomal-dominant.'
-  },
-  {
-    id: 'k15-49', sec: '15.5', p: 49, type: 'match',
-    q: 'Ordne die aseptische Knochennekrose ihrem Kennzeichen zu.',
-    pairs: [
-      ['M. Perthes', 'Hüftkopf bei Kindern'],
-      ['M. Kienböck', 'Os lunatum'],
-      ['Femurkopfnekrose des Erwachsenen', 'Steroide, Alkohol, Sichelzelle, Caisson']
-    ],
-    ex: 'Aseptische Knochennekrosen außerdem: M. Köhler I/II, Osgood-Schlatter, M. Scheuermann. Histo: leere Osteozytenhöhlen, Markfettnekrose.'
-  },
-  {
-    id: 'k15-50', sec: '15.5', p: 49, type: 'match',
-    q: 'Ordne die Knochenläsion ihrem Kennzeichen zu.',
-    pairs: [
-      ['Juvenile Knochenzyste', 'Flüssigkeitsgefüllt, dünne Membran, „fallen fragment“'],
-      ['Aneurysmatische Knochenzyste', 'Blutgefüllte Kammern, Septen mit Riesenzellen, USP6'],
-      ['Eosinophiles Granulom', 'Langerhans-Zell-Histiozytose, CD1a'],
-      ['Brauner Tumor', 'Hyperparathyreoidismus (Osteitis fibrosa cystica)']
-    ],
-    ex: 'Juvenile Knochenzyste: Kinder/Jugendliche, Metaphyse prox. Humerus/Femur. Weitere tumorähnliche Läsionen: NOF, Myositis ossificans.'
-  },
-  {
-    id: 'k15-51', sec: '15.5', p: 49, type: 'single',
-    q: 'Was ist eine Pseudarthrose?',
-    opts: [
-      'Bewegliche Diskontinuität bei ausbleibender Konsolidierung',
-      'Direkte Überbrückung des Frakturspalts durch Osteone ohne Kallus',
-      'Harter Kallus aus Geflechtknochen'
-    ],
-    a: 0,
-    ex: 'Pseudarthrose = Komplikation der Frakturheilung (bewegliche Diskontinuität). Die direkte Überbrückung ist die primäre Heilung, der harte Kallus eine Phase der sekundären Heilung.'
   },
   {
     id: 'k15-52', sec: '15.5', p: 49, type: 'single',
@@ -626,39 +438,6 @@ PQ.registerChapter(15, [
     ex: 'Laut KPK-Lösung gehören entzündliche Läsionen/Mukozele, Chondrosarkom, kongenitale Läsionen und invertiertes Papillom zur DD – der M. Paget nicht.'
   },
   {
-    id: 'k15-61', sec: '15.6', p: 50, type: 'match',
-    q: 'Ordne den Knochentumor seiner typischen Lage im Röhrenknochen zu.',
-    pairs: [
-      ['Chondroblastom', 'Epiphyse (< 30 J)'],
-      ['Riesenzelltumor', 'Epiphyse nach Fugenschluss'],
-      ['Osteosarkom', 'Metaphyse'],
-      ['Ewing-Sarkom', 'Diaphyse']
-    ],
-    ex: 'Metaphyse: Osteosarkom, Chondrosarkom, Osteochondrom, NOF, juvenile Knochenzyste, Enchondrom, aneurysmatische Knochenzyste. Diaphyse: Ewing-Sarkom, fibröse Dysplasie, Osteoidosteom, Enchondrom, Lymphom.'
-  },
-  {
-    id: 'k15-62', sec: '15.6', p: 50, type: 'match',
-    q: 'Ordne den Knochentumor seinem Kennzeichen zu.',
-    pairs: [
-      ['Osteochondrom', 'Häufigster benigner Knochentumor'],
-      ['Enchondrom', 'Kurze Röhrenknochen von Hand und Fuß'],
-      ['Osteoidosteom', 'Nächtlicher Schmerz, Ansprechen auf ASS/NSAR'],
-      ['Riesenzelltumor', 'Osteoklastäre Riesenzellen, Denosumab'],
-      ['Plasmozytom', '„Schrotschuss“-Osteolysen']
-    ],
-    ex: 'Enchondrom: zweithäufigster benigner Tumor (~30 %), hyaliner Knorpel intramedullär. Osteoidosteom: Nidus < 1,5 cm (Osteoblastom > 2 cm). Riesenzelltumor: 20–40 J, lokal aggressiv, Rezidive.'
-  },
-  {
-    id: 'k15-63', sec: '15.6', p: '49–50', type: 'match',
-    q: 'Ordne den Röntgenbefund dem Tumor bzw. der Läsion zu.',
-    pairs: [
-      ['Codman-Dreieck, Spiculae („Sonnenstrahlen“)', 'Osteosarkom'],
-      ['Zwiebelschalenartige Periostreaktion', 'Ewing-Sarkom'],
-      ['Milchglas, Hirtenstabdeformität', 'Fibröse Dysplasie']
-    ],
-    ex: 'Das Ewing-Sarkom hat zudem einen ausgedehnten Weichteilanteil; Fieber/BSG ↑ machen die Osteomyelitis zur DD.'
-  },
-  {
     id: 'k15-64', sec: '15.6', p: 50, type: 'single',
     q: 'Welcher Primärtumor verursacht typischerweise osteoblastische Knochenmetastasen?',
     opts: ['Prostatakarzinom', 'Nierenzellkarzinom', 'Schilddrüsenkarzinom', 'Plasmozytom'],
@@ -706,13 +485,6 @@ PQ.registerChapter(15, [
     ex: 'Die Response (Regressionsgrad) ist der prognostisch wichtigste Faktor: gute Responder 5-JÜR 80–90 %.'
   },
   {
-    id: 'k15-69', sec: '15.6', p: 50, type: 'single',
-    q: 'Welches Organ ist der dritthäufigste Ort hämatogener Metastasen?',
-    opts: ['Knochen', 'Leber', 'Lunge'],
-    a: 0,
-    ex: 'Knochen ist nach Leber und Lunge der dritthäufigste Ort hämatogener Metastasen (Mamma, Prostata, Lunge, Niere, Schilddrüse).'
-  },
-  {
     id: 'k15-70', sec: '15.6', p: 50, type: 'single',
     q: 'Ab welcher Dicke der Knorpelkappe ist ein Osteochondrom entartungsverdächtig?',
     opts: ['> 1–2 cm', '> 1–2 mm', '> 10 cm'],
@@ -758,30 +530,6 @@ PQ.registerChapter(15, [
     ex: 'Der tenosynoviale Riesenzelltumor wächst langsam an Finger/Hand; histologisch Histiozyten, Riesenzellen, Hämosiderin, Schaumzellen.'
   },
   {
-    id: 'k15-74', sec: '15.7', p: 51, type: 'match',
-    q: 'Ordne den Immunmarker der Liniendifferenzierung zu.',
-    pairs: [
-      ['Desmin', 'Muskel'],
-      ['Myogenin/MyoD1', 'Skelettmuskel'],
-      ['MDM2', 'Liposarkom'],
-      ['CD117/DOG1', 'GIST'],
-      ['CD31/CD34/ERG', 'Gefäße']
-    ],
-    ex: 'Außerdem: SMA/h-Caldesmon (glatte Muskulatur), S100/SOX10 (neural, Melanom), Keratin (Synovialsarkom). IHC zur Liniendifferenzierung ist unverzichtbar.'
-  },
-  {
-    id: 'k15-75', sec: '15.7', p: '50–51', type: 'match',
-    q: 'Ordne das Sarkom seiner molekularen Veränderung zu.',
-    pairs: [
-      ['Myxoides Liposarkom', 't(12;16) FUS-DDIT3'],
-      ['Atypischer lipomatöser Tumor', 'MDM2-Amplifikation (12q13–15)'],
-      ['Alveoläres Rhabdomyosarkom', 'PAX3/7-FOXO1'],
-      ['Synovialsarkom', 't(X;18)'],
-      ['Ewing-Sarkom', 't(11;22) EWSR1-FLI1']
-    ],
-    ex: 'Atypischer lipomatöser Tumor/G1-Liposarkom und dedifferenziertes LS: Ring-/Riesenchromosomen mit MDM2-Amplifikation.'
-  },
-  {
     id: 'k15-76', sec: '15.7', p: 51, type: 'single',
     q: 'Was ist das häufigste Sarkom des Erwachsenen?',
     opts: ['Liposarkom', 'Rhabdomyosarkom', 'Leiomyosarkom', 'Synovialsarkom'],
@@ -814,29 +562,6 @@ PQ.registerChapter(15, [
     ex: 'Weichgewebstumoren sind selten (< 1 % der Malignome, ~3.000 Sarkome/J in D). Bekannte Ätiologie: Strahlung (Latenz ~10 J), HHV-8, NF1, Li-Fraumeni, chronisches Lymphödem. IHC ist unverzichtbar.'
   },
   {
-    id: 'k15-80', sec: '15.7', p: 51, type: 'match',
-    q: 'Ordne die Fibromatose bzw. den Pseudotumor seinem Kennzeichen zu.',
-    pairs: [
-      ['Noduläre Fasziitis', 'Rasch wachsend, selbstlimitierend, USP6'],
-      ['Desmoid', 'β-Catenin, lokal aggressiv, keine Metastasen'],
-      ['M. Dupuytren', 'Palmare Fibromatose mit Beugekontraktur'],
-      ['M. Ledderhose', 'Plantaraponeurose'],
-      ['Induratio penis plastica', 'M. Peyronie']
-    ],
-    ex: 'Desmoid (aggressive Fibromatose): Bauchdeckenfaszie v. a. bei Frauen post partum, intraabdominal bei FAP/Gardner. Dupuytren: Ring-/Kleinfinger, Männer > 40 J.'
-  },
-  {
-    id: 'k15-81', sec: '15.7', p: 51, type: 'single',
-    q: 'Wie ist die Prognose des Leiomyosarkoms?',
-    opts: [
-      'Stark lokalisationsabhängig: intraabdominal 5-JÜR 20–30 %, kutan nahe 100 %',
-      'Kutan 5-JÜR 20–30 %, intraabdominal nahe 100 %',
-      'Unabhängig von der Lokalisation sehr gut'
-    ],
-    a: 0,
-    ex: 'Leiomyosarkom: intraabdominal/retroperitoneal, Uterus, Gefäße (V. cava); kutane Tumoren metastasieren kaum.'
-  },
-  {
     id: 'k15-82', sec: '15.7', p: 51, type: 'single',
     q: 'Was ist ein Ganglion („Überbein“)?',
     opts: [
@@ -850,72 +575,37 @@ PQ.registerChapter(15, [
 
   /* ---------- True/false statements ---------- */
   { id: 'k15-t01', sec: '15.1', p: 47, type: 'tf', a: false, q: 'Die Arthrose geht primär von der Synovialis aus.', ex: 'Die Arthrose geht vom Gelenkknorpel aus (Altfrage 2022, 2024).' },
-  { id: 'k15-t02', sec: '15.1', p: 47, type: 'tf', a: true, q: 'Die physiologische Alterung des Gelenkknorpels bleibt asymptomatisch.', ex: 'Physiologische Alterung (Wasserverlust, schlechtere Ernährung) bleibt asymptomatisch.' },
   { id: 'k15-t03', sec: '15.1', p: 47, type: 'tf', a: true, q: 'Die Heberden-Arthrose betrifft die Fingerendgelenke.', ex: 'Arthrose: große belastete Gelenke und Fingerendgelenke (Heberden).' },
   { id: 'k15-t04', sec: '15.1', p: 47, type: 'tf', a: false, q: 'Im Stadium I nach Otte besteht bereits ein deutlicher Substanzverlust.', ex: 'Stadium I: noch kein Substanzverlust (Altfrage 2019).' },
   { id: 'k15-t05', sec: '15.1', p: 47, type: 'tf', a: true, q: '„Brutkapseln“ (Chondrozytenproliferation) kennzeichnen Stadium II nach Otte.', ex: 'Stadium II: Fissuren bis in knochennahe Schichten, Chondrozytenproliferation („Brutkapseln“).' },
   { id: 'k15-t06', sec: '15.1', p: 47, type: 'tf', a: false, q: 'Das Röntgenbild ist bei der Arthrose früh aussagekräftig.', ex: 'Röntgen erst spät aussagekräftig (Altfrage 2022, 2024).' },
   { id: 'k15-t07', sec: '15.1', p: 47, type: 'tf', a: true, q: 'Geröllzysten sind subchondrale Pseudozysten im Spätstadium der Arthrose.', ex: 'Stadium IV: Knochenglatze, Sklerose, Osteophyten, Geröllzysten (subchondrale Pseudozysten).' },
   { id: 'k15-t08', sec: '15.2', p: 47, type: 'tf', a: false, q: 'Typ I der periprothetischen Membran entspricht dem Infektionstyp.', ex: 'Typ I = Abrieb, Typ II = Infekt (Altfrage).' },
-  { id: 'k15-t09', sec: '15.2', p: 47, type: 'tf', a: true, q: 'Die Quantifizierung der Granulozyten in der periprothetischen Membran ist zuverlässiger als die Mikrobiologie.', ex: 'Typ II: ≥ 23 neutrophile Granulozyten in 10 HPF – zuverlässiger als die Mikrobiologie.' },
-  { id: 'k15-t10', sec: '15.2', p: 47, type: 'tf', a: true, q: 'Abriebinduzierte Prothesenlockerungen haben mit ca. 12 Jahren die längste mittlere Standzeit.', ex: 'Mittlere Standzeit: Typ I ~12 J, Typ II ~2,5 J, Typ III ~4,2 J, Typ IV ~5,5 J.' },
   { id: 'k15-t11', sec: '15.2', p: 47, type: 'tf', a: false, q: 'Infektiöse Prothesenlockerungen treten typischerweise erst nach 10–15 Jahren auf.', ex: 'Typ II (infektiös): mittlere Standzeit ~2,5 J.' },
-  { id: 'k15-t12', sec: '15.3', p: 48, type: 'tf', a: true, q: 'Entzündliche Gelenkläsionen beginnen in der Synovialmembran.', ex: 'Arthritiden beginnen in der Synovialmembran (im Gegensatz zur Arthrose).' },
   { id: 'k15-t13', sec: '15.3', p: 48, type: 'tf', a: false, q: 'Bei der rheumatoiden Arthritis sind Männer häufiger betroffen.', ex: 'Frauen : Männer ≈ 3 : 1 (Altfrage 2008, 2010).' },
-  { id: 'k15-t14', sec: '15.3', p: 48, type: 'tf', a: false, q: 'Bei der rheumatoiden Arthritis sind typischerweise zuerst die DIP-Gelenke betroffen.', ex: 'RA: MCP, PIP, Handgelenke; DIP frei.' },
   { id: 'k15-t15', sec: '15.3', p: 48, type: 'tf', a: true, q: 'Der Pannus der RA ist Granulationsgewebe, das Knorpel und Knochen zerstört.', ex: 'Pannus: Granulationsgewebe zerstört Knorpel/Knochen (Erosionen).' },
   { id: 'k15-t16', sec: '15.3', p: 48, type: 'tf', a: false, q: 'Rheumatoide Granulome (Rheumaknoten) sind bei der RA kein typischer Befund.', ex: 'Rheumaknoten = rheumatoide Granulome gehören laut KPK zur RA (Altfrage 2022).' },
-  { id: 'k15-t17', sec: '15.3', p: 48, type: 'tf', a: true, q: 'Ein Krenn-Score ≥ 5 entspricht einer high-grade-Synovialitis wie bei RA.', ex: '≥ 5 = high-grade wie bei RA, ≤ 4 = low-grade wie bei Arthrose.' },
-  { id: 'k15-t18', sec: '15.3', p: 48, type: 'tf', a: false, q: 'Das rheumatische Fieber führt typischerweise zu einer bleibenden Gelenkdestruktion.', ex: 'Rheumatisches Fieber: Polyarthritis „springend“, große Gelenke, heilt folgenlos.' },
   { id: 'k15-t19', sec: '15.3', p: 48, type: 'tf', a: true, q: 'Der M. Bechterew ist mit HLA-B27 assoziiert.', ex: 'Spondyloarthritiden (M. Bechterew, HLA-B27).' },
-  { id: 'k15-t20', sec: '15.3', p: 48, type: 'tf', a: true, q: 'Die eitrige Arthritis ist wegen der Knorpeldestruktion ein Notfall.', ex: 'Infektiöse Arthritis: Notfall wegen Knorpeldestruktion.' },
   { id: 'k15-t21', sec: '15.3', p: 48, type: 'tf', a: false, q: 'Uratkristalle sind positiv doppelbrechend.', ex: 'Urat: nadelförmig, negativ doppelbrechend. Kalziumpyrophosphat: rhomboid, schwach positiv.' },
   { id: 'k15-t22', sec: '15.3', p: 48, type: 'tf', a: true, q: 'Für den Nachweis von Uratkristallen wird in Alkohol fixiert, weil sie sich in Formalin lösen.', ex: 'Mononatriumurat-Kristalle: Fixierung in Alkohol, in Formalin lösen sie sich.' },
-  { id: 'k15-t23', sec: '15.3', p: 48, type: 'tf', a: false, q: 'Die Chondrokalzinose betrifft typischerweise das Großzehengrundgelenk junger Männer.', ex: 'Chondrokalzinose: Knie (Menisken), ältere Patienten. Großzehengrundgelenk → Gicht.' },
   { id: 'k15-t24', sec: '15.3', p: 48, type: 'tf', a: true, q: 'Die Chondrokalzinose ist mit Hämochromatose und Hyperparathyreoidismus assoziiert.', ex: 'Assoziiert mit Hämochromatose, HPT, Hypomagnesiämie.' },
   { id: 'k15-t25', sec: '15.3', p: 48, type: 'tf', a: false, q: 'Der Hyperparathyreoidismus ist eine Kristallarthropathie.', ex: 'Der HPT selbst ist keine Kristallarthropathie (Altfrage 2018, 2020, 2023).' },
-  { id: 'k15-t26', sec: '15.4', p: 48, type: 'tf', a: true, q: 'Staphylococcus aureus ist der häufigste Erreger der Osteomyelitis.', ex: 'Unspezifische OM: Staph. aureus häufigster Erreger.' },
   { id: 'k15-t27', sec: '15.4', p: 48, type: 'tf', a: false, q: 'Die endogene (hämatogene) Osteomyelitis ist die häufigste Form.', ex: 'Exogene OM ~70 %, endogene ~30 % (Altfrage 2023).' },
-  { id: 'k15-t28', sec: '15.4', p: 49, type: 'tf', a: true, q: 'Beim Säugling kann eine hämatogene Osteomyelitis über transepiphysäre Gefäße ins Gelenk einbrechen.', ex: 'Säugling: Meta- und Epiphyse (transepiphysäre Gefäße → Gelenkeinbruch/septische Arthritis).' },
   { id: 'k15-t29', sec: '15.4', p: 49, type: 'tf', a: false, q: 'Beim Kind liegt die hämatogene Osteomyelitis typischerweise in der Diaphyse.', ex: 'Kind: Metaphyse (Wachstumsfuge als Barriere). Diaphyse → Erwachsener.' },
   { id: 'k15-t30', sec: '15.4', p: 49, type: 'tf', a: false, q: 'Die Totenlade ist der tote Knochen bei chronischer Osteomyelitis.', ex: 'Toter Knochen = Sequester; Totenlade = reaktive Knochenneubildung.' },
   { id: 'k15-t31', sec: '15.4', p: 49, type: 'tf', a: false, q: 'Eine Markraumfibrose mit lymphozytärem Infiltrat ist typisch für die akute Osteomyelitis.', ex: 'Das ist die chronische OM (Altfrage 2022).' },
-  { id: 'k15-t32', sec: '15.4', p: 49, type: 'tf', a: true, q: 'Die AA-Amyloidose ist eine mögliche Komplikation der chronischen Osteomyelitis.', ex: 'Komplikationen u. a.: pathologische Fraktur, Fistelkarzinom, Sepsis, AA-Amyloidose.' },
-  { id: 'k15-t33', sec: '15.4', p: 48, type: 'tf', a: false, q: 'Die Brucellose verursacht eine unspezifische Osteomyelitis.', ex: 'Brucellose (M. Bang) ist eine spezifische OM.' },
   { id: 'k15-t34', sec: '15.5', p: 49, type: 'tf', a: true, q: 'Bei der Osteoporose ist die Mineralisation normal.', ex: 'Osteoporose: verminderte Knochenmasse bei normaler Mineralisation.' },
-  { id: 'k15-t35', sec: '15.5', p: 49, type: 'tf', a: false, q: 'Bei der Osteoporose finden sich vermehrte Osteoidsäume.', ex: 'Keine vermehrten Osteoide bei Osteoporose; breite Osteoidsäume → Osteomalazie.' },
   { id: 'k15-t36', sec: '15.5', p: 49, type: 'tf', a: true, q: 'Looser-Umbauzonen sind typisch für die Osteomalazie.', ex: 'Osteomalazie: breite Osteoidsäume, Looser-Umbauzonen.' },
   { id: 'k15-t37', sec: '15.5', p: 49, type: 'tf', a: false, q: 'Die Tuberkulose führt zu einer generalisierten Osteoporose.', ex: 'Tbc → lokalisierte, perifokale Osteoporose (Altfrage 2016, 2021).' },
-  { id: 'k15-t38', sec: '15.5', p: 49, type: 'tf', a: true, q: 'Osteoblastische Metastasen können eine Osteosklerose verursachen.', ex: 'Osteosklerose: Osteopetrose, osteoblastische Metastasen, Fluorose, renale Osteopathie.' },
-  { id: 'k15-t39', sec: '15.5', p: 49, type: 'tf', a: false, q: 'Beim M. Paget ist die alkalische Phosphatase erniedrigt.', ex: 'M. Paget: AP ↑↑.' },
   { id: 'k15-t40', sec: '15.5', p: 49, type: 'tf', a: true, q: 'Der M. Paget erhöht das Osteosarkomrisiko.', ex: 'M. Paget: Osteosarkomrisiko; das Osteosarkom des Älteren entsteht sekundär.' },
-  { id: 'k15-t41', sec: '15.5', p: 49, type: 'tf', a: true, q: 'Die fibröse Dysplasie beruht auf einer GNAS-Mutation.', ex: 'Fibröse Dysplasie: GNAS-Mutation, mono-/polyostotisch.' },
-  { id: 'k15-t42', sec: '15.5', p: 49, type: 'tf', a: false, q: 'Die aneurysmatische Knochenzyste ist flüssigkeitsgefüllt und hat eine dünne Membran ohne Septen.', ex: 'Das beschreibt die juvenile Knochenzyste. Aneurysmatisch: blutgefüllte Kammern, Septen mit Riesenzellen.' },
-  { id: 'k15-t43', sec: '15.5', p: 49, type: 'tf', a: true, q: 'Das „fallen fragment“ spricht für eine pathologische Fraktur bei juveniler Knochenzyste.', ex: 'Juvenile Knochenzyste: pathologische Fraktur („fallen fragment“).' },
   { id: 'k15-t44', sec: '15.5', p: 49, type: 'tf', a: false, q: 'Bei der primären Frakturheilung bildet sich ein Kallus.', ex: 'Primäre Heilung: Osteone überbrücken direkt, ohne Kallus (Altfrage 2022, 2025).' },
-  { id: 'k15-t45', sec: '15.5', p: 49, type: 'tf', a: true, q: 'Die sekundäre Frakturheilung verläuft über einen weichen und einen harten Kallus.', ex: 'Hämatom → Entzündung → Granulationsgewebe → weicher Kallus → harter Kallus (Geflechtknochen) → Remodelling.' },
-  { id: 'k15-t46', sec: '15.5', p: 49, type: 'tf', a: true, q: 'Das eosinophile Granulom gehört zur Langerhans-Zell-Histiozytose (CD1a).', ex: 'Eosinophiles Granulom = Langerhans-Zell-Histiozytose, CD1a.' },
   { id: 'k15-t47', sec: '15.6', p: 50, type: 'tf', a: false, q: 'Primäre Knochentumoren sind häufiger als Knochenmetastasen.', ex: 'Metastasen >> primäre Knochentumoren (Altfrage 2022, 2024, 2025).' },
-  { id: 'k15-t48', sec: '15.6', p: 50, type: 'tf', a: true, q: 'Der Knochen ist nach Leber und Lunge der dritthäufigste Ort hämatogener Metastasen.', ex: 'Knochen = dritthäufigster Ort hämatogener Metastasen.' },
   { id: 'k15-t49', sec: '15.6', p: 50, type: 'tf', a: true, q: 'Das Osteochondrom ist der häufigste benigne Knochentumor.', ex: 'Osteochondrom (kartilaginäre Exostose): häufigster benigner Knochentumor, < 20 J.' },
-  { id: 'k15-t50', sec: '15.6', p: 50, type: 'tf', a: false, q: 'Das Enchondrom liegt bevorzugt in der Epiphyse langer Röhrenknochen.', ex: 'Enchondrom: kurze Röhrenknochen von Hand/Fuß (60 %), intramedullär; im Röhrenknochen meta- oder diaphysär.' },
-  { id: 'k15-t51', sec: '15.6', p: 50, type: 'tf', a: true, q: 'Multiple Enchondrome kennzeichnen den M. Ollier.', ex: 'M. Ollier (multiple Enchondrome), Maffucci (+ Hämangiome).' },
-  { id: 'k15-t52', sec: '15.6', p: 50, type: 'tf', a: false, q: 'Das Chondrosarkom ist strahlen- und chemosensibel.', ex: 'Chondrosarkom: chemo-/strahlenresistent → weite Resektion.' },
-  { id: 'k15-t53', sec: '15.6', p: 50, type: 'tf', a: true, q: 'Das Osteosarkom ist der häufigste primär maligne Knochentumor (Myelom ausgenommen).', ex: 'Osteosarkom: häufigster primär maligner Knochentumor (Myelom ausgenommen).' },
   { id: 'k15-t54', sec: '15.6', p: 50, type: 'tf', a: false, q: 'Das Osteosarkom hat seinen Altersgipfel bei ca. 39 Jahren.', ex: 'Osteosarkom: 2. Lebensdekade (Altfrage 2008, 2016).' },
-  { id: 'k15-t55', sec: '15.6', p: 50, type: 'tf', a: true, q: 'Das Osteosarkom liegt in ca. 50–60 % in der Kniegelenksregion.', ex: 'Kniegelenksregion (dist. Femur, prox. Tibia) ~50–60 %.' },
   { id: 'k15-t56', sec: '15.6', p: 50, type: 'tf', a: true, q: 'Das Ewing-Sarkom zeigt im Röntgen eine zwiebelschalenartige Periostreaktion.', ex: 'Ewing-Sarkom: zwiebelschalenartige Periostreaktion, ausgedehnter Weichteilanteil.' },
   { id: 'k15-t57', sec: '15.6', p: 50, type: 'tf', a: true, q: 'Das Osteoidosteom verursacht nächtliche Schmerzen, die auf ASS/NSAR ansprechen.', ex: 'Osteoidosteom: junge Patienten, Nidus < 1,5 cm, nächtlicher Schmerz, Ansprechen auf ASS/NSAR.' },
   { id: 'k15-t58', sec: '15.6', p: 50, type: 'tf', a: false, q: 'Der Riesenzelltumor des Knochens liegt typischerweise in der Diaphyse.', ex: 'Riesenzelltumor: 20–40 J, Epiphyse (Knie, dist. Radius).' },
-  { id: 'k15-t59', sec: '15.6', p: 50, type: 'tf', a: true, q: 'Das Prostatakarzinom verursacht typischerweise osteoblastische Metastasen.', ex: 'Osteoblastisch: Prostata (auch Mamma z. T., Karzinoid).' },
   { id: 'k15-t60', sec: '15.6', p: 50, type: 'tf', a: false, q: 'Knochenmetastasen des Nierenzellkarzinoms sind typischerweise osteoblastisch.', ex: 'Osteolytisch: Niere, Schilddrüse, Lunge, Mamma, Myelom.' },
-  { id: 'k15-t61', sec: '15.7', p: 51, type: 'tf', a: false, q: 'Sarkome entstehen typischerweise aus Präkanzerosen.', ex: 'Sarkome entstehen de novo aus mesenchymalen Stammzellen, keine Präkanzerosen.' },
-  { id: 'k15-t62', sec: '15.7', p: 51, type: 'tf', a: true, q: 'Das Lipom ist der häufigste Weichgewebstumor.', ex: 'Lipom = häufigster Weichgewebstumor.' },
-  { id: 'k15-t63', sec: '15.7', p: 51, type: 'tf', a: true, q: 'Das Liposarkom ist das häufigste Sarkom des Erwachsenen.', ex: 'Liposarkom ~20 %, 5.–7. Dekade.' },
-  { id: 'k15-t64', sec: '15.7', p: 51, type: 'tf', a: false, q: 'Das Rhabdomyosarkom ist beim Erwachsenen häufig.', ex: 'Rhabdomyosarkom: häufigstes Weichgewebssarkom bei Kindern (> 50 %), beim Erwachsenen selten.' },
   { id: 'k15-t65', sec: '15.7', p: 51, type: 'tf', a: true, q: 'Das alveoläre Rhabdomyosarkom hat eine schlechtere Prognose als das embryonale.', ex: 'Embryonal (häufigster) vs. alveolär (PAX3/7-FOXO1, schlechter).' },
-  { id: 'k15-t66', sec: '15.7', p: 51, type: 'tf', a: false, q: 'Desmoide metastasieren häufig.', ex: 'Desmoid: lokal aggressiv mit Rezidiven, keine Metastasen.' },
-  { id: 'k15-t67', sec: '15.7', p: 51, type: 'tf', a: true, q: 'Das Dermatofibrosarcoma protuberans ist CD34-positiv.', ex: 'Dermatofibrosarcoma protuberans (CD34).' },
-  { id: 'k15-t68', sec: '15.7', p: 51, type: 'tf', a: false, q: 'Das Ganglion ist eine epithelausgekleidete Zyste.', ex: 'Ganglion: mukoide Zyste ohne Epithelauskleidung.' },
   { id: 'k15-t69', sec: '15.7', p: 51, type: 'tf', a: true, q: 'Intraabdominale Desmoide treten gehäuft bei FAP/Gardner-Syndrom auf.', ex: 'Desmoid intraabdominal bei FAP/Gardner; Bauchdeckenfaszie v. a. bei Frauen post partum.' }
 ]);

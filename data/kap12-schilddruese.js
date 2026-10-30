@@ -28,17 +28,6 @@ PQ.registerChapter(12, [
     ex: 'Aktiv = hochprismatisches Epithel, kolloidarme/leere Follikel mit Resorptionsvakuolen, Papillenknospen; inaktiv = flaches Epithel, kolloidreiche große Follikel.'
   },
   {
-    id: 'k12-03', sec: '12.1', p: 39, type: 'match',
-    q: 'Ordne die Schilddrüsenerkrankung ihrem Kennzeichen zu.',
-    pairs: [
-      ['M. Basedow', 'Stimulierende AK gegen den TSH-Rezeptor (TRAK)'],
-      ['Hashimoto-Thyreoiditis', 'Anti-TPO- und Anti-Tg-AK'],
-      ['Thyreoiditis de Quervain', 'Subakut-granulomatös nach Virusinfekt'],
-      ['Riedel-Struma', 'Fibrosierend (IgG4)']
-    ],
-    ex: 'De Quervain: schmerzhaft, Riesenzellen um Kolloid, BSG ↑. Hashimoto: ADCC/Typ IV.'
-  },
-  {
     id: 'k12-04', sec: '12.1', p: 39, type: 'single',
     q: 'Welches histologische Bild zeigt eine aktive Schilddrüse?',
     opts: [
@@ -178,40 +167,6 @@ PQ.registerChapter(12, [
     ex: 'Die ersten beiden Aussagen stammen aus der Fragensammlung (✓). PTC: BRAF V600E, RET/PTC-Rearrangement (nicht Keimbahn); Therapie Thyreoidektomie + Radiojod + L-Thyroxin. RET-Keimbahn → MTC (MEN2).'
   },
   {
-    id: 'k12-17', sec: '12.2', p: 39, type: 'match',
-    q: 'Ordne das Schilddrüsenkarzinom seinem histologischen Kennzeichen zu.',
-    pairs: [
-      ['Papilläres Karzinom', 'Milchglaskerne, Kernfurchen, Psammomkörper'],
-      ['Follikuläres Karzinom', 'Kapsel- und/oder Gefäßinvasion'],
-      ['Medulläres Karzinom', 'C-Zellen, Calcitonin, Amyloid'],
-      ['Anaplastisches Karzinom', 'Spindel-/Riesenzellen, kein Thyreoglobulin']
-    ],
-    ex: 'PTC: papilläre Strukturen + Kernkriterien (Milchglaskerne, Kernfurchen, Pseudoinklusionen, Überlappung), multifokal. MTC: Zellnester, Amyloid (Kongorot+), Calcitonin, CEA, Chromogranin+.'
-  },
-  {
-    id: 'k12-18', sec: '12.2', p: 40, type: 'match',
-    q: 'Ordne das Schilddrüsenkarzinom seiner Molekularpathologie zu.',
-    pairs: [
-      ['Papillär', 'BRAF V600E, RET/PTC-Rearrangement'],
-      ['Follikulär', 'RAS, PAX8-PPARγ'],
-      ['Medullär', 'RET-Protoonkogen'],
-      ['Anaplastisch', 'p53, TERT']
-    ],
-    ex: 'MTC: RET-Keimbahn bei MEN2/FMTC → RET-Analyse bei jedem MTC obligat.'
-  },
-  {
-    id: 'k12-19', sec: '12.2', p: 40, type: 'match',
-    q: 'Ordne das Syndrom seinen endokrinen Tumoren zu.',
-    pairs: [
-      ['MEN1', 'Nebenschilddrüse, endokrines Pankreas, Hypophyse'],
-      ['MEN2A', 'MTC, Phäochromozytom, pHPT'],
-      ['MEN2B', 'MTC, Phäo, Schleimhautneurome, marfanoider Habitus'],
-      ['Cowden (PTEN)', 'Follikuläres SD-Ca'],
-      ['FAP', 'Kribriform-morulare Variante des PTC']
-    ],
-    ex: 'MEN1: Menin; MEN2A/2B: RET. Außerdem VHL (Phäo, Pankreas-NET), NF1 (Phäo).'
-  },
-  {
     id: 'k12-20', sec: '12.2', p: 40, type: 'single',
     q: 'Was muss vor einer Operation eines medullären SD-Karzinoms immer ausgeschlossen werden?',
     opts: ['Ein Phäochromozytom', 'Ein Hypophysenadenom', 'Ein Insulinom'],
@@ -348,26 +303,6 @@ PQ.registerChapter(12, [
       ['Osteitis fibrosa cystica', true]
     ],
     ex: 'Alle vier treffen zu. Osteitis fibrosa cystica generalisata von Recklinghausen: dissezierende Fibroosteoklasie, „braune Tumoren“.'
-  },
-  {
-    id: 'k12-35', sec: '12.3', p: 41, type: 'match',
-    q: 'Ordne die Ursache des primären HPT ihrer Häufigkeit zu.',
-    pairs: [
-      ['Solitäres Adenom', '75–85 %'],
-      ['Hyperplasie', '~15 %'],
-      ['Karzinom', '1–2 %']
-    ],
-    ex: 'Multiple Adenome 1–3 %. pHPT: Prävalenz 0,1–0,5 %, w > m; Assoziation mit MEN1/MEN2A.'
-  },
-  {
-    id: 'k12-36', sec: '12.3', p: 41, type: 'match',
-    q: 'Ordne die Form des Hyperparathyreoidismus ihrer Ursache zu.',
-    pairs: [
-      ['Primärer HPT', 'Autonome PTH-Sekretion, meist Adenom'],
-      ['Sekundärer HPT', 'Chronische Niereninsuffizienz oder Vitamin-D-Mangel'],
-      ['Tertiärer HPT', 'Autonomie nach langem sekundärem HPT']
-    ],
-    ex: 'Sekundärer HPT: reaktiv (Phosphat ↑, Calcitriol ↓ bei NI) → Hyperplasie aller 4 Drüsen.'
   },
   {
     id: 'k12-37', sec: '12.3', p: 41, type: 'single',

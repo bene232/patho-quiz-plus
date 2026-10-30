@@ -59,7 +59,9 @@
   const session = () => PQ.app.getSession();
   const cur = () => PQ.byId[session().ids[session().idx]];
   const ALL = Object.keys(PQ.sections);
+  const TYPES = ['single', 'kprim', 'tf'];
   const next = () => (btn('Weiter') || btn('Zur Auswertung')).click();
+  const inDays = n => { const d = new Date(); d.setDate(d.getDate() + n); return PQ.store.dayKey(d.getTime()); };
   const imgsOk = async label => {
     await sleep(80);
     const imgs = $$('img.art');
@@ -80,12 +82,6 @@
         const want = correct || i > 0 ? st[1] : !st[1];
         $$('.kp-btn', $$('.kp-row')[i])[want ? 0 : 1].click();
       });
-    } else if (q.type === 'match') {
-      q.pairs.forEach((p, i) => {
-        $$('.term')[i].click();
-        const ri = correct ? i : i === 0 ? 1 : i === 1 ? 0 : i;
-        $$('.target').find(t => $('.target-text', t).textContent.startsWith(q.pairs[ri][1])).click();
-      });
     }
     await sleep(10);
   }
@@ -101,22 +97,40 @@
   }
 
   try {
-    /* ---------- Home ---------- */
+    /* ---------- First start: welcome ---------- */
     await sleep(50);
-    ok($('.logo') && $('.hero'), 'Startseite mit Tagesziel');
+    ok($('.welcome-hero') && $('.mascot-welcome') && $('textarea.code'), 'Erster Start: Begrüßung mit Maskottchen, Name und Code-Übernahme');
+    cp('welcome');
+    $('.welcome .input').value = 'Mia';
+    btn('Los geht').click();
+    await sleep(40);
+    ok(PQ.store.setting('name') === 'Mia' && PQ.store.pref('welcomed') && $('.hero'), 'Name gespeichert, weiter zur Startseite');
+
+    /* ---------- Home ---------- */
+    PQ.store.setting('examDate', inDays(3)); // the plan strip shows up to 6 days before the exam
+    PQ.app.route();
+    await sleep(30);
+    ok($('.logo') && $('.hero .mascot'), 'Startseite mit Maskottchen');
+    ok($('.hero-kicker') && $('.hero-kicker').textContent === 'Noch 3 Tage bis zur Klausur', 'Countdown: ' + ($('.hero-kicker') && $('.hero-kicker').textContent));
+    ok(/Mia/.test($('.bubble').textContent), 'Begrüßung mit Namen: ' + $('.bubble').textContent);
+    ok($('.hero-title').textContent === 'Noch ' + PQ.questions.length + ' neue Fragen' && /^0 % einmal gesehen · noch ca\. \d+ h/.test($('.hero-meta').textContent),
+      'Plan: ' + $('.hero-title').textContent + ' · ' + $('.hero-meta').textContent);
+    ok($$('.plan-day').length === 4 && $('.plan-day.today .plan-count').textContent === '0 Fragen' && $$('.plan-day')[3].classList.contains('exam') &&
+      $$('.plan-task').map(t => t.textContent).join() === 'Neues lernen,Alles einmal,Festigen,Klausur', 'Plan bis zur Klausur: ' + $$('.plan-task').map(t => t.textContent).join(' → '));
     ok($$('.quick-btn').length === 3, '3 Schnellzugriffe');
     const avail = PQ.chapters.filter(c => c.available).length;
     ok($$('.tile').length === avail, avail + ' Kapitel-Kacheln');
     ok($$('.upcoming-row img').length === 17 - avail, (17 - avail) + ' kommende Kapitel als Bilder');
     ok(btn('Los geht') && !$('.hero-link'), 'Start-Button, keine Wiederholungen offen');
-    await imgsOk('Startseite (alle 17 Kapitelbilder + Schnellzugriffe)');
+    await imgsOk('Startseite (alle 17 Kapitelbilder, Schnellzugriffe, Abzeichen)');
     cp('home-empty');
 
     /* ---------- Custom round ---------- */
-    PQ.store.pref('practice', { sections: ALL, types: ['single', 'kprim', 'match', 'tf'], count: 20 });
+    PQ.store.pref('practice', { sections: ALL, types: TYPES, count: 20 });
     await nav('#/practice');
     ok($$('.pick-ch').length === avail, 'Themenauswahl mit ' + avail + ' Kapiteln');
     ok(/^20 Fragen von \d+$/.test($('.setup-summary').textContent), 'Zusammenfassung: ' + $('.setup-summary').textContent);
+    ok(!$$('.chip').some(c => /Zuordnen/.test(c.textContent)) && btn('K-prim') && btn('Richtig/Falsch'), 'Fragetypen ohne Zuordnen');
     $('.pick-toggle').click();
     await sleep(10);
     ok(!$('.pick-secs').hidden, 'Themen aufklappbar');
@@ -127,8 +141,8 @@
     btn('Alle Fragen').click();
     ok(/\d+ Fragen/.test(altText), 'Filter Altfragen: ' + altText);
 
-    /* ---------- Practice: each question type once right, once wrong ---------- */
-    PQ.app.startSession('practice', ['k4-02', 'k4-43', 'k4-11', 'k4-t10', 'k4-09', 'k5-08', 'k5-01', 'k5-t02'].map(id => PQ.byId[id]), { origin: { kind: 'custom' } });
+    /* ---------- Practice: each question type right and wrong; wrong ones come back in the round ---------- */
+    PQ.app.startSession('practice', ['k4-02', 'k4-43', 'k4-t10', 'k4-03', 'k4-09', 'k5-02', 'k5-01', 'k5-t02'].map(id => PQ.byId[id]), { origin: { kind: 'custom' } });
     await sleep(40);
     ok($('.q-text'), 'Quiz zeigt Frage');
     const plan = [true, true, true, true, false, false, false, false];
@@ -141,40 +155,57 @@
       btn('Prüfen').click();
       await sleep(30);
       const fb = $('.sheet');
-      const want = plan[i] ? 'ok' : q.type === 'kprim' || q.type === 'match' ? 'part' : 'bad';
-      ok(fb && fb.classList.contains(want), q.id + ' (' + q.type + '): Rückmeldung ' + (fb && fb.className));
+      const want = plan[i] ? 'ok' : q.type === 'kprim' ? 'part' : 'bad';
+      ok(fb && fb.classList.contains(want) && $('.mascot-fb', fb), q.id + ' (' + q.type + '): Rückmeldung mit Maskottchen ' + (fb && fb.className));
       ok(fb && $('.src', fb).textContent.includes('S. ' + q.p), q.id + ': Quelle mit Seite');
       ok(!btn('Prüfen'), q.id + ': Prüfen-Button ersetzt');
       if (q.dis) ok($('.dis', fb), q.id + ': Hinweis „umstritten“ sichtbar');
+      if (plan[i]) ok(btn('Geraten?'), q.id + ': „Geraten?“ wird angeboten');
+      else ok(/^Kommt gleich nochmal\./.test($('.fb-cheer', fb).textContent) && session().ids.length === 9 + (i - 4), q.id + ': Mutmach-Satz, Frage kommt nochmal (' + session().ids.length + ' Fragen)');
       cp('feedback-' + q.type + (plan[i] ? '' : '-wrong'));
       next();
       await sleep(30);
     }
+    ok(location.hash === '#/quiz' && $('.q-count').textContent === '9/12' && $('.q-again'), 'Danach die 4 falschen nochmal, markiert mit „Nochmal“');
+    cp('quiz-again');
+    for (let i = 0; i < 4; i++) {
+      await answer(false);
+      btn('Prüfen').click();
+      await sleep(20);
+      ok(!/Kommt gleich nochmal/.test($('.fb-cheer').textContent) && session().ids.length === 12, 'Zweiter Fehler: keine weitere Wiederholung in dieser Runde');
+      next();
+      await sleep(30);
+    }
     ok(location.hash === '#/result', 'Auswertung nach letzter Frage');
-    ok($('.rstat-val').textContent === '4/8', 'Ergebnis 4/8: ' + ($('.rstat-val') && $('.rstat-val').textContent));
+    ok($('.rstat-val').textContent === '4/12', 'Ergebnis 4/12: ' + ($('.rstat-val') && $('.rstat-val').textContent));
+    ok($('.mascot-result') && $('.result-hero .muted').textContent.includes('Mia'), 'Auswertung mit Maskottchen und Mutmach-Satz: ' + $('.result-hero .muted').textContent);
+    ok($('.new-badges') && /Losgelegt/.test($('.new-badges').textContent), 'Neues Abzeichen „Losgelegt“');
+    ok($('.res-plan') && /neue Fragen/.test($('.res-plan').textContent), 'Fortschritt im Plan: ' + $('.res-plan-text').textContent);
     ok($('.res-list').hidden, 'Antwortliste zunächst eingeklappt');
     btn('Antworten ansehen').click();
-    ok(!$('.res-list').hidden && $$('.res-row').length === 8, '8 Antworten gelistet');
+    ok(!$('.res-list').hidden && $$('.res-row').length === 12, '12 Antworten gelistet');
     $$('.res-row')[5].click();
     await sleep(10);
-    ok(!$$('.res-detail')[5].hidden && $('.res-detail .target-sol'), 'Detail zeigt richtige Zuordnung');
+    ok(!$$('.res-detail')[5].hidden && $('.res-detail .fb-inline'), 'Detail zeigt die Erklärung');
     ok(btn('Neue Runde') && btn('Fehler (4)'), 'Aktionen: Neue Runde + Fehler (4)');
     await imgsOk('Auswertung');
     cp('result');
     ok(PQ.store.points() > 0, 'Punkte vergeben: ' + PQ.store.points());
 
-    /* ---------- Home with progress → review ---------- */
+    /* ---------- Home with progress → practice mistakes ---------- */
     await nav('#/');
     const link = $('.hero-link');
-    ok(link && /4 Fehler wiederholen/.test(link.textContent), 'Hero bietet 4 Fehler an: ' + (link && link.textContent));
+    ok(link && link.textContent === 'Lieber erst Fehler üben', 'Hero bietet Fehler an, ohne Zahl: ' + (link && link.textContent));
     ok(btn('Weiterlernen'), 'Hero-Button heißt jetzt „Weiterlernen“');
-    ok(/8\s*\/300/.test($('.hero .ring-label').textContent), 'Tagesziel-Ring 8/300: ' + $('.hero .ring-label').textContent);
+    ok($('.plan-day.today .plan-count').textContent === '12 Fragen', 'Plan zählt heute 12 Antworten');
+    ok(Number($('.pill-btn').textContent) >= 1, 'Abzeichen-Zähler: ' + $('.pill-btn').textContent);
     cp('home-progress');
     link.click();
     await sleep(40);
-    ok(session().mode === 'review' && session().ids.length === 4, 'Wiederholungsrunde mit 4 Fragen');
+    ok(session().mode === 'review' && session().ids.length === 4, 'Fehlerrunde mit 4 Fragen');
     await playThrough(4, true);
-    ok($('.rstat-val').textContent === '4/4', 'Wiederholung 4/4');
+    ok($('.rstat-val').textContent === '4/4', 'Fehlerrunde 4/4');
+    ok(btn('Weiterlernen'), 'Nach der Fehlerrunde: weiterlernen');
     await nav('#/');
     ok(!$('.hero-link'), 'Keine offenen Fehler mehr');
 
@@ -187,6 +218,44 @@
     await sleep(300);
     ok(btn('Nächste Lektion'), 'Auswertung bietet „Nächste Lektion“');
     ok($('.confetti'), 'Konfetti bei 100 %');
+
+    /* ---------- Badges ---------- */
+    await nav('#/badges');
+    const got = $$('.badge.got').map(b => $('.badge-title', b).textContent);
+    ok($$('.badge').length === 17 + PQ.chapters.length && ['Losgelegt', 'Fehlerfrei', 'Heiße Serie'].every(t => got.includes(t)), 'Abzeichen: ' + got.join(', '));
+    await imgsOk('Abzeichen');
+    cp('badges');
+
+    /* ---------- „Geraten?“ (guessed) ---------- */
+    PQ.app.startSession('practice', ['k4-05', 'k4-12'].map(id => PQ.byId[id]), { origin: { kind: 'custom' } });
+    await sleep(40);
+    await answer(true);
+    btn('Prüfen').click();
+    await sleep(20);
+    btn('Geraten?').click();
+    await sleep(10);
+    ok(PQ.store.isShaky('k4-05') && session().ids.length === 3 && $('.q-count').textContent === '1/3' && $('.fb-guess').disabled,
+      '„Geraten?“: Frage gilt als wackelig und kommt in der Runde nochmal');
+    $('.quiz-top .icon-btn').click();
+    btn('Beenden und auswerten').click();
+    await sleep(30);
+
+    /* ---------- Pause reminder after 45 minutes ---------- */
+    PQ.store.pref('clock', { start: Date.now() - 50 * 60000, last: Date.now() - 60000 });
+    PQ.app.startSession('practice', [PQ.byId['k4-12']], { origin: { kind: 'custom' } });
+    await sleep(40);
+    await playThrough(1, true);
+    await sleep(1100);
+    ok($('.menu.pause') && /seit 5\d Minuten/.test($('.menu.pause').textContent), 'Pausen-Erinnerung nach 45 Minuten');
+    cp('pause');
+    btn('Pause starten').click();
+    await sleep(20);
+    ok(/^[45]:\d\d$/.test($('.pause-timer').textContent), 'Pausen-Timer läuft: ' + $('.pause-timer').textContent);
+    btn('Pause beenden').click();
+    await sleep(20);
+    ok((PQ.store.pref('badges') || {}).pause && Date.now() - PQ.store.pref('clock').start < 5000, 'Pause beendet: Uhr zurückgesetzt, Abzeichen „Pausen-Profi“');
+    $('.menu.pause .btn-primary').click();
+    ok(!$('.menu.pause'), 'Dialog geschlossen');
 
     /* ---------- Chapter page: topics, count, order ---------- */
     const herz = PQ.questions.filter(q => q.chapter === 4);
@@ -253,7 +322,7 @@
     /* ---------- Open questions only ---------- */
     await nav('#/chapter/4');
     btn('Nur offene').click();
-    const openTwo = PQ.quiz.filter({ sections: ['4.2', '4.8'], types: ['single', 'kprim', 'match', 'tf'], openOnly: true }).length;
+    const openTwo = PQ.quiz.filter({ sections: ['4.2', '4.8'], types: TYPES, openOnly: true }).length;
     const k = Math.min(25, openTwo);
     ok(openTwo <= two - 3 && summary() === k + ' Fragen' + (k < openTwo ? ' von ' + openTwo : ''), 'Nur offene: ' + summary());
     btn('Starten').click();
@@ -293,7 +362,7 @@
     ok($('.rstat-val').textContent === '3/20' && $('.rstat-label').textContent === 'Punkte', 'Klausur 3/20 Punkte');
     ok(btn('Neue Klausur'), 'Neue Klausur anbieten');
 
-    /* ---------- Speed round ---------- */
+    /* ---------- Speed round: wrong statements come back once ---------- */
     PQ.store.pref('blitz', { chapters: [4, 5], count: 20 });
     await nav('#/blitz');
     ok($('.setup-summary').textContent === '20 Aussagen', 'Blitz-Setup');
@@ -301,19 +370,24 @@
     await sleep(40);
     ok($('.swipe-card') && $$('.round-btn').length === 2, 'Karte und runde Buttons');
     cp('blitz');
-    for (let i = 0; i < 20; i++) {
+    let answered = 0;
+    let wrongs = 0;
+    while (location.hash !== '#/result' && answered < 40) {
       const q = cur();
-      const correct = i % 4 !== 3;
+      const correct = answered % 4 !== 3;
       btn((correct ? q.a : !q.a) ? 'Richtig' : 'Falsch').click();
       await sleep(20);
       if (!correct) {
+        wrongs += 1;
         ok($('.swipe-card.flash-bad') && $('.sheet .fb-truth'), 'Blitz: falsche Antwort wird erklärt');
-        if (i === 3) cp('blitz-wrong');
+        if (answered === 3) cp('blitz-wrong');
         next();
       }
+      answered += 1;
       await sleep(400);
     }
-    ok(location.hash === '#/result' && $('.rstat-val').textContent === '15/20', 'Blitzrunde 15/20');
+    ok(location.hash === '#/result' && answered > 20 && $('.rstat-val').textContent === (answered - wrongs) + '/' + answered,
+      'Blitzrunde mit Wiederholungen: ' + $('.rstat-val').textContent);
 
     /* ---------- Statistics & settings ---------- */
     await nav('#/stats');
@@ -330,70 +404,22 @@
     ok(!document.documentElement.hasAttribute('data-theme'), 'Systemmodus');
     btn('400').click();
     ok(PQ.store.setting('dailyGoal') === 400, 'Tagesziel änderbar');
+    const [nameField, dateField] = $$('.set-fields .input');
+    nameField.value = 'Mia B';
+    nameField.dispatchEvent(new Event('change'));
+    dateField.value = '2026-11-02';
+    dateField.dispatchEvent(new Event('change'));
+    ok(PQ.store.setting('name') === 'Mia B' && PQ.store.setting('examDate') === '2026-11-02', 'Name und Klausurtermin änderbar');
     cp('settings');
     const pts = PQ.store.points();
     const code = PQ.store.exportCode();
     btn('Fortschritt löschen').click();
-    ok(PQ.store.points() === 0, 'Fortschritt gelöscht');
+    ok(PQ.store.points() === 0 && PQ.store.setting('name') === 'Mia B', 'Fortschritt gelöscht, Name bleibt');
     btn('Importieren').click();
     ok(!$('.import-panel').hidden, 'Import-Feld klappt auf');
     $('textarea.code').value = code;
     $('.import-panel .btn-primary').click();
     ok(PQ.store.points() === pts, 'Import stellt Punkte wieder her');
-
-    /* ---------- Matching by dragging (mouse and finger) ---------- */
-    PQ.app.startSession('practice', [PQ.byId['k5-08']], { origin: { kind: 'custom' } });
-    await sleep(40);
-    const mq = cur();
-    const pe = (type, el, x, y, pointerType) => el.dispatchEvent(new PointerEvent(type, {
-      bubbles: true, cancelable: true, isPrimary: true, button: 0, clientX: x, clientY: y,
-      pointerId: pointerType === 'mouse' ? 1 : 7, pointerType
-    }));
-    const center = el => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
-    const targetFor = ri => $$('.target').find(t => $('.target-text', t).textContent.startsWith(mq.pairs[ri][1]));
-    const slotOf = ri => $('.slot', targetFor(ri)).textContent;
-    async function dragTo(from, to, pointerType) {
-      to.scrollIntoView({ block: 'center' });
-      await sleep(20);
-      const [x0, y0] = center(from);
-      const [x1, y1] = center(to);
-      // As on the device: touch hits the inner <span>, which releases the capture when it is moved to the button
-      const hit = pointerType === 'touch' ? from.querySelector('span:last-child') || from : from;
-      pe('pointerdown', hit, x0, y0, pointerType);
-      for (let s = 1; s <= 6; s++) {
-        pe('pointermove', from, x0 + (x1 - x0) * s / 6, y0 + (y1 - y0) * s / 6, pointerType);
-        if (s === 1 && hit !== from) pe('lostpointercapture', hit, x0, y0, pointerType);
-      }
-      const seen = { ghost: !!$('.drag-ghost'), over: to.classList.contains('drop-over') };
-      pe('pointerup', from, x1, y1, pointerType);
-      await sleep(20);
-      return seen;
-    }
-    let d = await dragTo($$('.term')[0], targetFor(0), 'mouse');
-    ok(d.ghost && d.over && slotOf(0) === '1', 'Maus: Begriff 1 auf Beschreibung gezogen (Zieh-Bild, Markierung, Zuordnung)');
-    ok(!$('.drag-ghost') && !$('.drag-src') && !$('.drop-over'), 'Nach dem Ablegen aufgeräumt');
-    d = await dragTo($$('.term')[1], targetFor(1), 'touch');
-    ok(d.ghost && slotOf(1) === '2', 'Finger: Begriff 2 auf Beschreibung gezogen');
-    d = await dragTo(targetFor(2), $$('.term')[2], 'mouse');
-    ok(slotOf(2) === '3', 'Maus: Beschreibung auf Begriff 3 gezogen');
-    d = await dragTo(targetFor(3), $$('.term')[3], 'touch');
-    ok(!d.ghost && slotOf(3) === '', 'Finger auf Beschreibung startet kein Ziehen (Scrollen bleibt möglich)');
-    await dragTo($$('.term')[0], targetFor(3), 'mouse');
-    ok(slotOf(3) === '1' && slotOf(0) === '', 'Umziehen: Begriff 1 wandert zur neuen Beschreibung');
-    $$('.term')[3].click();
-    targetFor(3).click();
-    await sleep(10);
-    ok(slotOf(3) === '4' && slotOf(0) === '', 'Antippen funktioniert nach dem Ziehen weiter');
-    const outside = $('.q-text');
-    const [ox, oy] = center($$('.term')[4]);
-    pe('pointerdown', $$('.term')[4], ox, oy, 'mouse');
-    pe('pointermove', $$('.term')[4], ox, oy - 300, 'mouse');
-    pe('pointerup', $$('.term')[4], ox, oy - 300, 'mouse');
-    await sleep(20);
-    ok(!$('.drag-ghost') && $$('.target').every(t => !$('.slot', t).textContent.includes('5')) && outside, 'Ablegen daneben ändert nichts');
-    $('.quiz-top .icon-btn').click();
-    btn('Runde beenden').click();
-    await sleep(30);
 
     /* ---------- Saved state and open round of the previous version ---------- */
     const oldState = {
@@ -403,12 +429,18 @@
       prefs: { practice: { sections: ['4.1'], types: ['single'], count: 20 } }
     };
     PQ.store.importData(JSON.stringify(oldState));
-    // Chapter round as the previous version saved it (no topics/count in origin)
-    PQ.store.saveSession(PQ.quiz.createSession('practice', ['k4-03', 'k4-04'].map(id => PQ.byId[id]), { origin: { kind: 'chapter', id: 4, altOnly: false } }));
+    // Chapter round as the previous version saved it (no topics/count in origin), including a matching question (k4-04) that no longer exists
+    const old = PQ.quiz.createSession('practice', ['k4-03', 'k4-05'].map(id => PQ.byId[id]), { origin: { kind: 'chapter', id: 4, altOnly: false } });
+    old.ids.splice(1, 0, 'k4-04');
+    old.views.splice(1, 0, { order: [2, 0, 1, 3] });
+    old.responses.splice(1, 0, null);
+    old.results.splice(1, 0, null);
+    PQ.store.saveSession(old);
     await nav('#/chapter/4');
     ok($$('.topic.on').length === 9 && summary() === herz.length + ' Fragen', 'Ohne gespeicherte Kapitel-Auswahl: alle Themen, alle Fragen');
     await nav('#/');
-    ok(btn('Fortsetzen') && /Üben 0\/2/.test($('.hero-link').textContent), 'Offene Runde der Vorversion wird angeboten');
+    ok(PQ.store.setting('name') === 'Mia B' && $('.hero'), 'Import aus der Vorversion behält Namen und Begrüßung');
+    ok(btn('Fortsetzen') && /Üben 0\/2/.test($('.hero-link').textContent), 'Offene Runde der Vorversion wird angeboten (ohne die entfernte Zuordnungsfrage)');
     btn('Fortsetzen').click();
     await sleep(30);
     await playThrough(2, true);

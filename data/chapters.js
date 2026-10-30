@@ -4,7 +4,7 @@
    Questions are added by the chapter files via PQ.registerChapter(). */
 window.PQ = window.PQ || {};
 
-PQ.VERSION = 'Plus 1.0 · Kapitel 1–17';
+PQ.VERSION = 'Plus 2.0 · Kapitel 1–17';
 
 PQ.chapters = [
   {
@@ -191,7 +191,6 @@ PQ.chapters.forEach(ch => (ch.sections || []).forEach(s => { PQ.sections[s.id] =
 /* Question formats:
    single: { opts: [...], a: index of the correct option }
    kprim:  { st: [[statement, true|false] × 4] }
-   match:  { pairs: [[term, match], ...] }  (right side is shuffled)
    tf:     { q: statement, a: true|false }
    Common: id, sec, p (page), q, ex (explanation), optional alt (past exam years), dis (disputed). */
 PQ.registerChapter = function (chapterId, items) {

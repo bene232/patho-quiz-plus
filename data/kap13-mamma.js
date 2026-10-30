@@ -14,34 +14,11 @@ PQ.registerChapter(13, [
     ex: 'Weitere Abklärung bei Diskrepanz zwischen Klinik/Bildgebung und Histologie („Triple-Diagnostik“).'
   },
   {
-    id: 'k13-02', sec: '13.1', p: 42, type: 'match',
-    q: 'Ordne die B-Kategorie der Mamma-Stanzbiopsie zu.',
-    pairs: [
-      ['B1', 'Nicht verwertbar bzw. nur Normalgewebe'],
-      ['B2', 'Benigne (z. B. Fibroadenom, Zyste)'],
-      ['B3', 'Benigne mit unsicherem biologischem Potenzial'],
-      ['B4', 'Malignitätsverdächtig'],
-      ['B5', 'Maligne']
-    ],
-    ex: 'B3 (ADH, LIN/LCIS, flache epitheliale Atypie, papilläre Läsion, radiäre Narbe, Phylloides-Tumor) → Exzision. B5a in situ, B5b invasiv, B5c unklar ob invasiv.'
-  },
-  {
     id: 'k13-03', sec: '13.1', p: 42, type: 'single',
     q: 'Welche Läsion wird in der Stanzbiopsie als B3 eingestuft und sollte exzidiert werden?',
     opts: ['Radiäre Narbe', 'Fibroadenom', 'Einfache Zyste', 'Invasives Karzinom NST'],
     a: 0,
     ex: 'B3: ADH, LIN/LCIS, flache epitheliale Atypie, papilläre Läsion, radiäre Narbe, Phylloides-Tumor → Exzision. Fibroadenom/Zyste = B2; invasives Ca = B5b.'
-  },
-  {
-    id: 'k13-04', sec: '13.1', p: 42, type: 'match',
-    q: 'Ordne den Mammarundherd seinem Kennzeichen zu.',
-    pairs: [
-      ['Fibroadenom', 'Häufigster benigner Tumor junger Frauen, Epithel + Stroma'],
-      ['Intraduktales Papillom', 'Blutige Mamillensekretion'],
-      ['Phylloides-Tumor', 'Zellreiches Stroma, blattartig, benigne bis maligne'],
-      ['Fettgewebsnekrose', 'Nach Trauma']
-    ],
-    ex: 'DD Mammarundherd außerdem: Zyste/Mastopathie, Lipom, Hamartom, Abszess/Mastitis, Karzinom, LK, Metastase, Lymphom.'
   },
   {
     id: 'k13-05', sec: '13.1', p: 42, type: 'single',
@@ -69,17 +46,6 @@ PQ.registerChapter(13, [
     ],
     a: 0,
     ex: 'Verkalkungen und Nekrosen sind typisch für das DCIS (Komedotyp mit zentralen Nekrosen, Mikrokalk).'
-  },
-  {
-    id: 'k13-08', sec: '13.2', p: 42, type: 'match',
-    q: 'Ordne die Mammaläsion ihrer Bedeutung zu.',
-    pairs: [
-      ['Einfache duktale Hyperplasie (UDH)', 'Keine Präneoplasie'],
-      ['Flache epitheliale Atypie/ADH', 'Risikoläsion (Vorstufe des low-grade DCIS)'],
-      ['DCIS', 'Obligate Vorläuferläsion'],
-      ['LCIS', 'Indikatorläsion für ein Ca-Risiko beidseits']
-    ],
-    ex: 'UDH: nur gering erhöhtes Risiko. LCIS: nicht obligater Vorläufer, multizentrisch, bilateral, meist Zufallsbefund.'
   },
   {
     id: 'k13-09', sec: '13.2', p: 42, type: 'kprim',
@@ -189,18 +155,6 @@ PQ.registerChapter(13, [
     ex: 'Mammakarzinom: häufigstes Malignom der Frau (~30 % aller Krebserkrankungen der Frau; ~70.000/J in D).'
   },
   {
-    id: 'k13-20', sec: '13.3', p: 42, type: 'match',
-    q: 'Ordne das Gen dem hereditären Mammakarzinom-Kennzeichen zu.',
-    pairs: [
-      ['BRCA1', '17q, oft triple-negativ, Ovarialkarzinom'],
-      ['BRCA2', '13q, Männer, Pankreas, Prostata'],
-      ['TP53', 'Li-Fraumeni (Sarkome, Hirntumoren, Leukämien)'],
-      ['CDH1', 'Lobuläres Mamma-Ca + diffuses Magen-Ca'],
-      ['PTEN', 'Cowden-Syndrom']
-    ],
-    ex: 'Weitere: PALB2, CHEK2, ATM, STK11 (Peutz-Jeghers). Genetisch bedingt sind 5–10 % der Mammakarzinome.'
-  },
-  {
     id: 'k13-21', sec: '13.3', p: 42, type: 'kprim',
     q: 'Invasiv-lobuläres Mammakarzinom – welche Aussagen treffen zu?',
     st: [
@@ -210,26 +164,6 @@ PQ.registerChapter(13, [
       ['Es macht ca. 70–80 % der Mammakarzinome aus.', false]
     ],
     ex: 'Invasiv-lobulär: 10–15 %; kleine monomorphe Zellen in Einzelzellreihen und schießscheibenartig um Gänge; oft multizentrisch/bilateral, ER+; ungewöhnliche Metastasierung. 70–80 % = Karzinom NST.'
-  },
-  {
-    id: 'k13-22', sec: '13.3', p: 43, type: 'match',
-    q: 'Ordne den molekularen Subtyp des Mammakarzinoms seinem Profil zu.',
-    pairs: [
-      ['Luminal A', 'ER+, PR hoch, HER2−, Ki-67 niedrig'],
-      ['Luminal B', 'ER+, Ki-67 hoch und/oder PR niedrig'],
-      ['Triple-negativ', 'ER−, PR−, HER2−; BRCA1; aggressiv']
-    ],
-    ex: 'Luminal A: G1/2, beste Prognose. Daneben HER2-positiv (non-luminal).'
-  },
-  {
-    id: 'k13-23', sec: '13.3', p: 43, type: 'match',
-    q: 'Ordne den HER2-IHC-Score seiner Bedeutung zu.',
-    pairs: [
-      ['3+', 'Positiv'],
-      ['2+', 'Fraglich → In-situ-Hybridisierung'],
-      ['1+', 'HER2-low']
-    ],
-    ex: 'HER2-low = 1+ oder 2+/ISH-negativ → Trastuzumab-Deruxtecan.'
   },
   {
     id: 'k13-24', sec: '13.3', p: 43, type: 'single',
@@ -264,18 +198,6 @@ PQ.registerChapter(13, [
     ex: 'HER2-low (1+ oder 2+/ISH-negativ) → Trastuzumab-Deruxtecan. Imatinib → GIST; KRAS spielt beim Mamma-Ca keine Rolle.'
   },
   {
-    id: 'k13-28', sec: '13.3', p: '42–43', type: 'match',
-    q: 'Ordne den histologischen Typ des Mammakarzinoms seinem Kennzeichen zu.',
-    pairs: [
-      ['Karzinom NST', 'Häufigster Typ (70–80 %)'],
-      ['Tubuläres Karzinom', 'Offene, eckige Tubuli; 5-JÜR ~100 %'],
-      ['Muzinöses Karzinom', 'Tumorzellnester in Schleimseen'],
-      ['Inflammatorisches Karzinom', '„Peau d\'orange“, T4d'],
-      ['Metaplastisches Karzinom', 'Schlechte Prognose']
-    ],
-    ex: 'Sonderformen mit sehr guter Prognose: tubulär, muzinös (Gallertkarzinom), kribriform. Inflammatorisch: Lymphangiosis der Haut.'
-  },
-  {
     id: 'k13-29', sec: '13.3', p: 42, type: 'single',
     q: 'Wohin metastasiert das invasiv-lobuläre Karzinom auf ungewöhnliche Weise?',
     opts: [
@@ -307,9 +229,7 @@ PQ.registerChapter(13, [
 
   /* ---------- True/false statements ---------- */
   { id: 'k13-t01', sec: '13.1', p: 42, type: 'tf', a: true, q: 'Das Fibroadenom ist der häufigste benigne Tumor junger Frauen.', ex: 'Fibroadenom: häufigster benigner Tumor junger Frauen; Epithel + Stroma.' },
-  { id: 'k13-t02', sec: '13.1', p: 42, type: 'tf', a: false, q: 'Eine radiäre Narbe wird in der Stanzbiopsie als B2 eingestuft.', ex: 'Radiäre Narbe = B3 → Exzision.' },
   { id: 'k13-t03', sec: '13.1', p: 42, type: 'tf', a: true, q: 'Ein intraduktales Papillom kann eine blutige Mamillensekretion verursachen.', ex: 'Intraduktales Papillom: blutige Mamillensekretion.' },
-  { id: 'k13-t04', sec: '13.1', p: 42, type: 'tf', a: true, q: 'Die Vakuumbiopsie wird zur Abklärung von Mikrokalk eingesetzt.', ex: 'Vakuumbiopsie (Mikrokalk).' },
   { id: 'k13-t05', sec: '13.2', p: 42, type: 'tf', a: false, q: 'Die einfache duktale Hyperplasie ist eine Präneoplasie.', ex: 'UDH: keine Präneoplasie (Altfrage 2008).' },
   { id: 'k13-t06', sec: '13.2', p: 42, type: 'tf', a: true, q: 'Das DCIS ist eine obligate Vorläuferläsion des Mammakarzinoms.', ex: 'DCIS = obligate Vorläuferläsion.' },
   { id: 'k13-t07', sec: '13.2', p: 42, type: 'tf', a: false, q: 'Das LCIS erhöht das Karzinomrisiko nur in der betroffenen Brust.', ex: 'LCIS: Indikatorläsion für ein erhöhtes Ca-Risiko beidseits.' },

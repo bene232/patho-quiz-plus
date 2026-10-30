@@ -14,18 +14,6 @@ PQ.registerChapter(11, [
     ex: 'Alle vier treffen zu (ebenso die Urocystitis follicularis). Bilharziose: Schistosoma-Eier in der Wand; Cyclophosphamid/Ifosfamid → Acrolein → hämorrhagische Zystitis; Strahlenzystitis akut/chronisch.'
   },
   {
-    id: 'k11-02', sec: '11.1', p: 36, type: 'match',
-    q: 'Ordne die Zystitisform ihrem Kennzeichen zu.',
-    pairs: [
-      ['Adenovirus-Zystitis', 'Hämorrhagisch, bei Kindern'],
-      ['Bilharziose', 'Schistosoma-Eier in der Wand, RF für Plattenepithel-Ca'],
-      ['BCG-Zystitis', 'Nicht verkäsende Granulome'],
-      ['Malakoplakie', 'Michaelis-Gutmann-Körperchen, gelbe Plaques'],
-      ['Interstitielle (Hunner-)Zystitis', 'Ältere Frauen, Mastzellen']
-    ],
-    ex: 'Chronische Urozystitis außerdem: follicularis (Lymphfollikel), cystica/glandularis (von-Brunn-Nester), Plattenepithel-/glanduläre Metaplasie.'
-  },
-  {
     id: 'k11-03', sec: '11.1', p: 36, type: 'single',
     q: 'Welcher Metabolit verursacht die hämorrhagische Zystitis unter Cyclophosphamid?',
     opts: ['Acrolein', 'Mesna', 'Phenacetin'],
@@ -38,13 +26,6 @@ PQ.registerChapter(11, [
     opts: ['E. coli', 'Schistosoma haematobium', 'Adenovirus', 'Candida'],
     a: 0,
     ex: 'Bakteriell: gramnegative Koliforme, v. a. E. coli (Frauen 20–40 J; Dysurie). Schistosoma = Parasit (Bilharziose), Adenovirus = viral, Candida = Pilz.'
-  },
-  {
-    id: 'k11-05', sec: '11.1', p: 36, type: 'single',
-    q: 'Welche Organ-Tuberkulose ist die häufigste isolierte Organ-Tbc?',
-    opts: ['Urogenital-Tbc', 'Spondylitis tuberculosa', 'Tuberkulöse Meningitis'],
-    a: 0,
-    ex: 'Urogenital-Tbc = häufigste isolierte Organ-Tbc.'
   },
 
   /* ---------- 11.2 Urothelial tumors ---------- */
@@ -84,30 +65,6 @@ PQ.registerChapter(11, [
       ['Nicht invasive Urothelkarzinome werden als pTa bzw. pTis klassifiziert.', true]
     ],
     ex: 'Alle vier treffen zu. pTa = nicht invasiv papillär, pTis = Carcinoma in situ.'
-  },
-  {
-    id: 'k11-09', sec: '11.2', p: 36, type: 'match',
-    q: 'Ordne das T-Stadium des Harnblasenkarzinoms seiner Ausdehnung zu.',
-    pairs: [
-      ['pTa', 'Nicht invasiv papillär'],
-      ['pTis', 'Carcinoma in situ („flat tumour“)'],
-      ['pT1', 'Lamina propria'],
-      ['pT2', 'Muscularis propria'],
-      ['pT3', 'Perivesikales Fett']
-    ],
-    ex: 'pT2a innere, b äußere Hälfte der Muscularis propria · pT4a Prostata/Uterus/Vagina, pT4b Becken-/Bauchwand. Ab pT2 (muskelinvasiv) → radikale Zystektomie.'
-  },
-  {
-    id: 'k11-10', sec: '11.2', p: 36, type: 'match',
-    q: 'Ordne die urotheliale Läsion ihrem Kennzeichen zu.',
-    pairs: [
-      ['Urothelpapillom', 'Benigne, keine Atypien'],
-      ['PUNLMP', '> 7 Zelllagen, keine Atypien, Progression < 5 %'],
-      ['Low-grade-Urothelkarzinom (nicht invasiv)', 'Geringe Atypien, Rezidivrate 50–70 %'],
-      ['Urotheliales Carcinoma in situ', 'Flach, hochgradige Atypien bis in die oberen Lagen'],
-      ['Urotheldysplasie', 'Atypien nur bis in mittlere Lagen']
-    ],
-    ex: 'High-grade-Urothelkarzinom (≈ G2–G3): deutliche Atypien, Mitosen in allen Lagen, hohes Progressionsrisiko. CIS: Basalmembran intakt, p53, ~50 % invasiv innerhalb von 5 J.'
   },
   {
     id: 'k11-11', sec: '11.2', p: 36, type: 'kprim',
@@ -317,39 +274,6 @@ PQ.registerChapter(11, [
     ex: 'Prostata-Ca: hämatogen in den Knochen (~85 %, osteoblastisch; Wirbelsäule, Becken). Die übrigen wurden als „typisch osteoblastisch“ falsch gewertet.'
   },
   {
-    id: 'k11-32', sec: '11.4', p: 37, type: 'match',
-    q: 'Ordne die Manifestationsform des Prostatakarzinoms ihrer Definition zu.',
-    pairs: [
-      ['Inzident', 'Zufallsbefund im TUR-Material bei BPH'],
-      ['Manifest', 'Positiver Tastbefund/Sono, bioptisch gesichert'],
-      ['Latent', 'Erst autoptisch entdeckt'],
-      ['Okkult', 'Zuerst Metastase, Primärtumor erst sekundär gefunden']
-    ],
-    ex: 'Latent: > 45 J bei jedem 3., > 75 J bei jedem 2. Mann. Okkult: IHC PSA/PAP/AR an der Metastase.'
-  },
-  {
-    id: 'k11-33', sec: '11.4', p: 37, type: 'match',
-    q: 'Ordne das Gleason-Muster seinem Wachstum zu.',
-    pairs: [
-      ['Muster 3', 'Einzelne infiltrierende Drüsen'],
-      ['Muster 4', 'Kribriform bzw. fusioniert'],
-      ['Muster 5', 'Solide, Einzelzellen, Komedonekrose']
-    ],
-    ex: 'Muster 3 ist das häufigste Muster. Score in Biopsien praktisch ≥ 6.'
-  },
-  {
-    id: 'k11-34', sec: '11.4', p: 37, type: 'match',
-    q: 'Ordne den Gleason-Score der ISUP-Gradgruppe zu.',
-    pairs: [
-      ['≤ 6', 'ISUP 1'],
-      ['3 + 4', 'ISUP 2'],
-      ['4 + 3', 'ISUP 3'],
-      ['8', 'ISUP 4'],
-      ['9–10', 'ISUP 5']
-    ],
-    ex: 'ISUP-Gradgruppen: 1 (≤ 6), 2 (3 + 4), 3 (4 + 3), 4 (8), 5 (9–10).'
-  },
-  {
     id: 'k11-35', sec: '11.4', p: 37, type: 'single',
     q: 'Welcher histologische Befund spricht für ein Prostatakarzinom?',
     opts: [
@@ -381,17 +305,6 @@ PQ.registerChapter(11, [
       ['Vor dem 50. Lebensjahr ist es extrem selten.', true]
     ],
     ex: 'Metastasierung: lymphogen zuerst pelvin (obturatorisch, iliakal), dann paraaortal/inguinal; hämatogen Knochen (~85 %, osteoblastisch).'
-  },
-  {
-    id: 'k11-38', sec: '11.4', p: 37, type: 'match',
-    q: 'Ordne das T-Stadium des Prostatakarzinoms zu.',
-    pairs: [
-      ['T1', 'Klinisch nicht erkennbar'],
-      ['T2', 'Organbegrenzt'],
-      ['T3', 'Kapselüberschreitung bzw. Samenblasen'],
-      ['T4', 'Nachbarorgane']
-    ],
-    ex: 'T1a ≤ 5 %, T1b > 5 % des TUR-Resektats, T1c Nadelbiopsie wegen PSA · T2a ≤ ½ Lappen, b > ½ Lappen, c beide Lappen · T3a extraprostatisch, b Samenblasen.'
   },
   {
     id: 'k11-39', sec: '11.4', p: 37, type: 'single',
@@ -452,29 +365,6 @@ PQ.registerChapter(11, [
     ex: 'Das ovarielle Pendant des Seminoms heißt Dysgerminom. Chorionkarzinom, Dottersacktumor und Teratom kommen im Ovar vor.'
   },
   {
-    id: 'k11-45', sec: '11.5', p: 38, type: 'match',
-    q: 'Ordne den Hodentumor seinem Tumormarker zu.',
-    pairs: [
-      ['Dottersacktumor', 'AFP ↑↑'],
-      ['Chorionkarzinom', 'β-HCG ↑↑'],
-      ['Reines Seminom', 'AFP immer normal, PLAP'],
-      ['Stromatumoren (Leydig, Sertoli)', 'Marker negativ']
-    ],
-    ex: 'Tumormarker: AFP → Dottersacktumor (+ EC), nie bei reinem Seminom/Chorion-Ca · β-HCG → Chorion-Ca, STGC · LDH (Tumorlast) · PLAP; Abnahme vor der Orchiektomie.'
-  },
-  {
-    id: 'k11-46', sec: '11.5', p: 38, type: 'match',
-    q: 'Ordne den Keimzelltumor seinem histologischen Kennzeichen zu.',
-    pairs: [
-      ['Seminom', 'Ballen großer heller Zellen, Septen mit Lymphozyten'],
-      ['Embryonales Karzinom', 'Große pleomorphe Zellen, Nekrosen, CD30+'],
-      ['Dottersacktumor', 'Schiller-Duval-Körper, hyaline Globuli'],
-      ['Chorionkarzinom', 'Zyto- + Synzytiotrophoblast, Blutungen'],
-      ['Teratom', 'Gewebe aller 3 Keimblätter']
-    ],
-    ex: 'Das embryonale Karzinom ist das häufigste Nicht-Seminom (~15 %) und hat keine Lymphozyten. Das postpubertäre Teratom des Mannes ist immer maligne einzustufen.'
-  },
-  {
     id: 'k11-47', sec: '11.5', p: 38, type: 'kprim',
     q: 'Hodentumoren – welche Aussagen treffen zu?',
     st: [
@@ -513,8 +403,6 @@ PQ.registerChapter(11, [
 
   /* ---------- True/false statements ---------- */
   { id: 'k11-t01', sec: '11.1', p: 36, type: 'tf', a: true, q: 'Die Urogenital-Tuberkulose ist die häufigste isolierte Organ-Tbc.', ex: 'Urogenital-Tbc = häufigste isolierte Organ-Tbc.' },
-  { id: 'k11-t02', sec: '11.1', p: 36, type: 'tf', a: false, q: 'Die BCG-Zystitis zeigt verkäsende Granulome.', ex: 'BCG-Zystitis: nicht verkäsende Granulome.' },
-  { id: 'k11-t03', sec: '11.1', p: 36, type: 'tf', a: true, q: 'Mesna dient der Prophylaxe der Cyclophosphamid-Zystitis.', ex: 'Cyclophosphamid → Acrolein → hämorrhagische Zystitis; Prophylaxe Mesna.' },
   { id: 'k11-t04', sec: '11.1', p: 36, type: 'tf', a: false, q: 'Die Malakoplakie ist durch Asteroid-Körperchen gekennzeichnet.', ex: 'Malakoplakie: Makrophagen mit Michaelis-Gutmann-Körperchen, gelbe Plaques. Asteroid-Körperchen → Sarkoidose.' },
   { id: 'k11-t05', sec: '11.1', p: 36, type: 'tf', a: true, q: 'Von-Brunn-Nester finden sich bei der Urocystitis cystica/glandularis.', ex: 'Chronische Urozystitis: cystica/glandularis (von-Brunn-Nester).' },
   { id: 'k11-t06', sec: '11.2', p: 36, type: 'tf', a: true, q: 'Ca. 90 % der Harnblasentumoren sind Urothelkarzinome.', ex: '90 % Urothelkarzinome; übrige Plattenepithel- und Adeno-Ca.' },

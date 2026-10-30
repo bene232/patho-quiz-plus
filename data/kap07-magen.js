@@ -158,27 +158,6 @@ PQ.registerChapter(7, [
     ex: 'NET (Typ 1) entstehen bei der Typ-A-Gastritis (Achlorhydrie → Hypergastrinämie → ECL-Zell-Hyperplasie).'
   },
   {
-    id: 'k7-15', sec: '7.2', p: '23–24', type: 'match',
-    q: 'Ordne den Gastritistyp seiner Ursache zu.',
-    pairs: [
-      ['Typ A (~5 %)', 'Autoantikörper gegen Parietalzellen und Intrinsic Factor'],
-      ['Typ B (~80 %)', 'Helicobacter pylori'],
-      ['Typ C (~15 %)', 'NSAR, Steroide, Alkohol, Gallereflux'],
-      ['Typ D', 'Sonderformen (lymphozytär, granulomatös, eosinophil, kollagen)']
-    ],
-    ex: 'Granulomatöse Gastritis z. B. bei M. Crohn und Sarkoidose; Kombinationsformen (A + B) kommen vor.'
-  },
-  {
-    id: 'k7-16', sec: '7.2', p: 24, type: 'match',
-    q: 'Ordne den Gastritistyp seiner typischen Folge zu.',
-    pairs: [
-      ['Typ A', 'Perniziöse Anämie, NET Typ 1'],
-      ['Typ B', 'Ulkus, MALT-Lymphom, Magenkarzinom'],
-      ['Typ C', 'Erosionen, Ulzera, Blutung']
-    ],
-    ex: 'Typ A: IF-Mangel → B12-Mangel → perniziöse (megaloblastäre) Anämie, funikuläre Myelose; Magen-Ca-Risiko ↑. Typ B außerdem: atrophische Gastritis, Riesenfaltengastritis, ITP, chronische Urtikaria.'
-  },
-  {
     id: 'k7-17', sec: '7.2', p: 23, type: 'single',
     q: 'Welcher histologische Befund ist typisch für die chemische (Typ-C-)Gastritis?',
     opts: [
@@ -233,16 +212,6 @@ PQ.registerChapter(7, [
     ],
     a: 0,
     ex: 'Erosion: Defekt, der die Muscularis mucosae nicht überschreitet (heilt narbenlos). Ulkus: Defekt durch die Muscularis mucosae hindurch.'
-  },
-  {
-    id: 'k7-22', sec: '7.3', p: 24, type: 'match',
-    q: 'Ordne das Ulkus bzw. Syndrom seiner Ursache zu.',
-    pairs: [
-      ['Curling-Ulkus', 'Verbrennung'],
-      ['Cushing-Ulkus', 'Schädel-Hirn-Trauma'],
-      ['Zollinger-Ellison-Syndrom', 'Gastrinom']
-    ],
-    ex: 'Weitere aggressive Faktoren: H. pylori, NSAR/ASS, Glukokortikoide (+ NSAR), Säure/Pepsin, Rauchen, Gallereflux, Hyperparathyreoidismus (Gastrin ↑).'
   },
   {
     id: 'k7-23', sec: '7.3', p: 24, type: 'kprim',
@@ -343,16 +312,6 @@ PQ.registerChapter(7, [
     ex: 'Frühkarzinom = auf Mukosa/Submukosa begrenzt (unabhängig vom LK-Status).'
   },
   {
-    id: 'k7-32', sec: '7.4', p: 24, type: 'match',
-    q: 'Ordne die Metastase des Magenkarzinoms ihrer Lokalisation zu.',
-    pairs: [
-      ['Virchow-Lymphknoten', 'Links supraklavikulär'],
-      ['Krukenberg-Tumor', 'Ovar'],
-      ['Schnitzler-Metastase', 'Douglas-Raum']
-    ],
-    ex: 'Metastasierung: lymphogen (regionär, Virchow), hämatogen (Leber), Peritonealkarzinose (präoperativ ausschließen!).'
-  },
-  {
     id: 'k7-33', sec: '7.4', p: 24, type: 'single',
     q: 'Welches Gen ist beim hereditären diffusen Magenkarzinom mutiert?',
     opts: ['CDH1 (E-Cadherin)', 'c-KIT', 'RET', 'MLH1-Promotor'],
@@ -397,26 +356,6 @@ PQ.registerChapter(7, [
     opts: ['Aktivierende c-KIT-Mutation', 'c-RET-Mutation', 'CDH1-Mutation', 'APC-Mutation'],
     a: 0,
     ex: 'GIST: aktivierende c-KIT-Mutation (Tyrosinkinase; ~80 %) oder PDGFRA; nicht c-RET. Therapie OP + Imatinib.'
-  },
-  {
-    id: 'k7-38', sec: '7.5', p: 25, type: 'match',
-    q: 'Ordne den Magen-NET-Typ seinem Kennzeichen zu.',
-    pairs: [
-      ['Typ 1', 'Bei A-Gastritis, multipel, klein, benigne Tendenz'],
-      ['Typ 2', 'Gastrinom/MEN1'],
-      ['Typ 3', 'Sporadisch, solitär, aggressiv']
-    ],
-    ex: 'NET allgemein: Synaptophysin/Chromogranin; Grading nach Ki-67/Mitosen; NEC = schlecht differenziert.'
-  },
-  {
-    id: 'k7-39', sec: '7.5', p: 25, type: 'match',
-    q: 'Ordne den NET-Grad seinem Ki-67-Index zu.',
-    pairs: [
-      ['G1', '< 3 %'],
-      ['G2', '3–20 %'],
-      ['G3', '> 20 %']
-    ],
-    ex: 'Grading der NET nach Ki-67/Mitosen.'
   },
   {
     id: 'k7-40', sec: '7.5', p: 25, type: 'single',
@@ -494,18 +433,6 @@ PQ.registerChapter(7, [
     ],
     a: 0,
     ex: 'HLA-DQ2/DQ8: niedriger positiver, aber ~100 % negativer prädiktiver Wert – ein negativer Befund schließt die Zöliakie praktisch aus.'
-  },
-  {
-    id: 'k7-47', sec: '7.6', p: 25, type: 'match',
-    q: 'Ordne die Dünndarmerkrankung ihrem histologischen Kennzeichen zu.',
-    pairs: [
-      ['Zöliakie', 'IEL ↑, Kryptenhyperplasie, Zottenatrophie'],
-      ['M. Whipple', 'PAS-positive Makrophagen (SPC-Zellen)'],
-      ['Giardiasis', 'Birnenförmige Trophozoiten auf dem Zottenepithel'],
-      ['CVID', 'Kaum Plasmazellen'],
-      ['Autoimmunenteropathie', 'Anti-Enterozyten-/Becherzell-AK, EmA negativ']
-    ],
-    ex: 'DD Zottenatrophie außerdem: tropische Sprue, M. Crohn, Nahrungsmittelintoleranz, Infektionen.'
   },
   {
     id: 'k7-48', sec: '7.6', p: 25, type: 'single',

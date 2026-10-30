@@ -21,46 +21,11 @@ PQ.registerChapter(16, [
     ex: 'Grad 1 = langsam, gutartig, durch Resektion potenziell heilbar. Anders als bei Karzinomen ist Grad 1 bei ZNS-Tumoren benigne („Ampelschema“: bei anderen Tumoren ist G1 trotzdem maligne).'
   },
   {
-    id: 'k16-03', sec: '16.1', p: 52, type: 'match',
-    q: 'Ordne den WHO-Grad der ZNS-Tumoren seinem biologischen Verlauf zu.',
-    pairs: [
-      ['Grad 1', 'Langsam, gutartig, durch Resektion potenziell heilbar'],
-      ['Grad 2', 'Infiltrativ, rezidivierend, Progression möglich'],
-      ['Grad 3', 'Anaplastisch, maligne'],
-      ['Grad 4', 'Hochmaligne, unbehandelt rasch letal']
-    ],
-    ex: 'WHO-Grading (Grad 1–4) beschreibt den biologischen Verlauf. ZNS-Tumoren werden nicht nach TNM klassifiziert.'
-  },
-  {
     id: 'k16-04', sec: '16.1', p: 52, type: 'single',
     q: 'Welche intrakraniellen Tumoren sind beim Erwachsenen am häufigsten?',
     opts: ['Metastasen', 'Meningeome', 'Glioblastome', 'Schwannome'],
     a: 0,
     ex: 'Häufigste intrakranielle Tumoren des Erwachsenen sind Metastasen. Häufigster primärer Hirntumor ist das Meningeom, häufigster maligner primärer Hirntumor das Glioblastom.'
-  },
-  {
-    id: 'k16-05', sec: '16.1', p: 52, type: 'match',
-    q: 'Ordne die Beschreibung dem ZNS-Tumor zu.',
-    pairs: [
-      ['Häufigster intrakranieller Tumor des Erwachsenen', 'Metastasen'],
-      ['Häufigster primärer Hirntumor', 'Meningeom'],
-      ['Häufigster maligner primärer Hirntumor', 'Glioblastom'],
-      ['Häufigster Hirntumor des Kindes', 'Pilozytisches Astrozytom'],
-      ['Häufigster maligner Hirntumor des Kindes', 'Medulloblastom']
-    ],
-    ex: 'Kinder (überwiegend infratentoriell): pilozytisches Astrozytom (häufigster), Medulloblastom (häufigster maligner), Ependymom, Kraniopharyngeom, Keimzelltumoren.'
-  },
-  {
-    id: 'k16-06', sec: '16.1', p: 52, type: 'match',
-    q: 'Ordne die molekulare Veränderung dem Tumor zu.',
-    pairs: [
-      ['1p/19q-Kodeletion', 'Oligodendrogliom'],
-      ['ATRX-Verlust + TP53', 'IDH-mutiertes Astrozytom'],
-      ['EGFR-Amplifikation, TERT-Promotor, +7/−10', 'Glioblastom, IDH-Wildtyp'],
-      ['KIAA1549-BRAF', 'Pilozytisches Astrozytom'],
-      ['H3 K27M', 'Diffuses Mittelliniengliom']
-    ],
-    ex: 'Außerdem: IDH1/2 bei diffusen Gliomen (prognostisch günstig), MGMT-Promotormethylierung (prädiktiv für Temozolomid), NF2 bei Meningeom und Schwannom.'
   },
   {
     id: 'k16-07', sec: '16.1', p: 52, type: 'single',
@@ -84,17 +49,6 @@ PQ.registerChapter(16, [
       ['Das Oligodendrogliom ist definitionsgemäß IDH-Wildtyp.', false]
     ],
     ex: 'Das Glioblastom ist als IDH-Wildtyp definiert (EGFR-Amplifikation, TERT, +7/−10). Das Oligodendrogliom ist definitionsgemäß IDH-mutiert + 1p/19q-kodeletiert.'
-  },
-  {
-    id: 'k16-09', sec: '16.1', p: 52, type: 'single',
-    q: 'Wie werden ZNS-Tumoren typisiert?',
-    opts: [
-      'Histologisch und molekular („integrierte Diagnose“)',
-      'Nach dem TNM-System',
-      'Nach Tumorgröße und Infiltrationstiefe'
-    ],
-    a: 0,
-    ex: 'ZNS-Tumoren werden nicht nach TNM klassifiziert; die Typisierung erfolgt histologisch und molekular („integrierte Diagnose“), nicht nach Größe/Infiltrationstiefe.'
   },
   {
     id: 'k16-10', sec: '16.1', p: 52, type: 'single',
@@ -237,28 +191,6 @@ PQ.registerChapter(16, [
     ex: 'Karzinome im Gehirn sind fast immer Metastasen oder wachsen per continuitatem aus den Nasennebenhöhlen ein. Das Plexuskarzinom ist ein seltener Tumor des Kindesalters.'
   },
   {
-    id: 'k16-24', sec: '16.2', p: 52, type: 'match',
-    q: 'Ordne den Tumor seinem histologischen Kennzeichen zu.',
-    pairs: [
-      ['Pilozytisches Astrozytom', 'Rosenthal-Fasern, „haarförmige“ bipolare Zellen'],
-      ['Oligodendrogliom', '„Spiegeleier“, „Maschendraht“-Kapillaren'],
-      ['Ependymom', 'Perivaskuläre Pseudorosetten'],
-      ['Medulloblastom', 'Kleine runde blaue Zellen, Homer-Wright-Rosetten'],
-      ['Meningeom', 'Zellwirbel (Zwiebelschalen), Psammomkörper']
-    ],
-    ex: 'Weitere Kennzeichen: pilozytisch auch eosinophile granuläre Körperchen; Ependymom auch echte ependymale Rosetten; Meningeom EMA+.'
-  },
-  {
-    id: 'k16-25', sec: '16.2', p: '52–53', type: 'match',
-    q: 'Ordne den Tumor dem zugehörigen Syndrom zu.',
-    pairs: [
-      ['Hämangioblastom', 'Von-Hippel-Lindau-Krankheit'],
-      ['Bilaterale Vestibularisschwannome', 'Neurofibromatose Typ 2'],
-      ['Plexiformes Neurofibrom', 'Neurofibromatose Typ 1']
-    ],
-    ex: 'NF1: Neurofibrom (plexiform → MPNST), pilozytisches Astrozytom des N. opticus/Chiasma. NF2: bilaterale Vestibularisschwannome, Meningeom. VHL: Hämangioblastom + Retina, NZK, Phäochromozytom.'
-  },
-  {
     id: 'k16-26', sec: '16.2', p: 52, type: 'single',
     q: 'Welche Befunde sind beim Glioblastom (neben hoher Zelldichte und Polymorphie) jeweils diagnostisch?',
     opts: [
@@ -322,16 +254,6 @@ PQ.registerChapter(16, [
     ex: 'Ependymom: beim Erwachsenen spinal intramedullär (häufigster intramedullärer Tumor; im Rückenmark meist gutartig). Meningeom und Schwannom liegen intradural-extramedullär.'
   },
   {
-    id: 'k16-33', sec: '16.2', p: 52, type: 'match',
-    q: 'Ordne die Lokalisation des Ependymoms zu.',
-    pairs: [
-      ['Ependymom bei Kindern', '4. Ventrikel (Hydrozephalus)'],
-      ['Ependymom bei Erwachsenen', 'Spinal intramedullär'],
-      ['Myxopapilläres Ependymom', 'Filum terminale']
-    ],
-    ex: 'Ependymom (WHO 2–3): perivaskuläre Pseudorosetten, echte ependymale Rosetten.'
-  },
-  {
     id: 'k16-34', sec: '16.2', p: 53, type: 'kprim',
     q: 'Schwannom (Neurinom) – welche Aussagen treffen zu?',
     st: [
@@ -341,16 +263,6 @@ PQ.registerChapter(16, [
       ['Es ist ein maligner Tumor (WHO-Grad 4).', false]
     ],
     ex: 'Schwannom: WHO 1, benigne, glatt begrenzt, gekapselt; Antoni A (zellreich) und Antoni B (zellarm, locker); hyalinisierte Gefäße, Siderophagen; S100+, GFAP−, EMA−, Ki-67 niedrig.'
-  },
-  {
-    id: 'k16-35', sec: '16.2', p: 53, type: 'match',
-    q: 'Ordne das spinale Kompartiment seinen typischen Tumoren zu.',
-    pairs: [
-      ['Intramedullär', 'Ependymom, pilozytisches Astrozytom, Hämangioblastom'],
-      ['Intradural-extramedullär', 'Meningeom, Schwannom/Neurinom'],
-      ['Extradural', 'Metastasen, Lymphom']
-    ],
-    ex: 'Spinale Tumoren: intramedullär = Ependymom, (pilozytisches) Astrozytom, Hämangioblastom · intradural-extramedullär = Meningeom, Schwannom · extradural = Metastasen, Lymphom.'
   },
   {
     id: 'k16-36', sec: '16.2', p: 53, type: 'single',
@@ -404,17 +316,6 @@ PQ.registerChapter(16, [
       ['Es ist definitionsgemäß 1p/19q-kodeletiert.', false]
     ],
     ex: 'Diffuses Astrozytom (WHO 2–4): junge Erwachsene; diffus infiltrierend – keine kurative Resektion, auch nicht bei günstiger Lage; pfeilspitzartige Kerne, GFAP; ATRX-Verlust, p53; Progression zu höhergradigem Astrozytom.'
-  },
-  {
-    id: 'k16-41', sec: '16.2', p: 52, type: 'kprim',
-    q: 'Oligodendrogliom – welche Aussagen treffen zu?',
-    st: [
-      ['Es liegt bevorzugt im Frontallappen.', true],
-      ['Es hat eine schlechtere Prognose als Astrozytome.', false],
-      ['Es ist chemosensibel.', true],
-      ['Verkalkungen sprechen gegen ein Oligodendrogliom.', false]
-    ],
-    ex: 'Oligodendrogliom (WHO 2–3): IDH-mutiert + 1p/19q-kodeletiert; Frontallappen, Epilepsie, Verkalkungen; „Spiegeleier“, „Maschendraht“-Kapillaren; bessere Prognose als Astrozytome, chemosensibel.'
   },
 
   /* ---------- 16.3 Neurodegeneration & dementias ---------- */
@@ -487,18 +388,6 @@ PQ.registerChapter(16, [
     ex: 'ALS: Degeneration des 1. Motoneurons (vordere Zentralwindung, Pyramidenbahn) und des 2. Motoneurons (Vorderhörner, motorische Hirnnervenkerne). Die Sensibilität (Hinterstränge, hintere Zentralwindung) bleibt verschont.'
   },
   {
-    id: 'k16-49', sec: '16.3', p: 54, type: 'match',
-    q: 'Ordne das abgelagerte Protein der Erkrankung zu.',
-    pairs: [
-      ['Tau', 'Alzheimer (Tangles), M. Pick, PSP, CBD'],
-      ['α-Synuklein', 'M. Parkinson, Lewy-Körper-Demenz, MSA'],
-      ['TDP-43', 'ALS'],
-      ['Prionprotein', 'Creutzfeldt-Jakob-Krankheit'],
-      ['Huntingtin (Polyglutamin)', 'Chorea Huntington']
-    ],
-    ex: 'Proteinablagerungen: Tau (Alzheimer, FTLD/Pick, PSP, CBD) · α-Synuklein (Parkinson, DLB, MSA) · β-Amyloid (Alzheimer, Amyloidangiopathie) · TDP-43 (ALS, FTLD) · Prionprotein (CJD) · Huntingtin (Chorea Huntington).'
-  },
-  {
     id: 'k16-50', sec: '16.3', p: 53, type: 'single',
     q: 'Welche Demenzform ist am häufigsten?',
     opts: ['Alzheimer-Demenz', 'Vaskuläre Demenz', 'Lewy-Körper-Demenz', 'Frontotemporale Lobärdegeneration'],
@@ -515,17 +404,6 @@ PQ.registerChapter(16, [
       ['ApoE4 und Trisomie 21 sind genetische Risikofaktoren.', true]
     ],
     ex: 'Amyloid-Kaskade: APP-Spaltung → Aβ42 aggregiert → Oligomere/Plaques → Synapsentoxizität, Entzündung → Tau-Hyperphosphorylierung → Tangles → Neuronenuntergang. Genetisch: APP, PSEN1/2, Trisomie 21, ApoE4. Diffuse Plaques sind unspezifisch.'
-  },
-  {
-    id: 'k16-52', sec: '16.3', p: 54, type: 'match',
-    q: 'Ordne den Alzheimer-Befund seiner Beschreibung zu.',
-    pairs: [
-      ['Neuritische Plaques', 'Amyloidkern + dystrophe tau-positive Neuriten (diagnostisch)'],
-      ['Diffuse Plaques', 'Unspezifisch, auch bei gesunden Alten'],
-      ['Neurofibrilläre Tangles', 'Intraneuronal, hyperphosphoryliertes Tau'],
-      ['Amyloidangiopathie', 'Kongophile Ablagerungen in Gefäßen']
-    ],
-    ex: 'Außerdem: Neuronen-/Synapsenverlust, Astrogliose, granulovakuoläre Degeneration, Hirano-Körperchen. Makro: Atrophie temporal (Hippocampus), parietal, frontal; Hydrocephalus e vacuo.'
   },
   {
     id: 'k16-53', sec: '16.3', p: 54, type: 'single',
@@ -549,17 +427,6 @@ PQ.registerChapter(16, [
     ],
     a: 0,
     ex: 'Demenz bei Parkinson in bis zu ~40 % (kortikale Lewy-Körper). Lewy-Körper-Demenz, wenn die Demenz vor oder innerhalb eines Jahres nach der Motorik auftritt.'
-  },
-  {
-    id: 'k16-55', sec: '16.3', p: 54, type: 'match',
-    q: 'Ordne die Form der Creutzfeldt-Jakob-Krankheit ihrem Kennzeichen zu.',
-    pairs: [
-      ['Sporadisch', 'Ca. 85–90 %, 60–70 J'],
-      ['Genetisch', 'Ca. 10 %, PRNP-Mutationen'],
-      ['Iatrogen', 'Dura-/Korneatransplantate, Wachstumshormon'],
-      ['Variante CJD (vCJD)', 'BSE, junge Patienten, floride Plaques']
-    ],
-    ex: 'Prionerkrankungen: Fehlfaltung von PrPᶜ → PrPˢᶜ (β-Faltblatt, proteaseresistent). Kuru durch Kannibalismus; zu den genetischen Formen gehören auch GSS und FFI.'
   },
   {
     id: 'k16-56', sec: '16.3', p: 54, type: 'single',
@@ -590,18 +457,6 @@ PQ.registerChapter(16, [
     opts: ['α-Synuklein in glialen Einschlüssen', 'Tau in neurofibrillären Tangles', 'Huntingtin (Polyglutamin)', 'Prionprotein'],
     a: 0,
     ex: 'α-Synuklein: Parkinson, Lewy-Körper-Demenz und MSA (gliale Einschlüsse).'
-  },
-  {
-    id: 'k16-59', sec: '16.3', p: 54, type: 'single',
-    q: 'Was versteht man unter der subkortikalen arteriosklerotischen Enzephalopathie (Binswanger)?',
-    opts: [
-      'Vaskuläre Demenz durch Mikroangiopathie mit Marklagerschäden und Lakunen',
-      'Frontotemporale Lobärdegeneration mit Tau-Ablagerung',
-      'Prionerkrankung mit spongiformer Auflockerung',
-      'Demenz durch Normaldruckhydrozephalus'
-    ],
-    a: 0,
-    ex: 'Vaskuläre Demenz: Multiinfarktdemenz, Binswanger (Mikroangiopathie bei Hypertonie, Hyalinose; Marklagerschäden, Lakunen), strategische Infarkte (Thalamus), Amyloidangiopathie.'
   },
 
   /* ---------- 16.4 Cerebrovascular diseases & hemorrhages ---------- */
@@ -653,49 +508,6 @@ PQ.registerChapter(16, [
     opts: ['Lewy-Körperchen', 'Ödem', 'Vergrößerte Mitochondrien', 'Mikrogliaaktivierung', '„Eosinophile“ Neuronenveränderungen'],
     a: 0,
     ex: 'Nach Ischämie: 6–12 h „rote/eosinophile Neurone“, Ödem, geschwollene Mitochondrien; später Granulozyten, Makrophagen, Mikrogliaaktivierung. Lewy-Körperchen gehören zum M. Parkinson.'
-  },
-  {
-    id: 'k16-65', sec: '16.4', p: 55, type: 'match',
-    q: 'Ordne die Blutung ihrer Blutungsquelle zu.',
-    pairs: [
-      ['Epiduralhämatom', 'A. meningea media (Schädelfraktur temporal)'],
-      ['Subduralhämatom', 'Brückenvenen'],
-      ['Subarachnoidalblutung', 'Hirnbasisaneurysma (Circulus Willisii)'],
-      ['Intrazerebrale Blutung', 'Hypertonie, Amyloidangiopathie, AVM']
-    ],
-    ex: 'SAB: Ruptur eines Hirnbasisaneurysmas in ~80–90 % (v. a. A. communicans anterior), AVM. ICB: Hypertonie (häufigste nicht-traumatische Ursache), Amyloidangiopathie, AVM, Kavernom, Tumor, Gerinnungsstörung.'
-  },
-  {
-    id: 'k16-66', sec: '16.4', p: 55, type: 'match',
-    q: 'Ordne die Blutung ihrer Form bzw. ihrem Leitbefund zu.',
-    pairs: [
-      ['Epiduralhämatom', 'Bikonvex, luzides Intervall'],
-      ['Subduralhämatom', 'Halbmondförmig über der Hemisphäre'],
-      ['Subarachnoidalblutung', 'Vernichtungskopfschmerz, Blut in den basalen Zisternen'],
-      ['Intrazerebrale Blutung', 'Massenblutung im Parenchym, v. a. Stammganglien']
-    ],
-    ex: 'Epidural: bikonvex/linsenförmig (Nähte als Grenze), rasche Einklemmung. Subdural: halbmond-/sichelförmig. SAB: Meningismus, 40–60 J, Diagnose CT, sonst Liquor. ICB: Prädilektion Putamen/Capsula interna, Thalamus, Pons, Kleinhirn.'
-  },
-  {
-    id: 'k16-67', sec: '16.4', p: 54, type: 'match',
-    q: 'Ordne den Infarkttyp seiner Beschreibung zu.',
-    pairs: [
-      ['Territorialinfarkt', 'Versorgungsgebiet einer großen Arterie, am häufigsten A. cerebri media'],
-      ['Lakunärer Infarkt', 'Mikroangiopathie; Basalganglien, Thalamus, Pons'],
-      ['Grenzzoneninfarkt', 'Wasserscheiden bei globaler Hypoperfusion']
-    ],
-    ex: 'Grenzzoneninfarkt: zwischen den Versorgungsgebieten großer Arterien (z. B. ACA/ACM) bei Hypotonie, Herzstillstand, Stenosen.'
-  },
-  {
-    id: 'k16-68', sec: '16.4', p: 54, type: 'match',
-    q: 'Ordne die Zeit nach einem Hirninfarkt dem histologischen Befund zu.',
-    pairs: [
-      ['6–12 h', '„Rote/eosinophile Neurone“, Ödem'],
-      ['1–2 d', 'Neutrophile Granulozyten'],
-      ['Ab ca. 3–5 d', 'Makrophagen (Fettkörnchenzellen), Kapillarsprossung'],
-      ['Wochen bis Monate', 'Pseudozyste mit Astrogliose']
-    ],
-    ex: 'Infarktstadien: 6–12 h rote/eosinophile Neurone (Kernpyknose), Ödem, geschwollene Mitochondrien · 1–2 d Granulozyten · ab ~3–5 d Makrophagen, Mikrogliaaktivierung, Kapillarsprossung · Wochen bis Monate Resorption → Pseudozyste (Kolliquationsnekrose).'
   },
   {
     id: 'k16-69', sec: '16.4', p: 54, type: 'single',
@@ -794,28 +606,6 @@ PQ.registerChapter(16, [
     ex: 'Eitrige Meningitis: makroskopisch gelblich-grünliche, trübe „Haube“ über der Konvexität; Granulozyten im Subarachnoidalraum. Die virale Meningitis ist klar. Im Original eine Bildfrage – die Beschreibung reicht zur Lösung.'
   },
   {
-    id: 'k16-79', sec: '16.5', p: 55, type: 'match',
-    q: 'Ordne die Meningitisform ihren typischen Erregern zu.',
-    pairs: [
-      ['Eitrige Meningitis des Neugeborenen', 'E. coli, B-Streptokokken, Listerien'],
-      ['Eitrige Meningitis bei Kindern/Erwachsenen', 'Pneumokokken, Meningokokken, H. influenzae'],
-      ['Lymphozytäre (virale) Meningitis', 'Enteroviren']
-    ],
-    ex: 'Komplikationen der eitrigen Meningitis: Hydrozephalus, Waterhouse-Friderichsen. Die virale Meningitis ist klar, mit Lymphozyten.'
-  },
-  {
-    id: 'k16-80', sec: '16.5', p: 55, type: 'match',
-    q: 'Ordne die ZNS-Infektion ihrem Kennzeichen zu.',
-    pairs: [
-      ['Toxoplasmose', 'Ringherde in den Basalganglien'],
-      ['Cryptococcus', 'Nachweis im Tuschepräparat'],
-      ['CMV', 'Ventrikulitis'],
-      ['PML', 'JC-Virus, Befall der Oligodendrozyten'],
-      ['HSV-Enzephalitis', 'Hämorrhagisch-nekrotisierend, temporal']
-    ],
-    ex: 'Opportunistische ZNS-Erreger bei HIV: Toxoplasmose, Cryptococcus, CMV, PML (JC-Virus), Candida/Aspergillus, primäres ZNS-Lymphom (EBV), Tbc. HSV-Enzephalitis: Cowdry-A-Einschlüsse.'
-  },
-  {
     id: 'k16-81', sec: '16.5', p: 55, type: 'single',
     q: 'Welche Meningitis ist basal betont, sulzig-gelatinös und geht mit Hirnnervenausfällen einher?',
     opts: ['Tuberkulöse Meningitis', 'Eitrige Pneumokokken-Meningitis', 'Virale (Enterovirus-)Meningitis'],
@@ -846,18 +636,6 @@ PQ.registerChapter(16, [
     ex: 'HIV-Enzephalopathie: mikrogliale Knötchen, mehrkernige Riesenzellen, Myelinblässe → HIV-assoziierte Demenz. Cowdry A → HSV-Enzephalitis; spongiform → CJD; basale verkäsende Granulome → tuberkulöse Meningitis.'
   },
   {
-    id: 'k16-84', sec: '16.5', p: 55, type: 'single',
-    q: 'Welche Symptomkombination passt zur Riesenzellarteriitis?',
-    opts: [
-      'Schläfenkopfschmerz, Kauclaudicatio, Sehstörung, BSG ↑',
-      'Vernichtungskopfschmerz und Meningismus',
-      'Rigor, Ruhetremor, Akinese',
-      'Retrobulbärneuritis bei einer jungen Frau'
-    ],
-    a: 0,
-    ex: 'RZA: > 50 J (Frauen), Schläfenkopfschmerz, verdickte A. temporalis, Kauclaudicatio, Sehstörung/Amaurose, Polymyalgie, BSG ↑. Vernichtungskopfschmerz → SAB; Rigor/Tremor/Akinese → Parkinson; Retrobulbärneuritis → MS.'
-  },
-  {
     id: 'k16-85', sec: '16.5', p: 55, type: 'single',
     q: 'Welche Beschreibung passt zur HSV-Enzephalitis?',
     opts: [
@@ -877,27 +655,6 @@ PQ.registerChapter(16, [
     opts: ['Segmentale Demyelinisierung', 'Waller-Degeneration', 'Gruppierte (felderförmige) Atrophie', 'Perifaszikuläre Atrophie'],
     a: 0,
     ex: 'Guillain-Barré = akute inflammatorische demyelinisierende Polyradikuloneuritis nach Infekt (Campylobacter). Waller-Degeneration → axonale Schädigung; gruppierte Atrophie → neurogen; perifaszikuläre Atrophie → Dermatomyositis.'
-  },
-  {
-    id: 'k16-87', sec: '16.6', p: 56, type: 'match',
-    q: 'Ordne die Nervenschädigung ihrem Kennzeichen zu.',
-    pairs: [
-      ['Axonale Schädigung', 'Waller-Degeneration, NLG nahezu normal, Amplitude ↓'],
-      ['Demyelinisierende Schädigung', 'Segmentale Demyelinisierung, NLG ↓↓'],
-      ['„Zwiebelschalen“', 'Rezidivierende Schädigung mit Remyelinisierung']
-    ],
-    ex: 'Axonal: toxisch, metabolisch/diabetisch, Vaskulitis. Demyelinisierend: Guillain-Barré, CIDP, CMT1; Remyelinisierung mit kurzen Internodien.'
-  },
-  {
-    id: 'k16-88', sec: '16.6', p: 56, type: 'match',
-    q: 'Ordne die Myopathie ihrem Kennzeichen zu.',
-    pairs: [
-      ['Polymyositis', 'Endomysiale CD8-T-Zellen invadieren nicht nekrotische Fasern'],
-      ['Dermatomyositis', 'Perifaszikuläre Atrophie, Kapillarschaden'],
-      ['Einschlusskörpermyositis', 'Ältere Männer, rimmed vacuoles'],
-      ['Mitochondriale Myopathie', 'Ragged-red-Fibers']
-    ],
-    ex: 'Polymyositis: proximale Schwäche. Dermatomyositis: perivaskulär B-/CD4-Zellen, Haut, paraneoplastisch.'
   },
   {
     id: 'k16-89', sec: '16.6', p: 56, type: 'single',
@@ -924,71 +681,34 @@ PQ.registerChapter(16, [
   },
 
   /* ---------- True/false statements ---------- */
-  { id: 'k16-t01', sec: '16.1', p: 52, type: 'tf', a: false, q: 'ZNS-Tumoren werden nach dem TNM-System klassifiziert.', ex: 'ZNS-Tumoren werden nicht nach TNM klassifiziert; die Typisierung erfolgt histologisch und molekular („integrierte Diagnose“).' },
-  { id: 'k16-t02', sec: '16.1', p: 52, type: 'tf', a: true, q: 'Anders als bei Karzinomen ist ein WHO-Grad-1-Tumor des ZNS benigne.', ex: 'Grad 1 = langsam, gutartig, durch Resektion potenziell heilbar; bei anderen Tumoren ist G1 trotzdem maligne.' },
   { id: 'k16-t03', sec: '16.1', p: 52, type: 'tf', a: true, q: 'Das Meningeom ist der häufigste primäre Hirntumor.', ex: 'Häufigster primärer Hirntumor: Meningeom (Frauen, meist WHO 1).' },
   { id: 'k16-t04', sec: '16.1', p: 52, type: 'tf', a: false, q: 'Der häufigste Hirntumor des Kindesalters ist das Medulloblastom.', ex: 'Häufigster kindlicher Hirntumor ist das pilozytische Astrozytom; das Medulloblastom ist der häufigste maligne.' },
   { id: 'k16-t05', sec: '16.1', p: 52, type: 'tf', a: false, q: 'Hirntumoren im Kindesalter liegen überwiegend supratentoriell.', ex: 'Hirntumoren bei Kindern liegen überwiegend infratentoriell.' },
-  { id: 'k16-t06', sec: '16.1', p: 52, type: 'tf', a: false, q: 'Die mediane Überlebenszeit beim Glioblastom beträgt etwa 5 Jahre.', ex: 'Glioblastom: mediane Überlebenszeit ~15 Monate.' },
   { id: 'k16-t07', sec: '16.1', p: 52, type: 'tf', a: true, q: 'Die 1p/19q-Kodeletion ist kennzeichnend für das Oligodendrogliom.', ex: 'Oligodendrogliom: definitionsgemäß IDH-mutiert + 1p/19q-kodeletiert.' },
-  { id: 'k16-t08', sec: '16.1', p: 52, type: 'tf', a: false, q: 'Die MGMT-Promotormethylierung ist ein diagnostischer Marker.', ex: 'MGMT-Promotormethylierung: prädiktiv für Temozolomid, prognostisch günstig – kein diagnostischer Marker.' },
-  { id: 'k16-t09', sec: '16.1', p: 52, type: 'tf', a: true, q: 'H3 K27M ist typisch für das diffuse Mittelliniengliom.', ex: 'H3 K27M → diffuses Mittelliniengliom.' },
-  { id: 'k16-t10', sec: '16.1', p: 52, type: 'tf', a: false, q: 'NF2-Veränderungen sind typisch für das pilozytische Astrozytom.', ex: 'NF2 → Meningeom, Schwannom. Pilozytisches Astrozytom: BRAF-Fusion/V600E; am N. opticus mit NF1 assoziiert.' },
-  { id: 'k16-t11', sec: '16.2', p: 52, type: 'tf', a: true, q: 'Das pilozytische Astrozytom ist typischerweise zystisch mit wandständigem Knoten.', ex: 'Pilozytisches Astrozytom: zystisch mit wandständigem Knoten; biphasisch, Rosenthal-Fasern.' },
   { id: 'k16-t12', sec: '16.2', p: 52, type: 'tf', a: false, q: 'Das pilozytische Astrozytom zeigt meist eine sekundäre Malignisierung.', ex: 'Nur sehr selten sekundäre Malignisierung (Altfrage 2018, 2021).' },
-  { id: 'k16-t13', sec: '16.2', p: 52, type: 'tf', a: false, q: 'Das diffuse Astrozytom ist bei günstiger Lage kurativ resezierbar.', ex: 'Diffus infiltrierend – keine kurative Resektion möglich, auch nicht bei günstiger Lage.' },
-  { id: 'k16-t14', sec: '16.2', p: 52, type: 'tf', a: true, q: 'Der perinukleäre Halo („Spiegeleier“) beim Oligodendrogliom ist ein Artefakt.', ex: '„Spiegeleier“: perinukleärer Halo = Artefakt; dazu „Maschendraht“-Kapillaren.' },
   { id: 'k16-t15', sec: '16.2', p: 52, type: 'tf', a: true, q: 'Oligodendrogliome haben eine bessere Prognose als Astrozytome.', ex: 'Oligodendrogliom: bessere Prognose als Astrozytome, chemosensibel (Altfrage 2019).' },
-  { id: 'k16-t16', sec: '16.2', p: 52, type: 'tf', a: false, q: 'Das Glioblastom (IDH-Wildtyp) tritt bevorzugt bei Kindern auf.', ex: 'Glioblastom: Ältere (50–70 J), Großhirn.' },
-  { id: 'k16-t17', sec: '16.2', p: 52, type: 'tf', a: true, q: 'Nekrosen mit Pseudopalisaden und mikrovaskuläre Proliferate sind beim Glioblastom jeweils diagnostisch.', ex: 'Beide Befunde sind jeweils diagnostisch für das Glioblastom.' },
   { id: 'k16-t18', sec: '16.2', p: 53, type: 'tf', a: false, q: 'Glioblastome metastasieren häufig in Lunge und Knochen.', ex: 'Glioblastom: extrakraniell praktisch keine Metastasen (Altfrage 2019).' },
-  { id: 'k16-t19', sec: '16.2', p: 52, type: 'tf', a: true, q: 'Das Ependymom ist der häufigste intramedulläre Tumor des Erwachsenen.', ex: 'Ependymom: beim Erwachsenen spinal intramedullär, im Rückenmark meist gutartig.' },
   { id: 'k16-t20', sec: '16.2', p: 53, type: 'tf', a: false, q: 'Das Medulloblastom liegt typischerweise frontal oder parietal.', ex: 'Medulloblastom: Kleinhirn (Vermis), engt den 4. Ventrikel ein (Altfrage 2025).' },
-  { id: 'k16-t21', sec: '16.2', p: 52, type: 'tf', a: true, q: 'Beim Medulloblastom hat die WNT-Subgruppe die beste Prognose.', ex: 'WNT (beste Prognose), SHH, Gruppe 3 (MYC, schlechteste), Gruppe 4.' },
   { id: 'k16-t22', sec: '16.2', p: 53, type: 'tf', a: false, q: 'Das Medulloblastom ist überwiegend ein WHO-Grad-1-Tumor mit günstiger Prognose.', ex: 'Medulloblastom = WHO-Grad 4, embryonaler Tumor (Altfrage 2025).' },
-  { id: 'k16-t23', sec: '16.2', p: 52, type: 'tf', a: true, q: 'Meningeome sind häufig Progesteronrezeptor-positiv.', ex: 'Meningeom: Frauen (Progesteronrezeptor+), NF2, Z. n. Bestrahlung.' },
-  { id: 'k16-t24', sec: '16.2', p: 52, type: 'tf', a: false, q: 'Meningeome wachsen typischerweise intrazerebral und infiltrierend.', ex: 'Meningeom: extrazerebral, durabasal, scharf begrenzt, verdrängend.' },
   { id: 'k16-t25', sec: '16.2', p: 53, type: 'tf', a: true, q: 'Das Akustikusneurinom geht vom N. vestibularis aus.', ex: 'Schwannom im Kleinhirnbrückenwinkel: N. vestibularis → Akustikusneurinom; einseitige Hörminderung, Tinnitus, Schwindel.' },
   { id: 'k16-t26', sec: '16.2', p: 53, type: 'tf', a: false, q: 'Das Schwannom ist GFAP- und EMA-positiv.', ex: 'Schwannom: S100+, GFAP−, EMA− (Altfrage 2018).' },
-  { id: 'k16-t27', sec: '16.2', p: 53, type: 'tf', a: true, q: 'Plexiforme Neurofibrome können in einen MPNST übergehen.', ex: 'Neurofibrom (WHO 1): NF1; plexiform → MPNST.' },
-  { id: 'k16-t28', sec: '16.2', p: 53, type: 'tf', a: true, q: 'Das Hämangioblastom kann über EPO-Bildung eine Polyglobulie verursachen.', ex: 'Hämangioblastom: EPO → Polyglobulie.' },
-  { id: 'k16-t29', sec: '16.2', p: 53, type: 'tf', a: false, q: 'Das primäre ZNS-Lymphom ist meist ein Hodgkin-Lymphom.', ex: 'Primäres ZNS-Lymphom = DLBCL (Immunsuppression, EBV), periventrikulär.' },
   { id: 'k16-t30', sec: '16.2', p: 53, type: 'tf', a: true, q: 'Hirnmetastasen des malignen Melanoms neigen zur Einblutung.', ex: 'Malignes Melanom (5–20 % der Hirnmetastasen) neigt zu Einblutung.' },
-  { id: 'k16-t31', sec: '16.2', p: 53, type: 'tf', a: false, q: 'Das Plexuskarzinom ist ein häufiger Hirntumor des Erwachsenen.', ex: 'Das Plexuskarzinom ist ein seltener Tumor des Kindesalters.' },
-  { id: 'k16-t32', sec: '16.2', p: 53, type: 'tf', a: false, q: 'Hirnmetastasen sind typischerweise unscharf begrenzt und zeigen kein Ödem.', ex: 'Hirnmetastasen: Mark-Rinden-Grenze, scharf begrenzt, perifokales Ödem.' },
-  { id: 'k16-t33', sec: '16.3', p: 53, type: 'tf', a: true, q: 'Die Alzheimer-Demenz ist mit ca. 60 % die häufigste Demenzform.', ex: 'Alzheimer ~60 %, vaskuläre Demenz ~15–20 %.' },
-  { id: 'k16-t34', sec: '16.3', p: 54, type: 'tf', a: false, q: 'Diffuse Amyloidplaques sind für die Alzheimer-Diagnose beweisend.', ex: 'Diffuse Plaques sind unspezifisch (auch bei gesunden Alten); diagnostisch sind neuritische Plaques.' },
-  { id: 'k16-t35', sec: '16.3', p: 54, type: 'tf', a: true, q: 'Die Braak-Stadien der Tangles reichen von transentorhinal über limbisch bis neokortikal.', ex: 'Braak-Stadien I–VI: transentorhinal → limbisch → neokortikal.' },
   { id: 'k16-t36', sec: '16.3', p: 54, type: 'tf', a: false, q: 'Die CERAD-Kriterien beruhen auf der Zahl der Lewy-Körper.', ex: 'CERAD: Dichte der neuritischen Plaques in Relation zum Alter (Altfrage 2021).' },
   { id: 'k16-t37', sec: '16.3', p: 54, type: 'tf', a: true, q: 'Trisomie 21 ist ein genetischer Risikofaktor für den M. Alzheimer.', ex: 'Genetisch: APP, PSEN1/2, Trisomie 21, ApoE4.' },
   { id: 'k16-t38', sec: '16.3', p: 54, type: 'tf', a: false, q: 'Lewy-Körperchen bestehen aus hyperphosphoryliertem Tau.', ex: 'Lewy-Körperchen bestehen aus α-Synuklein; hyperphosphoryliertes Tau bildet neurofibrilläre Tangles.' },
   { id: 'k16-t39', sec: '16.3', p: 54, type: 'tf', a: false, q: 'Lewy-Körperchen liegen im Zellkern der Neurone.', ex: 'Lewy-Körperchen sind intrazytoplasmatische Einschlüsse in Neuronen (Altfrage 2018).' },
   { id: 'k16-t40', sec: '16.3', p: 54, type: 'tf', a: true, q: 'Bei der Creutzfeldt-Jakob-Krankheit faltet sich PrPᶜ in eine proteaseresistente β-Faltblatt-Form (PrPˢᶜ) um.', ex: 'Prionerkrankungen: Fehlfaltung von PrPᶜ → PrPˢᶜ (β-Faltblatt, proteaseresistent, „infektiös“).' },
-  { id: 'k16-t41', sec: '16.3', p: 54, type: 'tf', a: false, q: 'Die meisten Fälle der Creutzfeldt-Jakob-Krankheit sind genetisch bedingt.', ex: 'CJD: sporadisch ~85–90 %, genetisch ~10 %.' },
-  { id: 'k16-t42', sec: '16.3', p: 54, type: 'tf', a: true, q: 'Die variante CJD (vCJD) betrifft junge Patienten und zeigt floride Plaques.', ex: 'vCJD: BSE, junge Patienten, floride Plaques.' },
   { id: 'k16-t43', sec: '16.3', p: 54, type: 'tf', a: false, q: 'Bei der ALS sind typischerweise die Hinterstränge degeneriert.', ex: 'Bei der ALS bleibt die Sensibilität (Hinterstränge, hintere Zentralwindung) verschont (Altfrage 2020).' },
   { id: 'k16-t44', sec: '16.3', p: 54, type: 'tf', a: true, q: 'Die Chorea Huntington ist eine Polyglutamin-Erkrankung (Huntingtin).', ex: 'Polyglutamin/Huntingtin → Chorea Huntington.' },
   { id: 'k16-t45', sec: '16.4', p: 54, type: 'tf', a: true, q: 'Etwa 80–85 % aller Schlaganfälle sind ischämisch.', ex: 'Hirninfarkt ~80–85 % aller Schlaganfälle, Blutungen ~15 %.' },
   { id: 'k16-t46', sec: '16.4', p: 54, type: 'tf', a: false, q: 'Der Territorialinfarkt betrifft am häufigsten die A. cerebri anterior.', ex: 'Territorialinfarkt: am häufigsten A. cerebri media.' },
-  { id: 'k16-t47', sec: '16.4', p: 54, type: 'tf', a: true, q: 'Lakunäre Infarkte entstehen durch Mikroangiopathie, z. B. in Basalganglien, Thalamus und Pons.', ex: 'Lakunärer Infarkt: Mikroangiopathie; Basalganglien, Thalamus, Pons.' },
   { id: 'k16-t48', sec: '16.4', p: 55, type: 'tf', a: false, q: 'Lewy-Körperchen sind ein typischer postischämischer Befund.', ex: 'Postischämisch sind Lewy-Körperchen nicht zu erwarten (Altfrage 2024).' },
-  { id: 'k16-t49', sec: '16.4', p: 55, type: 'tf', a: false, q: 'Das Epiduralhämatom entsteht meist durch Ruptur der Brückenvenen.', ex: 'Epidural: arteriell (A. meningea media). Brückenvenen → Subduralhämatom.' },
   { id: 'k16-t50', sec: '16.4', p: 55, type: 'tf', a: true, q: 'Das chronische Subduralhämatom tritt oft bei älteren Menschen nach Bagatelltrauma auf.', ex: 'Chronisches SDH: ältere Menschen, Bagatelltrauma, Alkohol, Antikoagulation.' },
-  { id: 'k16-t51', sec: '16.4', p: 55, type: 'tf', a: true, q: 'Die ADPKD ist mit einer Subarachnoidalblutung assoziiert.', ex: 'SAB: Ruptur eines Hirnbasisaneurysmas; 40–60 J, ADPKD.' },
   { id: 'k16-t52', sec: '16.4', p: 55, type: 'tf', a: false, q: 'Häufigste Ursache einer nicht-traumatischen intrazerebralen Blutung ist die arterielle Hypotonie.', ex: 'Häufigste Ursache ist die Hypertonie (Altfrage 2020, 2024).' },
   { id: 'k16-t53', sec: '16.4', p: 55, type: 'tf', a: true, q: 'Ein Ventrikeleinbruch einer intrazerebralen Blutung kann zum Hämatozephalus internus führen.', ex: 'ICB mit Ventrikeleinbruch → Hämatozephalus internus (Altfrage 2024).' },
-  { id: 'k16-t54', sec: '16.4', p: 55, type: 'tf', a: true, q: 'Duret-Blutungen im Hirnstamm entstehen bei Einklemmung.', ex: 'Duret-Blutungen: Hirnstamm bei Einklemmung.' },
-  { id: 'k16-t55', sec: '16.4', p: 55, type: 'tf', a: false, q: 'Die Purpura cerebri ist eine Massenblutung in den Stammganglien.', ex: 'Purpura cerebri = petechiale Marklagerblutungen (Fettembolie, Gerinnungsstörung, Intoxikation, Luftembolie, Entzündung).' },
-  { id: 'k16-t56', sec: '16.5', p: 55, type: 'tf', a: false, q: 'Die virale Meningitis zeigt einen trüben Liquor mit Granulozyten.', ex: 'Virale (lymphozytäre) Meningitis: klar, Lymphozyten. Trüb mit Granulozyten = bakteriell.' },
-  { id: 'k16-t57', sec: '16.5', p: 55, type: 'tf', a: true, q: 'Die HSV-Enzephalitis betrifft typischerweise den Temporallappen.', ex: 'HSV-Enzephalitis: hämorrhagisch-nekrotisierend, temporal, Cowdry-A-Einschlüsse.' },
   { id: 'k16-t58', sec: '16.5', p: 55, type: 'tf', a: true, q: 'Die PML wird durch das JC-Virus verursacht und betrifft die Oligodendrozyten.', ex: 'PML: JC-Virus, Oligodendrozyten.' },
   { id: 'k16-t59', sec: '16.5', p: 55, type: 'tf', a: true, q: 'MS-Herde liegen typischerweise periventrikulär („Dawson\'s fingers“).', ex: 'MS-Herde: periventrikulär („Dawson\'s fingers“), Balken, N. opticus, Hirnstamm, Kleinhirn, Rückenmark.' },
   { id: 'k16-t60', sec: '16.5', p: 55, type: 'tf', a: true, q: 'Die zerebrale Toxoplasmose zeigt Ringherde in den Basalganglien.', ex: 'Toxoplasmose: Ringherde in den Basalganglien (opportunistisch bei HIV).' },
-  { id: 'k16-t61', sec: '16.5', p: 55, type: 'tf', a: true, q: 'Cryptococcus lässt sich im Tuschepräparat nachweisen.', ex: 'Pilze: Cryptococcus – Tuschepräparat.' },
-  { id: 'k16-t62', sec: '16.5', p: 55, type: 'tf', a: false, q: 'Die tuberkulöse Meningitis bildet eine eitrige Haube über der Konvexität.', ex: 'Tuberkulöse Meningitis: basal, sulzig-gelatinös. Die eitrige „Haube“ über der Konvexität passt zur bakteriellen Meningitis.' },
   { id: 'k16-t63', sec: '16.6', p: 56, type: 'tf', a: true, q: 'Bei axonaler Nervenschädigung ist die Nervenleitgeschwindigkeit nahezu normal, die Amplitude vermindert.', ex: 'Axonal: NLG nahezu normal, Amplitude ↓. Demyelinisierend: NLG ↓↓.' },
   { id: 'k16-t64', sec: '16.6', p: 56, type: 'tf', a: false, q: 'Das Guillain-Barré-Syndrom ist eine axonale Neuropathie.', ex: 'Guillain-Barré: segmentale Demyelinisierung (Altfrage 2023).' },
-  { id: 'k16-t65', sec: '16.6', p: 56, type: 'tf', a: true, q: 'Eine Fasertypengruppierung spricht für eine Reinnervation nach Denervierung.', ex: 'Neurogene Muskelschädigung: Fasertypengruppierung nach Reinnervation.' },
-  { id: 'k16-t66', sec: '16.6', p: 56, type: 'tf', a: false, q: 'Die perifaszikuläre Atrophie ist typisch für die Polymyositis.', ex: 'Perifaszikuläre Atrophie → Dermatomyositis. Polymyositis: endomysiale CD8-T-Zellen.' },
-  { id: 'k16-t67', sec: '16.6', p: 56, type: 'tf', a: true, q: 'Bei der Becker-Muskeldystrophie ist Dystrophin vermindert.', ex: 'Duchenne: Dystrophin fehlt. Becker: Dystrophin vermindert.' }
 ]);

@@ -6,11 +6,23 @@
   const Q = PQ.quiz;
   const root = document.getElementById('app');
   const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
-  const ALL_TYPES = ['single', 'kprim', 'match', 'tf'];
+  const ALL_TYPES = ['single', 'kprim', 'tf'];
   const LESSON_SIZE = 10;
   const MODE_TITLE = { practice: 'Üben', review: 'Wiederholen', exam: 'Klausur', blitz: 'Blitzrunde' };
-  const PRAISE = ['Richtig!', 'Stark!', 'Genau!', 'Sitzt!', 'Super!'];
+  const PRAISE = ['Richtig!', 'Stark!', 'Genau!', 'Sitzt!', 'Super!', 'Klasse!', 'Perfekt!'];
   const MILESTONES = [3, 5, 10, 15, 20, 30];
+  const DAY_MILESTONES = [50, 100, 150, 200, 250, 300, 400, 500];
+  // Encouragement; {n} becomes the name (or disappears with the comma before it)
+  const CHEER_OK = ['Weiter so, {n}!', 'Läuft bei dir!', 'Du bist richtig gut drin.', 'Stark, {n}!', 'Genau so!', 'Das hast du drauf, {n}.'];
+  const CHEER_BAD = [
+    'Nicht schlimm – genau so lernt das Gehirn.',
+    'Gut, dass es jetzt auffällt und nicht in der Klausur.',
+    'Kurz die Erklärung lesen, dann sitzt es beim nächsten Mal.',
+    'Fehler sind die besten Lernmomente, {n}.',
+    'Kopf hoch, {n} – du machst das super.'
+  ];
+  const BREAK_MS = 10 * 60000;     // no answer for 10 minutes counts as a break
+  const STUDY_BLOCK = 45 * 60000;  // pause reminder after 45 minutes of learning
 
   let session = null;     // current round
   let lastResult = null;  // results of the last finished round
@@ -117,6 +129,32 @@
     return arr[Math.floor(Math.random() * arr.length)];
   }
 
+  function nameOf() {
+    return (S.setting('name') || '').trim();
+  }
+
+  function say(text) {
+    const n = nameOf();
+    return n ? text.replace('{n}', n) : text.replace(/,? \{n\}/, '');
+  }
+
+  function fmtDuration(min) {
+    if (min < 60) return Math.max(1, min) + ' min';
+    const hrs = Math.floor(min / 60);
+    const rest = Math.round((min % 60) / 5) * 5;
+    return hrs + ' h' + (rest ? ' ' + rest + ' min' : '');
+  }
+
+  // Calendar days until the exam (0 = today, negative = past, null = no date)
+  function daysUntilExam() {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(S.setting('examDate') || '');
+    if (!m) return null;
+    const exam = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]), 12);
+    const today = new Date();
+    today.setHours(12, 0, 0, 0);
+    return Math.round((exam - today) / 86400000);
+  }
+
   function availableChapters() {
     return PQ.chapters.filter(c => c.available);
   }
@@ -142,6 +180,7 @@
   }
 
   function toast(...content) {
+    document.querySelectorAll('.toast').forEach(t => t.remove()); // the newest message replaces an older one
     const t = h('div', { class: 'toast', role: 'status' }, content);
     document.body.append(t);
     requestAnimationFrame(() => t.classList.add('show'));
@@ -161,6 +200,49 @@
     }
     document.body.append(wrap);
     setTimeout(() => wrap.remove(), 4000);
+  }
+
+  function svg(tag, attrs, ...kids) {
+    const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (const k in attrs) el.setAttribute(k, attrs[k]);
+    kids.flat().forEach(kid => kid && el.append(kid));
+    return el;
+  }
+
+  /* Mascot „Zelli“, a little cell. Inline SVG so CSS can animate it (float, blink, jump, wave).
+     mood: happy | cheer (jumps, arms up) | comfort (sways, holds a heart) | wave | sleepy */
+  function mascot(mood, cls) {
+    const skin = '#ff8fb8';
+    const ink = '#3a2147';
+    const arm = d => svg('path', { d, fill: 'none', stroke: '#f06f9f', 'stroke-width': 9, 'stroke-linecap': 'round' });
+    const up = mood === 'cheer';
+    const armL = arm(up ? 'M24 60 Q12 48 12 34' : 'M22 70 Q10 74 9 86');
+    const armR = arm(up ? 'M96 60 Q108 48 108 34' : mood === 'wave' ? 'M99 60 Q114 48 117 31' : 'M98 70 Q110 74 111 86');
+    armR.setAttribute('class', 'm-arm-r');
+    const closed = mood === 'cheer' || mood === 'sleepy';
+    const eye = x => closed
+      ? svg('path', { d: mood === 'sleepy' ? 'M' + (x - 7) + ' 58 h14' : 'M' + (x - 7) + ' 60 Q' + x + ' 50 ' + (x + 7) + ' 60', fill: 'none', stroke: ink, 'stroke-width': 4, 'stroke-linecap': 'round' })
+      : svg('g', { class: 'm-blink' },
+        svg('ellipse', { cx: x, cy: 58, rx: 6.5, ry: 8.5, fill: ink }),
+        svg('circle', { cx: x + 2.2, cy: 54.5, r: 2.4, fill: '#fff' }));
+    const mouth = {
+      happy: svg('path', { d: 'M50 75 Q60 85 70 75', fill: 'none', stroke: ink, 'stroke-width': 4, 'stroke-linecap': 'round' }),
+      wave: svg('path', { d: 'M50 75 Q60 85 70 75', fill: 'none', stroke: ink, 'stroke-width': 4, 'stroke-linecap': 'round' }),
+      cheer: svg('path', { d: 'M48 72 Q60 92 72 72 Z', fill: ink, stroke: ink, 'stroke-width': 3, 'stroke-linejoin': 'round' }),
+      comfort: svg('path', { d: 'M52 77 Q60 82 68 77', fill: 'none', stroke: ink, 'stroke-width': 4, 'stroke-linecap': 'round' }),
+      sleepy: svg('ellipse', { cx: 60, cy: 78, rx: 4, ry: 5, fill: ink })
+    }[mood] || null;
+    return svg('svg', { viewBox: '0 0 120 120', class: 'mascot mood-' + mood + (cls ? ' ' + cls : ''), 'aria-hidden': 'true' },
+      svg('g', { class: 'm-float' },
+        armL, armR,
+        svg('path', { d: 'M60 16 C89 15 105 36 104 63 C103 91 86 106 60 106 C33 106 16 90 16 62 C16 35 32 17 60 16 Z', fill: skin }),
+        svg('ellipse', { cx: 40, cy: 34, rx: 11, ry: 6, fill: '#fff', opacity: 0.5, transform: 'rotate(-28 40 34)' }),
+        svg('circle', { cx: 84, cy: 38, r: 7, fill: '#f06f9f', opacity: 0.45 }),
+        svg('ellipse', { cx: 35, cy: 71, rx: 8, ry: 5, fill: '#ff5c8a', opacity: 0.45 }),
+        svg('ellipse', { cx: 85, cy: 71, rx: 8, ry: 5, fill: '#ff5c8a', opacity: 0.45 }),
+        eye(45), eye(75), mouth,
+        mood === 'comfort' ? svg('path', { class: 'm-heart', d: 'M60 108 C48 99 44 93 48 88 C51 84 57 85 60 90 C63 85 69 84 72 88 C76 93 72 99 60 108 Z', fill: '#ef4b6b' }) : null,
+        mood === 'sleepy' ? svg('text', { class: 'm-z', x: 92, y: 26, fill: ink, 'font-size': 18, 'font-weight': 900 }, 'z') : null));
   }
 
   // Progress ring: fill in the chapter color, track in a light tint of the same color
@@ -322,8 +404,9 @@
     startSession('practice', Q.smartLesson(LESSON_SIZE), { origin: { kind: 'smart' } });
   }
 
+  // Small bites, so a long list of mistakes doesn't discourage
   function startReview() {
-    startSession('review', Q.reviewPool().slice(0, 20), { origin: { kind: 'review' } });
+    startSession('review', Q.reviewPool().slice(0, LESSON_SIZE), { origin: { kind: 'review' } });
   }
 
   function startSection(sec) {
@@ -346,7 +429,7 @@
     custom: { label: 'Neue Runde', run: () => go('#/practice') },
     exam: { label: 'Neue Klausur', run: () => go('#/exam') },
     blitz: { label: 'Noch eine Runde', run: () => go('#/blitz') },
-    review: { label: 'Fertig', run: () => go('#/') }
+    review: { label: 'Weiterlernen', run: startSmart }
   };
 
   function abortSession() {
@@ -369,6 +452,10 @@
       keepOnly(s, s.ids.map((id, i) => i).filter(i => s.results[i] !== null));
     }
     s.ended = Date.now();
+    const events = [s.mode === 'exam' ? 'exam' : s.mode === 'blitz' ? 'blitz' : 'start'];
+    if (s.ids.length >= 5 && s.results.every(r => r && r.correct)) events.push('perfect');
+    unlock(events, s);
+    checkBadges(s);
     lastResult = s;
     session = null;
     S.saveSession(null);
@@ -379,31 +466,163 @@
     const s = session;
     const q = PQ.byId[s.ids[s.idx]];
     const res = Q.evaluate(q, response);
+    const before = S.get(q.id);
     s.responses[s.idx] = response;
     s.results[s.idx] = res;
     s.combo = res.correct ? s.combo + 1 : 0;
     s.bestCombo = Math.max(s.bestCombo, s.combo);
     S.record(q.id, res.correct, Q.points(res.score));
+    // Wrong → the same question once more a few questions later (except in the exam)
+    if (!res.correct && s.mode !== 'exam') res.again = Q.requeue(s, s.idx);
+    if (res.correct && before && before.b === 1) count('fixed');
+    trackTime(s, q);
     persist();
-    if (res.correct && MILESTONES.includes(s.combo)) toast(art('flame', 'art-xs'), s.combo + ' in Folge!');
+    const today = S.todayCount();
+    if (DAY_MILESTONES.includes(today)) toast(art('star', 'art-xs'), say(today + ' Fragen heute – stark, {n}!'));
+    else if (res.correct && MILESTONES.includes(s.combo)) toast(art('flame', 'art-xs'), s.combo + ' in Folge!');
+    checkBadges(s);
     return res;
+  }
+
+  function count(name) {
+    const c = S.pref('counters') || {};
+    c[name] = (c[name] || 0) + 1;
+    S.pref('counters', c);
+  }
+
+  // Measured pace per question type (time estimate) and the start of the current learning block (pause reminder)
+  function trackTime(s, q) {
+    const now = Date.now();
+    const sec = (now - (s.lastAt || s.started)) / 1000;
+    s.lastAt = now;
+    if (sec >= 3 && sec <= 240) {
+      const pace = S.pref('pace') || {};
+      pace[q.type] = Math.round(((pace[q.type] || Q.PACE[q.type]) * 0.9 + sec * 0.1) * 10) / 10;
+      S.pref('pace', pace);
+    }
+    const clock = S.pref('clock') || {};
+    if (!clock.last || now - clock.last > BREAK_MS) clock.start = now;
+    clock.last = now;
+    S.pref('clock', clock);
+  }
+
+  /* ================= Badges ================= */
+
+  const BADGES = [
+    { id: 'start', art: 'star', title: 'Losgelegt', desc: 'Die erste Runde in Patho-Quiz+' },
+    { id: 'perfect', art: 'medal', title: 'Fehlerfrei', desc: 'Eine Runde ohne Fehler' },
+    { id: 'combo10', art: 'flame', title: 'Heiße Serie', desc: '10 richtig in Folge' },
+    { id: 'combo25', art: 'flame', title: 'Unaufhaltsam', desc: '25 richtig in Folge' },
+    { id: 'day100', art: 'target', title: 'Hundert', desc: '100 Fragen an einem Tag' },
+    { id: 'day250', art: 'medal', title: 'Marathon', desc: '250 Fragen an einem Tag' },
+    { id: 'day400', art: 'trophy', title: 'Mega-Tag', desc: '400 Fragen an einem Tag' },
+    { id: 'fix10', art: 'check', title: 'Ausgebügelt', desc: '10 Fehler korrigiert' },
+    { id: 'fix50', art: 'check', title: 'Fehler-Jagd', desc: '50 Fehler korrigiert' },
+    { id: 'fix150', art: 'trophy', title: 'Aus Fehlern gelernt', desc: '150 Fehler korrigiert' },
+    { id: 'seen75', art: 'books', title: 'Dreiviertel', desc: '75 % aller Fragen gesehen' },
+    { id: 'seen100', art: 'trophy', title: 'Einmal alles', desc: 'Jede Frage mindestens einmal gesehen' },
+    { id: 'pause', art: 'star', title: 'Pausen-Profi', desc: 'Eine Lernpause gemacht' },
+    { id: 'night', art: 'star', title: 'Nachteule', desc: 'Nach 22 Uhr gelernt' },
+    { id: 'early', art: 'bolt', title: 'Früher Vogel', desc: 'Vor 8 Uhr gelernt' },
+    { id: 'blitz', art: 'bolt', title: 'Blitzschnell', desc: 'Eine Blitzrunde beendet' },
+    { id: 'exam', art: 'stopwatch', title: 'Generalprobe', desc: 'Eine Klausur-Simulation abgegeben' }
+  ].concat(PQ.chapters.map(ch => ({ id: 'ch' + ch.id, art: ch.art, title: ch.short, desc: 'Alle Fragen des Kapitels gesehen', chapter: ch.id })));
+
+  function unlock(ids, s) {
+    const have = S.pref('badges') || {};
+    const fresh = ids.filter(id => !have[id]);
+    if (!fresh.length) return;
+    fresh.forEach(id => { have[id] = Date.now(); });
+    S.pref('badges', have);
+    if (s) s.newBadges = (s.newBadges || []).concat(fresh);
+    const b = BADGES.find(x => x.id === fresh[0]);
+    if (s && s.ended) return; // shown on the results screen
+    toast(art(b.art, 'art-xs'), fresh.length > 1 ? fresh.length + ' neue Abzeichen!' : 'Abzeichen: ' + b.title);
+  }
+
+  function checkBadges(s) {
+    const c = S.pref('counters') || {};
+    const today = S.todayCount();
+    const hour = new Date().getHours();
+    const best = s ? s.bestCombo : 0;
+    const seen = PQ.questions.filter(q => S.get(q.id)).length / (PQ.questions.length || 1);
+    const chapterDone = id => PQ.questions.every(q => q.chapter !== id || S.get(q.id));
+    const met = {
+      combo10: best >= 10, combo25: best >= 25,
+      day100: today >= 100, day250: today >= 250, day400: today >= 400,
+      fix10: c.fixed >= 10, fix50: c.fixed >= 50, fix150: c.fixed >= 150,
+      seen75: seen >= 0.75, seen100: seen >= 1,
+      night: today > 0 && hour >= 22, early: today > 0 && hour >= 4 && hour < 8
+    };
+    unlock(BADGES.filter(b => (b.chapter ? chapterDone(b.chapter) : met[b.id])).map(b => b.id), s);
   }
 
   /* ================= Home ================= */
 
+  function examKicker(days) {
+    if (days === null || days < 0) return null;
+    return days === 0 ? 'Heute ist Klausur – viel Erfolg!' : days === 1 ? 'Morgen ist Klausur' : 'Noch ' + days + ' Tage bis zur Klausur';
+  }
+
+  function greeting(p, today) {
+    const hour = new Date().getHours();
+    if (!p.fresh && !p.mistakes && !p.shaky) return say('Alles sitzt, {n}! Du bist bereit.');
+    if (hour >= 23 || hour < 4) return say('Schon spät, {n}. Schlaf hilft beim Merken – vielleicht noch eine kleine Runde?');
+    if (!today) return say(hour < 11 ? 'Guten Morgen, {n}! Schön, dass du da bist.' : 'Hallo {n}! Schön, dass du da bist.');
+    return say(pick(['Weiter geht’s, {n}!', 'Du machst das großartig, {n}.', 'Jede Frage bringt dich näher ans Ziel.', 'Ich bin stolz auf dich, {n}!']));
+  }
+
+  // Phase of the plan: first see everything once, then consolidate mistakes and shaky ones
+  function planSummary(p) {
+    const seenPct = Math.round(((p.total - p.fresh) / p.total) * 100);
+    if (p.fresh) {
+      return { title: 'Noch ' + plural(p.fresh, 'neue Frage', 'neue Fragen'), pct: seenPct,
+        meta: seenPct + ' % einmal gesehen · noch ca. ' + fmtDuration(p.minutes) };
+    }
+    if (p.mistakes + p.shaky) {
+      const knownPct = Math.round(((p.total - p.mistakes - p.shaky) / p.total) * 100);
+      return { title: 'Alles einmal gesehen!', pct: knownPct,
+        meta: [p.mistakes ? plural(p.mistakes, 'Fehler', 'Fehler') : null, p.shaky ? p.shaky + ' wackelige' : null].filter(Boolean).join(' + ') +
+          ' festigen · ca. ' + fmtDuration(p.reviewMinutes) };
+    }
+    return { title: 'Alles sitzt!', pct: 100, meta: 'Jetzt Altfragen wiederholen oder die Klausur simulieren.' };
+  }
+
+  // Days until the exam: learn new questions, the day before consolidate, then the exam
+  function planStrip(p, days, today) {
+    if (days === null || days < 0 || days > 6) return null;
+    const names = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+    const cells = [];
+    for (let i = 0; i <= days; i++) {
+      const d = new Date();
+      d.setHours(12, 0, 0, 0);
+      d.setDate(d.getDate() + i);
+      const left = days - i;
+      const task = left === 0 ? 'Klausur' : left === 1 && days > 1 ? 'Festigen' : p.fresh ? (left === 2 || days <= 2 ? 'Alles einmal' : 'Neues lernen') : 'Festigen';
+      cells.push(h('div', { class: 'plan-day' + (i === 0 ? ' today' : '') + (left === 0 ? ' exam' : '') },
+        h('span', { class: 'plan-name' }, i === 0 ? 'Heute' : names[d.getDay()]),
+        h('span', { class: 'plan-task' }, task),
+        i === 0 ? h('span', { class: 'plan-count' }, plural(today, 'Frage', 'Fragen')) : null));
+    }
+    return h('section', { class: 'plan', 'aria-label': 'Plan bis zur Klausur' }, cells);
+  }
+
   function renderHome() {
+    if (!S.pref('welcomed')) { renderWelcome(); return; }
     const all = PQ.questions;
-    const goal = S.setting('dailyGoal') || S.DEFAULT_GOAL;
     const today = S.todayCount();
-    const mistakes = all.filter(q => S.isMistake(q.id)).length;
-    const due = all.filter(q => S.isDue(q.id)).length;
+    const p = Q.plan();
+    const days = daysUntilExam();
+    const sum = planSummary(p);
     const saved = restoreSession();
+    const badgeCount = Object.keys(S.pref('badges') || {}).length;
 
     const head = h('header', { class: 'home-head' },
-      h('span', { class: 'logo' }, 'Patho', h('b', {}, 'Quiz')),
+      h('span', { class: 'logo' }, 'Patho', h('b', {}, 'Quiz+')),
       h('span', { class: 'grow' }),
       h('span', { class: 'stat-pill', title: 'Tage in Folge gelernt' }, icon('flame', 'ico-flame'), S.streak()),
       h('span', { class: 'stat-pill', title: 'Punkte' }, icon('star', 'ico-star'), S.points()),
+      h('button', { class: 'stat-pill pill-btn', title: 'Abzeichen', 'aria-label': 'Abzeichen', onclick: () => go('#/badges') }, art('medal', 'art-pill'), badgeCount),
       h('button', { class: 'icon-btn', 'aria-label': 'Einstellungen', onclick: () => go('#/settings') }, icon('gear')));
 
     const actions = [];
@@ -413,20 +632,23 @@
         h('button', { class: 'hero-link', onclick: () => { abortSession(); renderHome(); } },
           MODE_TITLE[saved.mode] + ' ' + answeredCount(saved) + '/' + saved.ids.length + ' · verwerfen'));
     } else {
-      actions.push(h('button', { class: 'btn btn-hero', onclick: startSmart }, icon('play'), today ? 'Weiterlernen' : 'Los geht’s'));
-      if (mistakes + due) {
-        const parts = [mistakes ? plural(mistakes, 'Fehler', 'Fehler') : null, due ? due + ' fällige' : null].filter(Boolean);
-        actions.push(h('button', { class: 'hero-link', onclick: startReview }, icon('repeat'), parts.join(' + ') + ' wiederholen'));
-      }
+      const label = p.fresh ? (today ? 'Weiterlernen' : 'Los geht’s') : p.mistakes + p.shaky ? 'Festigen' : 'Extra-Runde';
+      actions.push(h('button', { class: 'btn btn-hero', onclick: startSmart }, icon('play'), label));
+      // Mistakes come back mixed into the lessons; practicing them on their own stays possible without a big number
+      if (p.fresh && p.mistakes) actions.push(h('button', { class: 'hero-link', onclick: startReview }, icon('repeat'), 'Lieber erst Fehler üben'));
     }
 
-    const reached = today >= goal;
     const hero = h('section', { class: 'hero' },
       h('div', { class: 'hero-top' },
-        ring(Math.min(100, Math.round((today / goal) * 100)), 'lg', '#ffffff', h('span', {}, h('b', {}, today), h('small', {}, '/' + goal))),
-        h('div', {},
-          h('p', { class: 'hero-kicker' }, 'Tagesziel'),
-          h('p', { class: 'hero-title' }, reached ? 'Geschafft!' : 'Noch ' + plural(goal - today, 'Frage', 'Fragen')))),
+        mascot(p.fresh || p.mistakes || p.shaky ? 'wave' : 'cheer', 'mascot-hero'),
+        h('div', { class: 'hero-hello' },
+          examKicker(days) ? h('p', { class: 'hero-kicker' }, examKicker(days)) : null,
+          h('p', { class: 'bubble' }, greeting(p, today)))),
+      h('div', { class: 'hero-plan' },
+        h('p', { class: 'hero-title' }, sum.title),
+        h('span', { class: 'hero-bar', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': String(sum.pct) },
+          h('span', { style: 'width:' + sum.pct + '%' })),
+        h('p', { class: 'hero-meta' }, sum.meta)),
       actions);
 
     const quick = h('div', { class: 'quick' },
@@ -452,7 +674,7 @@
       : null;
 
     mount(h('main', { class: 'screen home' },
-      head, hero, quick,
+      head, hero, planStrip(p, days, today), quick,
       h('div', { class: 'row-head' },
         h('h2', { class: 'h2' }, 'Kapitel'),
         h('button', { class: 'link', onclick: () => go('#/practice') }, 'Eigene Runde', icon('right'))),
@@ -569,7 +791,7 @@
     const valid = new Set(allSectionIds());
     const sel = new Set((presetSections || prefs.sections || [...valid]).filter(id => valid.has(id)));
     presetSections = null;
-    const types = new Set(prefs.types || ['single', 'kprim', 'match']);
+    const types = new Set(prefs.types || ['single', 'kprim']);
     let altOnly = !!prefs.altOnly;
     let minStars = prefs.minStars || 0;
     let count = prefs.count === undefined ? 20 : prefs.count;
@@ -793,164 +1015,16 @@
     return list;
   }
 
-  function renderMatch(q, view, ctx) {
-    const n = q.pairs.length;
-    if (!Array.isArray(ctx.value)) ctx.value = Array(n).fill(null);
-    let selLeft = null;
-    let selRight = null;
-    const wrap = h('div', { class: 'match' });
-
-    const leftFor = ri => ctx.value.indexOf(ri);
-    const badge = i => h('span', { class: 'pair-badge pc' + i }, i + 1);
-
-    function assign(li, ri) {
-      const prev = leftFor(ri);
-      if (prev >= 0) ctx.value[prev] = null;
-      ctx.value[li] = ri;
-      selLeft = selRight = null;
-      paint();
-      ctx.onChange(ctx.value);
-    }
-
-    function paint() {
-      const lefts = q.pairs.map(([term], i) => h('button', {
-        class: 'term' + (selLeft === i ? ' sel' : '') + (ctx.value[i] !== null ? ' paired' : ''),
-        disabled: ctx.locked, 'data-i': i,
-        onclick: () => {
-          if (selRight !== null) assign(i, selRight);
-          else { selLeft = selLeft === i ? null : i; paint(); }
-        }
-      }, badge(i), h('span', {}, term)));
-
-      const rights = view.order.map(ri => {
-        const li = leftFor(ri);
-        let cls = 'target' + (selRight === ri ? ' sel' : '');
-        if (ctx.solved) cls += li === ri ? ' ok' : ' bad';
-        else if (li >= 0) cls += ' filled';
-        return h('button', {
-          class: cls, disabled: ctx.locked, 'data-i': ri,
-          onclick: () => {
-            if (selLeft !== null) assign(selLeft, ri);
-            else if (li >= 0) { ctx.value[li] = null; paint(); ctx.onChange(ctx.value); }
-            else { selRight = selRight === ri ? null : ri; paint(); }
-          }
-        },
-          h('span', { class: 'slot' + (li >= 0 ? ' filled' : '') }, li >= 0 ? badge(li) : null),
-          h('span', { class: 'target-text' }, q.pairs[ri][1],
-            ctx.solved && li !== ri ? h('span', { class: 'target-sol' }, 'Richtig: ', badge(ri), ' ', q.pairs[ri][0]) : null));
-      });
-
-      wrap.replaceChildren(h('div', { class: 'terms' }, lefts), h('div', { class: 'targets' }, rights));
-    }
-    ctx.repaint = paint;
-    dragPairs(wrap, (kind, from, to) => (kind === 'term' ? assign(from, to) : assign(to, from)));
-    paint();
-    return wrap;
-  }
-
-  // Drag with mouse or finger: drag a term onto a description (or vice versa). Tapping still works.
-  // On touchscreens only the terms are draggable (touch-action: none), so the descriptions can still be scrolled.
-  function dragPairs(wrap, onDrop) {
-    let drag = null;
-    let suppressClick = false;
-    const kindOf = el => (el.classList.contains('term') ? 'term' : 'target');
-
-    function dropZoneAt(x, y) {
-      const el = document.elementFromPoint(x, y);
-      const zone = el && el.closest('.term, .target');
-      return zone && wrap.contains(zone) && !zone.disabled && kindOf(zone) !== drag.kind ? zone : null;
-    }
-
-    function hover(zone) {
-      if (zone === drag.over) return;
-      if (drag.over) drag.over.classList.remove('drop-over');
-      if (zone) zone.classList.add('drop-over');
-      drag.over = zone;
-    }
-
-    // Auto-scroll at the top/bottom edge (header, footer) so every description can be reached
-    function autoScroll() {
-      if (!drag || !drag.ghost) return;
-      const bar = document.querySelector('.quiz-top');
-      const foot = document.querySelector('.footer');
-      const top = (bar ? bar.getBoundingClientRect().bottom : 0) + 48;
-      const bottom = (foot ? foot.getBoundingClientRect().top : window.innerHeight) - 48;
-      const dy = drag.y < top ? -Math.min(18, (top - drag.y) / 3) : drag.y > bottom ? Math.min(18, (drag.y - bottom) / 3) : 0;
-      if (dy) {
-        window.scrollBy(0, dy);
-        hover(dropZoneAt(drag.x, drag.y));
-      }
-      drag.raf = requestAnimationFrame(autoScroll);
-    }
-
-    function end(drop) {
-      if (!drag) return;
-      const d = drag;
-      drag = null;
-      if (!d.ghost) return;
-      cancelAnimationFrame(d.raf);
-      d.ghost.remove();
-      d.src.classList.remove('drag-src');
-      wrap.classList.remove('dragging');
-      if (d.over) d.over.classList.remove('drop-over');
-      suppressClick = true;
-      setTimeout(() => { suppressClick = false; }, 0);
-      if (drop && d.over) onDrop(d.kind, Number(d.src.dataset.i), Number(d.over.dataset.i));
-    }
-
-    wrap.addEventListener('pointerdown', e => {
-      const src = e.target.closest('.term, .target');
-      if (!src || src.disabled || e.button !== 0 || (drag && drag.ghost)) return;
-      if (e.pointerType !== 'mouse' && kindOf(src) === 'target') return;
-      const r = src.getBoundingClientRect();
-      drag = { src, kind: kindOf(src), id: e.pointerId, x0: e.clientX, y0: e.clientY, x: e.clientX, y: e.clientY, dx: e.clientX - r.left, dy: e.clientY - r.top, ghost: null, over: null };
-    });
-
-    wrap.addEventListener('pointermove', e => {
-      if (!drag || e.pointerId !== drag.id) return;
-      drag.x = e.clientX;
-      drag.y = e.clientY;
-      if (!drag.ghost) {
-        if (Math.hypot(drag.x - drag.x0, drag.y - drag.y0) < 8) return;
-        const r = drag.src.getBoundingClientRect();
-        drag.ghost = drag.src.cloneNode(true);
-        drag.ghost.classList.add('drag-ghost');
-        drag.ghost.removeAttribute('data-i');
-        drag.ghost.style.width = r.width + 'px';
-        document.body.append(drag.ghost);
-        drag.src.classList.add('drag-src');
-        wrap.classList.add('dragging');
-        try { drag.src.setPointerCapture(drag.id); } catch (err) { /* older browsers */ }
-        drag.raf = requestAnimationFrame(autoScroll);
-      }
-      e.preventDefault();
-      drag.ghost.style.left = (drag.x - drag.dx) + 'px';
-      drag.ghost.style.top = (drag.y - drag.dy) + 'px';
-      hover(dropZoneAt(drag.x, drag.y));
-    });
-
-    wrap.addEventListener('pointerup', e => { if (drag && e.pointerId === drag.id) end(true); });
-    wrap.addEventListener('pointercancel', e => { if (drag && e.pointerId === drag.id) end(false); });
-    // Only losing capture on the button itself counts: with touch the inner <span> holds the capture first and reports releasing it too
-    wrap.addEventListener('lostpointercapture', e => { if (drag && e.pointerId === drag.id && e.target === drag.src) end(false); });
-    // Don't fire an extra click after dragging
-    wrap.addEventListener('click', e => {
-      if (!suppressClick) return;
-      e.stopPropagation();
-      e.preventDefault();
-    }, true);
-  }
-
-  const RENDERERS = { single: renderSingle, tf: renderTF, kprim: renderKprim, match: renderMatch };
+  const RENDERERS = { single: renderSingle, tf: renderTF, kprim: renderKprim };
   const HINTS = {
-    kprim: 'K-prim · jede Aussage einzeln bewerten',
-    match: 'Begriff auf die passende Beschreibung ziehen oder nacheinander antippen'
+    kprim: 'K-prim · jede Aussage einzeln bewerten'
   };
 
-  function questionHead(q) {
+  function questionHead(q, view) {
     const ch = chapterOf(q);
     return h('div', { class: 'q-head' },
       h('div', { class: 'q-meta' },
+        view && view.again ? h('span', { class: 'q-chip q-again' }, icon('repeat'), 'Nochmal') : null,
         h('span', { class: 'q-chip' }, art(ch.art, 'art-xs'), sectionTitle(q.sec)),
         q.alt ? h('span', { class: 'q-chip q-alt' }, art('scroll', 'art-xs'), 'Altfrage ' + q.alt) : null),
       q.type === 'tf'
@@ -967,12 +1041,18 @@
     if (res.skipped) return 'Nicht beantwortet';
     if (res.correct) return pick(PRAISE);
     if (q.type === 'kprim') return res.hits === 3 ? 'Fast! 3 von 4' : res.hits + ' von 4 richtig';
-    if (q.type === 'match') return res.hits + ' von ' + q.pairs.length + ' Paaren';
     return 'Nicht ganz';
   }
 
-  // Feedback: as a bar at the bottom (onNext set) or embedded in the results
-  function feedback(q, res, onNext, nextLabel) {
+  // Line under the title in the feedback sheet: comfort after mistakes, now and then praise
+  function cheerLine(res) {
+    if (res.correct) return Math.random() < 0.35 ? say(pick(CHEER_OK)) : null;
+    return (res.again ? 'Kommt gleich nochmal. ' : '') + say(pick(CHEER_BAD));
+  }
+
+  /* Feedback: as a bar at the bottom (onNext set) or embedded in the results.
+     onGuess: offers „Geraten?“ (guessed) after a right answer, so the question comes back like a mistake. */
+  function feedback(q, res, onNext, nextLabel, onGuess) {
     const tone = resultTone(res);
     const pts = Q.points(res.score);
     const body = [
@@ -986,9 +1066,17 @@
       h('span', { class: 'grow' }, resultTitle(q, res)),
       pts ? h('span', { class: 'fb-pts' }, '+' + pts) : null);
     if (!onNext) return h('section', { class: 'fb fb-inline ' + tone }, title, body);
+    const cheer = cheerLine(res);
+    const guess = onGuess && res.correct ? h('button', {
+      class: 'fb-guess',
+      onclick: () => { onGuess(); guess.disabled = true; guess.textContent = 'Kommt gleich nochmal'; }
+    }, 'Geraten?') : null;
     return h('section', { class: 'fb sheet ' + tone, 'aria-live': 'polite' },
       h('div', { class: 'sheet-inner' },
-        title,
+        h('div', { class: 'fb-head' },
+          mascot(tone === 'ok' ? 'cheer' : tone === 'part' ? 'happy' : 'comfort', 'mascot-fb'),
+          h('div', { class: 'grow' }, title, cheer ? h('p', { class: 'fb-cheer' }, cheer) : null),
+          guess),
         h('div', { class: 'sheet-body' }, body),
         h('button', { class: 'btn btn-block btn-xl btn-' + (tone === 'ok' ? 'ok' : tone === 'part' ? 'warn' : 'bad'), onclick: onNext }, nextLabel)));
   }
@@ -1023,8 +1111,9 @@
     const exam = s.mode === 'exam';
     const q = PQ.byId[s.ids[s.idx]];
     const view = s.views[s.idx];
-    const total = s.ids.length;
-    const last = s.idx === total - 1;
+    // A wrong answer adds the question once more (Q.requeue), so length and end can change during the round
+    const total = () => s.ids.length;
+    const last = () => s.idx === s.ids.length - 1;
     let result = exam ? null : s.results[s.idx];
 
     const ctx = {
@@ -1044,10 +1133,26 @@
 
     const answeredAt = i => (exam ? Q.isComplete(PQ.byId[s.ids[i]], s.responses[i]) : s.results[i] !== null);
     const doneCount = () => s.ids.filter((id, i) => answeredAt(i)).length;
-    const bar = h('span', { style: 'width:' + (doneCount() / total) * 100 + '%' });
+    const bar = h('span', { style: 'width:' + (doneCount() / total()) * 100 + '%' });
     const combo = h('span', { class: 'combo' + (s.combo >= 2 ? '' : ' hidden') }, icon('flame', 'ico-flame'), h('b', {}, s.combo));
     const timeEl = s.endsAt ? h('span', { class: 'timer' }, icon('clock'), h('span', {}, fmtTime(s.endsAt - Date.now()))) : null;
     const navGrid = exam ? h('div', { class: 'nav-grid', hidden: true }) : null;
+    const countEl = h('span', { class: 'q-count' });
+    function updateCount() {
+      bar.style.width = (doneCount() / total()) * 100 + '%';
+      countEl.textContent = (s.idx + 1) + '/' + total();
+      countEl.setAttribute('aria-label', 'Frage ' + (s.idx + 1) + ' von ' + total());
+    }
+    updateCount();
+
+    // „Geraten?“ (guessed): counts as shaky and comes back in this round
+    function guessed() {
+      S.markGuessed(q.id);
+      Q.requeue(s, s.idx);
+      persist();
+      updateCount();
+      if (primary) primary.textContent = last() ? 'Zur Auswertung' : 'Weiter';
+    }
 
     const head = h('header', { class: 'quiz-top' },
       h('button', {
@@ -1057,8 +1162,8 @@
           else if (confirm('Klausur abbrechen? Deine Antworten gehen verloren.')) { abortSession(); go('#/'); }
         }
       }, icon('x')),
-      h('div', { class: 'progress', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': String(total), 'aria-valuenow': String(doneCount()) }, bar),
-      h('span', { class: 'q-count', 'aria-label': 'Frage ' + (s.idx + 1) + ' von ' + total }, (s.idx + 1) + '/' + total),
+      h('div', { class: 'progress', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': String(total()), 'aria-valuenow': String(doneCount()) }, bar),
+      countEl,
       exam ? timeEl : combo,
       exam ? h('button', { class: 'icon-btn', 'aria-label': 'Fragenübersicht', onclick: () => { navGrid.hidden = !navGrid.hidden; } }, icon('grid')) : null);
 
@@ -1079,7 +1184,7 @@
     function refreshFooter() {
       if (result) return;
       if (exam) {
-        primary = h('button', { class: 'btn btn-primary grow btn-xl', onclick: () => (last ? submitExam() : move(1)) }, last ? 'Abgeben' : 'Weiter');
+        primary = h('button', { class: 'btn btn-primary grow btn-xl', onclick: () => (last() ? submitExam() : move(1)) }, last() ? 'Abgeben' : 'Weiter');
         footer.replaceChildren(h('button', { class: 'btn btn-soft', disabled: s.idx === 0, onclick: () => move(-1), 'aria-label': 'Vorherige Frage' }, icon('back')), primary);
       } else {
         primary = h('button', { class: 'btn btn-primary btn-block btn-xl', disabled: !Q.isComplete(q, ctx.value), onclick: check }, 'Prüfen');
@@ -1088,7 +1193,7 @@
     }
 
     function showSheet() {
-      const sheet = feedback(q, result, next, last ? 'Zur Auswertung' : 'Weiter');
+      const sheet = feedback(q, result, next, last() ? 'Zur Auswertung' : 'Weiter', exam ? null : guessed);
       footer.replaceWith(sheet);
       primary = sheet.querySelector('.btn');
       requestAnimationFrame(() => {
@@ -1104,21 +1209,21 @@
       result = answerCurrent(clone(ctx.value));
       ctx.locked = ctx.solved = true;
       ctx.repaint();
-      bar.style.width = (doneCount() / total) * 100 + '%';
+      updateCount();
       combo.classList.toggle('hidden', s.combo < 2);
       combo.lastChild.textContent = s.combo;
       showSheet();
     }
 
     function next() {
-      if (last) { finishSession(); return; }
+      if (last()) { finishSession(); return; }
       s.idx += 1;
       persist();
       renderQuiz();
     }
 
     function move(d) {
-      s.idx = Math.min(Math.max(s.idx + d, 0), total - 1);
+      s.idx = Math.min(Math.max(s.idx + d, 0), total() - 1);
       persist();
       renderQuiz();
     }
@@ -1130,7 +1235,7 @@
     }
 
     refreshFooter();
-    main.append(head, navGrid || '', questionHead(q), answer, footer);
+    main.append(head, navGrid || '', questionHead(q, view), answer, footer);
     mount(main);
     if (result) showSheet();
 
@@ -1161,7 +1266,7 @@
   function renderBlitz() {
     const s = restoreSession();
     if (!s || s.mode !== 'blitz') { go('#/'); return; }
-    const total = s.ids.length;
+    const total = s.ids.length; // fixed for this card; a wrong answer may add the statement again (Q.requeue)
     const q = PQ.byId[s.ids[s.idx]];
     const ch = chapterOf(q);
     const done = s.results.filter(r => r !== null).length;
@@ -1187,7 +1292,7 @@
       h('span', { class: 'combo' }, icon('flame', 'ico-flame'), h('b', {}, s.combo)));
 
     function nextCard() {
-      if (s.idx >= total - 1) { finishSession(); return; }
+      if (s.idx >= s.ids.length - 1) { finishSession(); return; }
       s.idx += 1;
       persist();
       renderBlitz();
@@ -1203,7 +1308,7 @@
         setTimeout(nextCard, 320);
       } else {
         card.classList.add('flash-bad');
-        const sheet = feedback(q, res, nextCard, s.idx >= total - 1 ? 'Zur Auswertung' : 'Weiter');
+        const sheet = feedback(q, res, nextCard, s.idx >= s.ids.length - 1 ? 'Zur Auswertung' : 'Weiter');
         footer.replaceWith(sheet);
         requestAnimationFrame(() => { main.style.paddingBottom = sheet.offsetHeight + 24 + 'px'; });
         keyHandler = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); nextCard(); } };
@@ -1258,9 +1363,18 @@
     const exam = r.mode === 'exam';
     const pct = Math.round(((exam ? score : correct) / total) * 100);
     const earned = results.reduce((a, x) => a + Q.points(x.score), 0);
-    const wrongIds = r.ids.filter((id, i) => !results[i].correct);
-    const [heroArt, verdict] = pct >= 90 ? ['trophy', 'Hervorragend!'] : pct >= 75 ? ['medal', 'Sehr gut!'] : pct >= 50 ? ['target', 'Gut gemacht!'] : ['books', 'Dranbleiben!'];
+    // A question asked twice counts by its last answer
+    const lastRes = {};
+    r.ids.forEach((id, i) => { lastRes[id] = results[i]; });
+    const wrongIds = Object.keys(lastRes).filter(id => !lastRes[id].correct);
+    const [mood, verdict, sub] = pct >= 90 ? ['cheer', 'Hervorragend!', 'Das sitzt richtig gut, {n}.']
+      : pct >= 75 ? ['cheer', 'Sehr gut!', 'Weiter so, {n}!']
+        : pct >= 50 ? ['happy', 'Gut gemacht!', 'Die Fehler kommen automatisch wieder – so bleibt’s hängen.']
+          : ['comfort', 'Dranbleiben!', 'Jede Runde zählt, {n}. Die Fehler kommen ganz entspannt nochmal dran.'];
     const again = AGAIN[(r.origin && r.origin.kind) || 'review'] || AGAIN.review;
+    const p = Q.plan();
+    const sum = planSummary(p);
+    const newBadges = (r.newBadges || []).map(id => BADGES.find(b => b.id === id)).filter(Boolean);
 
     const list = h('div', { class: 'res-list', hidden: true }, r.ids.map((id, i) => {
       const q = PQ.byId[id];
@@ -1271,7 +1385,7 @@
         onclick: () => {
           if (!detail.childElementCount) {
             const ctx = { value: clone(r.responses[i]), locked: true, solved: true, onChange: () => {} };
-            detail.append(questionHead(q), RENDERERS[q.type](q, r.views[i], ctx), feedback(q, res));
+            detail.append(questionHead(q, r.views[i]), RENDERERS[q.type](q, r.views[i], ctx), feedback(q, res));
           }
           detail.hidden = !detail.hidden;
           row.setAttribute('aria-expanded', String(!detail.hidden));
@@ -1303,18 +1417,152 @@
       h('header', { class: 'topbar' },
         h('button', { class: 'icon-btn', 'aria-label': 'Zur Startseite', onclick: () => go('#/') }, icon('x'))),
       h('section', { class: 'result-hero' },
-        art(heroArt, 'art-result'),
+        mascot(mood, 'mascot-result'),
         h('h1', { class: 'result-title' }, verdict),
-        h('p', { class: 'muted' }, exam ? 'Klausur ausgewertet · ' + pct + ' %' : MODE_TITLE[r.mode] + ' beendet')),
+        h('p', { class: 'muted' }, exam ? 'Klausur ausgewertet · ' + pct + ' %' : say(sub))),
       h('div', { class: 'result-stats' },
         rstat('check', exam ? fmtNum(score) + '/' + total : correct + '/' + total, exam ? 'Punkte' : 'Richtig'),
         rstat('star', '+' + earned, 'XP'),
         rstat('flame', r.bestCombo, 'Beste Serie')),
       exam ? h('p', { class: 'muted small center' }, 'K-prim: 4 richtig = 1 Punkt, 3 richtig = ½ Punkt') : null,
+      newBadges.length ? h('section', { class: 'new-badges' },
+        h('p', { class: 'label' }, newBadges.length > 1 ? newBadges.length + ' neue Abzeichen' : 'Neues Abzeichen'),
+        h('div', { class: 'new-badges-row' }, newBadges.map((b, i) => h('button', {
+          class: 'badge-chip', style: 'animation-delay:' + (0.15 * i).toFixed(2) + 's', onclick: () => go('#/badges')
+        }, art(b.art, 'art-sm'), b.title)))) : null,
+      h('div', { class: 'res-plan' },
+        h('span', { class: 'res-plan-text' }, h('b', {}, sum.title), ' · ', sum.meta),
+        h('span', { class: 'tile-bar' }, h('span', { style: 'width:' + sum.pct + '%' }))),
       toggleList,
       list,
       footer));
-    if (pct >= 80) setTimeout(confetti, 200);
+    if (pct >= 80 || newBadges.length) setTimeout(confetti, 200);
+    if (needsPause()) setTimeout(pauseDialog, newBadges.length ? 900 : 400);
+  }
+
+  /* ================= Pause reminder ================= */
+
+  function needsPause() {
+    const c = S.pref('clock');
+    const now = Date.now();
+    return !!c && now - c.last < BREAK_MS && now - c.start >= STUDY_BLOCK && !(c.snooze > now);
+  }
+
+  // After 45 minutes in a row: suggest a short break with a timer; a 10-minute gap also counts as a break
+  function pauseDialog() {
+    const c = S.pref('clock') || {};
+    const mins = Math.round((Date.now() - c.start) / 60000);
+    const prevKey = keyHandler;
+    let tick = null;
+    const close = () => { clearInterval(tick); wrap.remove(); keyHandler = prevKey; };
+    const body = h('div', { class: 'pause-body' });
+    function ask() {
+      body.replaceChildren(
+        mascot('sleepy', 'mascot-pause'),
+        h('h2', { class: 'menu-title', id: 'pause-title' }, 'Zeit für eine Pause'),
+        h('p', { class: 'muted' }, say('Du lernst seit ' + mins + ' Minuten am Stück, {n}. 5–10 Minuten Pause helfen dem Gehirn, das Gelernte abzuspeichern: Wasser trinken, kurz bewegen, aus dem Fenster schauen.')),
+        h('button', { class: 'btn btn-primary btn-block btn-xl', onclick: start }, 'Pause starten · 5 min'),
+        h('button', {
+          class: 'link link-center',
+          onclick: () => { S.pref('clock', Object.assign(c, { snooze: Date.now() + 15 * 60000 })); close(); }
+        }, 'Später erinnern'));
+    }
+    function start() {
+      const ends = Date.now() + 5 * 60000;
+      const left = h('p', { class: 'pause-timer' });
+      body.replaceChildren(mascot('sleepy', 'mascot-pause'), h('h2', { class: 'menu-title', id: 'pause-title' }, 'Pause …'), left,
+        h('button', { class: 'btn btn-soft btn-block', onclick: done }, 'Pause beenden'));
+      const update = () => {
+        const ms = ends - Date.now();
+        left.textContent = fmtTime(ms);
+        if (ms <= 0) done();
+      };
+      tick = setInterval(update, 1000);
+      update();
+    }
+    function done() {
+      clearInterval(tick);
+      S.pref('clock', { start: Date.now(), last: Date.now() });
+      unlock(['pause']);
+      body.replaceChildren(mascot('cheer', 'mascot-pause'), h('h2', { class: 'menu-title', id: 'pause-title' }, say('Frisch erholt, {n}!')),
+        h('p', { class: 'muted' }, 'Weiter geht’s – du schaffst das.'),
+        h('button', { class: 'btn btn-primary btn-block btn-xl', onclick: close }, 'Weiterlernen'));
+    }
+    const wrap = h('div', { class: 'menu-wrap' },
+      h('div', { class: 'menu pause', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'pause-title' }, body));
+    ask();
+    root.append(wrap);
+    keyHandler = e => { if (e.key === 'Escape') close(); };
+  }
+
+  /* ================= Badges screen ================= */
+
+  function renderBadges() {
+    const have = S.pref('badges') || {};
+    const got = BADGES.filter(b => have[b.id]).length;
+    const card = b => h('div', { class: 'badge' + (have[b.id] ? ' got' : '') },
+      art(b.art, 'art-lg'),
+      h('span', { class: 'badge-title' }, b.title),
+      h('span', { class: 'badge-desc' }, b.desc));
+    mount(h('main', { class: 'screen badges' },
+      topbar('Abzeichen'),
+      h('div', { class: 'setup-hero' },
+        mascot(got ? 'cheer' : 'wave', 'mascot-sm'),
+        h('p', {}, got + ' von ' + BADGES.length + ' gesammelt. ' + (got ? say('Stark, {n}!') : 'Das erste kommt gleich!'))),
+      h('h2', { class: 'label' }, 'Erfolge'),
+      h('div', { class: 'badge-grid' }, BADGES.filter(b => !b.chapter).map(card)),
+      h('h2', { class: 'label' }, 'Kapitel komplett gesehen'),
+      h('div', { class: 'badge-grid' }, BADGES.filter(b => b.chapter).map(card))));
+  }
+
+  /* ================= Welcome ================= */
+
+  // First start: name and taking over the progress from Patho-Quiz (another home screen app has its own storage)
+  function renderWelcome() {
+    const nameBox = h('input', { class: 'input', type: 'text', placeholder: 'Dein Name', autocomplete: 'given-name', maxlength: '30', value: nameOf(), 'aria-label': 'Dein Name' });
+    const codeBox = h('textarea', { class: 'code', rows: '3', placeholder: 'Code hier einfügen …', 'aria-label': 'Fortschritts-Code' });
+    const status = h('p', { class: 'welcome-status' });
+    const seenCount = () => PQ.questions.filter(q => S.get(q.id)).length;
+    function showStatus() {
+      const n = seenCount();
+      status.hidden = !n;
+      status.replaceChildren(icon('check'), ' Dein Fortschritt ist da: ' + plural(n, 'Frage', 'Fragen') + ' schon bearbeitet.');
+    }
+    function doImport() {
+      if (!codeBox.value.trim()) { toast('Bitte zuerst den Code einfügen'); return; }
+      if (seenCount() && !confirm('Den vorhandenen Fortschritt durch den Code ersetzen?')) return;
+      try {
+        S.importData(codeBox.value);
+        codeBox.value = '';
+        applyTheme();
+        showStatus();
+        confetti();
+        toast('Fortschritt übernommen');
+      } catch (e) {
+        toast('Das war kein gültiger Fortschritts-Code');
+      }
+    }
+    function start() {
+      S.setting('name', nameBox.value.trim());
+      S.pref('welcomed', true);
+      go('#/');
+    }
+    showStatus();
+    mount(h('main', { class: 'screen welcome has-footer' },
+      h('section', { class: 'welcome-hero' },
+        mascot('wave', 'mascot-welcome'),
+        h('h1', { class: 'result-title' }, 'Hallo! Ich bin Zelli.'),
+        h('p', { class: 'muted' }, 'Ich begleite dich bis zur Klausur: kurze Lektionen, Fehler kommen clever verteilt wieder, und ich feuere dich an.')),
+      h('h2', { class: 'label' }, 'Wie heißt du?'),
+      nameBox,
+      h('h2', { class: 'label' }, 'Schon im alten Patho-Quiz gelernt?'),
+      h('ol', { class: 'steps' },
+        h('li', {}, 'Altes Patho-Quiz öffnen → ', h('b', {}, 'Einstellungen'), ' → ', h('b', {}, 'Code kopieren')),
+        h('li', {}, 'Hier einfügen und übernehmen')),
+      codeBox,
+      h('button', { class: 'btn btn-soft btn-block', onclick: doImport }, icon('upload'), 'Fortschritt übernehmen'),
+      status,
+      h('footer', { class: 'footer' }, h('button', { class: 'btn btn-primary btn-block btn-xl', onclick: start }, 'Los geht’s'))));
   }
 
   function rstat(artName, value, label) {
@@ -1353,8 +1601,8 @@
     const parts = [
       ['new', 'Neu', all.length - p.seen],
       ['bad', 'Fehler offen', mistakes],
-      ['learn', 'In Arbeit', p.known - p.solid],
-      ['solid', 'Gefestigt', p.solid]
+      ['learn', 'Wackelig', p.known - p.solid],
+      ['solid', 'Sitzt', p.solid]
     ];
     const stack = h('div', { class: 'stack', role: 'img', 'aria-label': parts.map(x => x[1] + ' ' + x[2]).join(', ') },
       parts.filter(x => x[2] > 0).map(([k, label, n]) => h('span', { class: 'stack-seg seg-' + k, style: 'flex-grow:' + n, title: label + ': ' + n })));
@@ -1489,6 +1737,12 @@
 
     mount(h('main', { class: 'screen settings' },
       topbar('Einstellungen'),
+      h('h2', { class: 'label' }, 'Persönlich'),
+      h('div', { class: 'set-fields' },
+        h('label', { class: 'field' }, h('span', {}, 'Name'),
+          h('input', { class: 'input', type: 'text', maxlength: '30', value: nameOf(), placeholder: 'Dein Name', onchange: e => S.setting('name', e.target.value.trim()) })),
+        h('label', { class: 'field' }, h('span', {}, 'Klausur am'),
+          h('input', { class: 'input', type: 'date', value: S.setting('examDate') || '', onchange: e => S.setting('examDate', e.target.value) }))),
       h('h2', { class: 'label' }, 'Darstellung'),
       segmented([['auto', 'System'], ['light', 'Hell'], ['dark', 'Dunkel']], S.setting('theme'), v => { S.setting('theme', v); applyTheme(); }, 'Darstellung'),
       h('h2', { class: 'label' }, 'Tagesziel'),
@@ -1532,6 +1786,8 @@
     result: renderResult,
     stats: renderStats,
     settings: renderSettings,
+    badges: renderBadges,
+    welcome: renderWelcome,
     chapter: id => renderChapter(Number(id))
   };
 

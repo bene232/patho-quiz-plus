@@ -36,17 +36,6 @@ PQ.registerChapter(4, [
     ex: 'Manifestationen der KHK: Angina pectoris 55 %, Infarkt 25 %, plötzlicher Herztod 20 %; außerdem Rhythmusstörungen und ischämische Kardiomyopathie.'
   },
   {
-    id: 'k4-04', sec: '4.1', p: 12, type: 'match',
-    q: 'Ordne den KHK-Stenosegraden die Lumeneinengung zu.',
-    pairs: [
-      ['Grad I', '25–49 %'],
-      ['Grad II (signifikant)', '50–74 %'],
-      ['Grad III (kritisch)', '75–99 %'],
-      ['Grad IV', '100 %']
-    ],
-    ex: 'Stenosegrade: I 25–49 % · II 50–74 % (signifikant) · III 75–99 % (kritisch) · IV 100 %. Symptomatisch ab ca. 75 % unter Belastung, ca. 90 % in Ruhe.'
-  },
-  {
     id: 'k4-05', sec: '4.1', p: 12, type: 'single',
     q: 'Welcher Faktor ist ein Risikofaktor 1. Ordnung der Arteriosklerose?',
     opts: ['Diabetes mellitus', 'Adipositas', 'Bewegungsmangel', 'Lipoprotein(a)', 'Homocystein'],
@@ -103,28 +92,6 @@ PQ.registerChapter(4, [
     dis: 'In den KPK-Facts steht „Ventrikelseptumruptur, aber kein VSD“. Gemeint ist: kein angeborener VSD. Die Septumruptur ist pathophysiologisch ein erworbener Defekt – die meisten Lösungen werten die Aussage deshalb als richtig.'
   },
   {
-    id: 'k4-10', sec: '4.2', p: 12, type: 'match',
-    q: 'Ordne die Koronararterie dem typischen Infarktgebiet zu.',
-    pairs: [
-      ['RIVA', 'Vorderwand, Herzspitze, Septum'],
-      ['RCA', 'Hinterwand / inferior'],
-      ['RCX', 'Seiten- / Hinterwand']
-    ],
-    ex: 'RIVA → Vorderwand/Spitze/Septum (häufigste Lokalisation), RCA → Hinterwand/inferior, RCX → Seiten-/Hinterwand.'
-  },
-  {
-    id: 'k4-11', sec: '4.2', p: 12, type: 'match',
-    q: 'Ordne dem Zeitpunkt nach Infarktbeginn den typischen Befund zu.',
-    pairs: [
-      ['0–4 h', 'Lichtmikroskopisch noch keine Veränderung'],
-      ['ca. 12 h', 'Voll ausgebildete Koagulationsnekrose (lehmgelb, hyperämischer Randsaum)'],
-      ['10–24 h bis Tag 3', 'Einwanderung neutrophiler Granulozyten'],
-      ['Ab Tag 4 bis 3. Woche', 'Makrophagen, Granulationsgewebe vom Rand her'],
-      ['Ab 6. Woche', 'Kollagene Narbe (weiß, derb)']
-    ],
-    ex: '0–4 h: keine Veränderung (allenfalls Kontraktionsbänder, Wellenfasern) · 4–6 h: beginnende Koagulationsnekrose · ca. 12 h: voll ausgebildete Koagulationsnekrose · 10–24 h bis Tag 3: Neutrophile · ab Tag 4 bis 3. Woche: Makrophagen, Granulationsgewebe · ab 6. Woche bis 3 Monate: kollagene Narbe.'
-  },
-  {
     id: 'k4-12', sec: '4.2', p: 12, type: 'single',
     q: 'Ab wann ist ein Myokardinfarkt frühestens als beginnende Koagulationsnekrose erkennbar?',
     opts: ['Nach ca. 4–6 Stunden', 'Nach ca. 30 Minuten', 'Nach ca. 3 Tagen', 'Nach ca. 6 Wochen'],
@@ -137,18 +104,6 @@ PQ.registerChapter(4, [
     opts: ['Rhythmusstörungen (v. a. Kammerflimmern)', 'Freie Herzwandruptur', 'Papillarmuskelabriss', 'Dressler-Syndrom', 'Herzwandaneurysma'],
     a: 0,
     ex: 'Rhythmusstörungen (v. a. Kammerflimmern) sind die häufigste Infarktkomplikation. Die freie Wandruptur betrifft 3–6 % (Tag 3–10); Dressler-Syndrom und Herzwandaneurysma sind Spätkomplikationen.'
-  },
-  {
-    id: 'k4-14', sec: '4.2', p: 12, type: 'match',
-    q: 'Ordne die Infarktkomplikation ihrer Folge bzw. ihrem Kennzeichen zu.',
-    pairs: [
-      ['Papillarmuskelabriss', 'Akute Mitralinsuffizienz'],
-      ['Freie Herzwandruptur', 'Hämoperikard / Tamponade (Tag 3–10)'],
-      ['Parietale Endokardthrombose', 'Arterielle Embolien (Hirn, Darm, Milz, Niere)'],
-      ['Pericarditis epistenocardica', 'Früh, fibrinös'],
-      ['Dressler-Syndrom', 'Spät, autoimmun']
-    ],
-    ex: 'Papillarmuskelabriss → akute Mitralinsuffizienz · freie Wandruptur (3–6 %, Tag 3–10) → Hämoperikard/Tamponade · parietale Endokardthrombose (ca. 45 %) → arterielle Embolien · Pericarditis epistenocardica (ca. 30 %, früh, fibrinös) · Dressler-Syndrom (spät, autoimmun).'
   },
   {
     id: 'k4-15', sec: '4.2', p: 12, type: 'single',
@@ -193,18 +148,6 @@ PQ.registerChapter(4, [
     opts: ['Ventrikelseptum, subvalvulär', 'Herzspitze', 'Freie Wand des rechten Ventrikels', 'Linker Vorhof'],
     a: 0,
     ex: 'HOCM: asymmetrische Septumhypertrophie mit subvalvulärem Muskelwulst („subvalvuläre muskuläre Aortenstenose“). Eine spitzennahe Hypertrophie ohne Obstruktion spricht für eine HNCM.'
-  },
-  {
-    id: 'k4-20', sec: '4.4', p: 13, type: 'match',
-    q: 'Ordne die Kardiomyopathie ihrem Kennzeichen zu.',
-    pairs: [
-      ['HOCM', 'Asymmetrische Septumhypertrophie mit subvalvulärem Muskelwulst'],
-      ['ARVC', 'Ersatz des rechtsventrikulären Myokards durch Fett- und Bindegewebe'],
-      ['DCM', 'Dilatation + systolische Dysfunktion'],
-      ['RCM', 'Endomyokardfibrose, gestörte diastolische Dehnbarkeit'],
-      ['Ionenkanalerkrankungen', 'Long-QT-, Brugada-Syndrom']
-    ],
-    ex: 'Primär genetisch: HCM (HOCM/HNCM), ARVC, Ionenkanalerkrankungen. Primär gemischt: DCM, RCM. Primär erworben: Myokarditis, peripartale KMP, Tako-Tsubo. Sekundär: ischämisch, hypertensiv, valvulär, metabolisch/endokrin, toxisch, neuromuskulär.'
   },
   {
     id: 'k4-21', sec: '4.4', p: 13, type: 'single',
@@ -273,18 +216,6 @@ PQ.registerChapter(4, [
     ex: 'Diphtherie = infekttoxische Myokarditis: Das Exotoxin hemmt die Proteinsynthese → Verfettung und Nekrosen, keine Erreger im Myokard.'
   },
   {
-    id: 'k4-28', sec: '4.5', p: 13, type: 'match',
-    q: 'Ordne die Myokarditis-Form ihrem Kennzeichen zu.',
-    pairs: [
-      ['Viral (Coxsackie B)', 'Lymphozytäres Infiltrat mit Myozytennekrosen'],
-      ['Bakteriell', 'Granulozytär / abszedierend'],
-      ['Rheumatisch', 'Aschoff-Knötchen mit Anitschkow-Zellen'],
-      ['Sarkoidose', 'Epitheloidzellige Granulome ohne Nekrose'],
-      ['Riesenzellmyokarditis', 'Unklare Ätiologie, rapider, oft letaler Verlauf']
-    ],
-    ex: 'Viral → lymphozytär (Verlauf Virusinfekt → Autoimmunität → DCM). Bakteriell (Staph., Pneumokokken, Pseudomonas, Klebsiellen) → granulozytär/abszedierend. Granulomatös: rheumatisch (Aschoff/Anitschkow) bzw. Sarkoidose (ohne Nekrose).'
-  },
-  {
     id: 'k4-29', sec: '4.5', p: 13, type: 'single',
     q: 'Was besagen die Dallas-Kriterien (1987) für die Myokarditis?',
     opts: [
@@ -346,18 +277,6 @@ PQ.registerChapter(4, [
     ex: 'Der Klappenschaden betrifft überwiegend das linke Herz (Mitral- > Aortenklappe); das rechte Herz v. a. bei i.v.-Drogenabusus (Trikuspidalklappe).'
   },
   {
-    id: 'k4-34', sec: '4.6', p: 14, type: 'match',
-    q: 'Ordne die Endokarditis-Form ihrem Kennzeichen zu.',
-    pairs: [
-      ['E. verrucosa rheumatica', '2–3 Wochen nach Infekt mit β-hämolysierenden Streptokokken der Gruppe A'],
-      ['E. verrucosa simplex', 'Abakteriell, im Wesentlichen nur Fibrinauflagerungen'],
-      ['Libman-Sacks-Endokarditis', 'Abakteriell bei SLE / Antiphospholipid-Syndrom'],
-      ['E. parietalis fibroplastica Löffler', 'Wandendokard, Hypereosinophilie → Endomyokardfibrose'],
-      ['Karzinoid-Herz', 'Rechtsbetonte Endokardfibrose']
-    ],
-    ex: 'E. verrucosa rheumatica: molekulares Mimikry, Wärzchen am Schließungsrand, v. a. Mitralklappe → später Mitralstenose. E. verrucosa simplex: paraneoplastisch/auszehrende Erkrankungen. Löffler: Wandendokard (nicht Klappen) → restriktive KMP.'
-  },
-  {
     id: 'k4-35', sec: '4.6', p: 13, type: 'single',
     q: 'Welcher Erreger ist der häufigste bei der akuten infektiösen Endokarditis?',
     opts: ['Staphylococcus aureus', 'Streptococcus viridans', 'Enterokokken', 'HACEK-Gruppe'],
@@ -416,17 +335,6 @@ PQ.registerChapter(4, [
     ex: 'In dieser Altfrage waren alle 4 Aussagen richtig. Druckbelastung (Aortenstenose) → konzentrische Hypertrophie, erst spät Dilatation; Volumenbelastung (Aorteninsuffizienz) → früh Dilatation. Beide Mitralvitien vergrößern den linken Vorhof und belasten über den Rückstau das rechte Herz.'
   },
   {
-    id: 'k4-41', sec: '4.7', p: 14, type: 'match',
-    q: 'Ordne dem Klappenfehler seine häufigste Ursache zu.',
-    pairs: [
-      ['Aortenklappenstenose', 'Senil-kalzifizierend (degenerativ), bikuspide Klappe'],
-      ['Aorteninsuffizienz', 'Bakterielle Endokarditis, Aortenwurzeldilatation (Marfan, Lues)'],
-      ['Mitralstenose', 'Rheumatisches Fieber'],
-      ['Mitralinsuffizienz', 'Mitralklappenprolaps, ischämisch (Papillarmuskel)']
-    ],
-    ex: 'Aortenklappenstenose: senil-kalzifizierend, bikuspide Klappe, nur noch ca. 25 % rheumatisch. Mitralinsuffizienz außerdem: Endokarditis, relative Insuffizienz bei LV-Dilatation.'
-  },
-  {
     id: 'k4-42', sec: '4.7', p: 14, type: 'single',
     q: 'Welcher Befund ist typisch für die Mitralstenose?',
     opts: [
@@ -477,30 +385,6 @@ PQ.registerChapter(4, [
     opts: ['Fallot-Tetralogie', 'Ventrikelseptumdefekt', 'Vorhofseptumdefekt', 'Persistierender Ductus arteriosus'],
     a: 0,
     ex: 'VSD, ASD und PDA sind primär Links-rechts-Shunts (azyanotisch). Die Fallot-Tetralogie ist ein R→L-Shunt mit verminderter Lungendurchblutung.'
-  },
-  {
-    id: 'k4-47', sec: '4.8', p: '14–15', type: 'match',
-    q: 'Ordne dem Herzfehler das passende Kennzeichen zu.',
-    pairs: [
-      ['Ventrikelseptumdefekt', 'Häufigster angeborener Herzfehler (27 %)'],
-      ['Ebstein-Anomalie', 'Trikuspidalklappe nach apikal verlagert'],
-      ['Postduktale Aortenisthmusstenose', 'Rippenusuren, schwache Femoralispulse'],
-      ['Fallot-Tetralogie', 'Holzschuhherz, verminderte Lungengefäßzeichnung'],
-      ['Persistierender Ductus arteriosus', 'Blutfluss Aorta → Pulmonalis']
-    ],
-    ex: 'Ebstein: Trikuspidalklappe nach apikal verlagert → „Atrialisierung“ des RV. Postduktale Isthmusstenose: Kollateralen (Rippenusuren), Hypertonie der oberen Körperhälfte, schwache Femoralispulse. Fallot: Holzschuhherz, verminderte Lungengefäßzeichnung.'
-  },
-  {
-    id: 'k4-48', sec: '4.8', p: 14, type: 'match',
-    q: 'Ordne den Herzfehler seiner Gruppe zu.',
-    pairs: [
-      ['Vorhofseptumdefekt', 'L→R-Shunt (azyanotisch)'],
-      ['Transposition der großen Arterien', 'R→L-Shunt, Lungendurchblutung ↑'],
-      ['Trikuspidalatresie', 'R→L-Shunt, Lungendurchblutung ↓'],
-      ['Hypoplastisches Linksherz', 'Obstruktion links'],
-      ['Pulmonalatresie', 'Obstruktion rechts']
-    ],
-    ex: 'L→R (ca. 50 %): VSD, PDA, ASD, Endokardkissendefekt. R→L (ca. 30 %): mit Lungendurchblutung ↑ Truncus, TGA; mit ↓ Fallot, Trikuspidalatresie, Ebstein. Obstruktion (ca. 20 %): links Aortenisthmusstenose, Aortenstenose/-atresie, hypoplastisches Linksherz; rechts Pulmonalstenose/-atresie.'
   },
   {
     id: 'k4-49', sec: '4.8', p: 14, type: 'single',
@@ -571,18 +455,6 @@ PQ.registerChapter(4, [
     ex: 'Kardiales Fibrom: Ventrikelwand/Septum, echokardiographisch gut umschrieben, DD hypertrophe Kardiomyopathie. Häufigster Herztumor bei Kindern ist das Rhabdomyom, bei Erwachsenen das Myxom.'
   },
   {
-    id: 'k4-55', sec: '4.9', p: 15, type: 'match',
-    q: 'Ordne den Herztumor seinem Kennzeichen zu.',
-    pairs: [
-      ['Myxom', 'Linker Vorhof, sternförmige Zellen in myxoider Matrix'],
-      ['Papilläres Fibroelastom', 'Herzklappen, „Seeanemone“'],
-      ['Rhabdomyom', 'Tuberöse Sklerose, „Spinnenzellen“'],
-      ['Kardiales Fibrom', 'Ventrikelwand/Septum, DD hypertrophe KMP'],
-      ['Angiosarkom', 'Häufigster primär maligner Herztumor']
-    ],
-    ex: 'Myxom: linker Vorhof, gestielt am Vorhofseptum, gallertig; Synkope (Ventilmechanismus), Embolien, B-Symptome. Rhabdomyom: oft schon bei Geburt, Hamartom, spontane Regression.'
-  },
-  {
     id: 'k4-56', sec: '4.9', p: 15, type: 'single',
     q: 'Wo ist das Herzmyxom typischerweise lokalisiert?',
     opts: [
@@ -630,17 +502,6 @@ PQ.registerChapter(4, [
       ['Die kollagene Narbe entsteht ab der 6. Woche.', true]
     ],
     ex: '10–24 h bis Tag 3: Neutrophile · ab Tag 4 bis 3. Woche: Makrophagen, Granulationsgewebe vom Rand her · ab 6. Woche bis 3 Monate: kollagene Narbe.'
-  },
-  {
-    id: 'k4-61', sec: '4.3', p: 13, type: 'kprim',
-    q: 'Herzhypertrophie & Cor pulmonale – welche Aussagen treffen zu?',
-    st: [
-      ['Volumenbelastung führt zu einer exzentrischen/dilatativen Hypertrophie.', true],
-      ['Eine Aortenisthmusstenose führt über Druckbelastung zu einer konzentrischen Hypertrophie.', true],
-      ['Das Cor pulmonale ist eine Linksherzhypertrophie.', false],
-      ['Eine Silikose kann ein chronisches Cor pulmonale verursachen.', true]
-    ],
-    ex: 'Cor pulmonale = Rechtsherzhypertrophie/-dilatation infolge pulmonaler Hypertonie bei Lungenerkrankung (chronisch z. B. COPD/Emphysem, Lungenfibrose, Silikose, rezidivierende Embolien).'
   },
   {
     id: 'k4-62', sec: '4.4', p: 13, type: 'kprim',
@@ -697,17 +558,6 @@ PQ.registerChapter(4, [
     ],
     ex: 'PDA = Links-rechts-Shunt (Blut Aorta → Pulmonalis). Die präduktale (infantile) Aortenisthmusstenose hat die schlechtere Prognose.'
   },
-  {
-    id: 'k4-67', sec: '4.9', p: 15, type: 'kprim',
-    q: 'Perikarditis & Herztumoren – welche Aussagen treffen zu?',
-    st: [
-      ['Die fibrinöse Perikarditis wird als „Zottenherz“ bezeichnet.', true],
-      ['Das papilläre Fibroelastom sitzt typischerweise im linken Vorhof.', false],
-      ['Das Rhabdomyom enthält „Spinnenzellen“ (Arachnozyten).', true],
-      ['Das kardiale Fibrom ist echokardiographisch schlecht abgrenzbar.', false]
-    ],
-    ex: 'Papilläres Fibroelastom: Klappen („Seeanemone“); im linken Vorhof sitzt das Myxom. Kardiales Fibrom: echokardiographisch gut umschrieben, DD hypertrophe KMP.'
-  },
 
   /* ---------- True/false statements ---------- */
   { id: 'k4-t01', sec: '4.1', p: 12, type: 'tf', a: true, q: 'Die Arteriosklerose ist eine Erkrankung der Intima großer und mittelgroßer Arterien.', ex: 'Chronische Erkrankung der Intima großer und mittelgroßer Arterien mit Lipideinlagerung, Fibrose, Verkalkung.' },
@@ -723,8 +573,6 @@ PQ.registerChapter(4, [
   { id: 'k4-t11', sec: '4.2', p: 12, type: 'tf', a: true, q: 'Ein Papillarmuskelabriss nach Infarkt führt zur akuten Mitralinsuffizienz.', ex: 'Papillarmuskelabriss → akute Mitralinsuffizienz (→ Lungenödem).' },
   { id: 'k4-t12', sec: '4.2', p: 12, type: 'tf', a: true, q: 'Eine freie Herzwandruptur tritt typischerweise an Tag 3–10 nach Infarkt auf.', ex: 'Freie Herzwandruptur: 3–6 %, Tag 3–10 → Hämoperikard/Tamponade.' },
   { id: 'k4-t13', sec: '4.3', p: 13, type: 'tf', a: true, q: 'Das kritische Herzgewicht liegt bei ca. 500 g.', ex: 'Kritisches Herzgewicht ca. 500 g.' },
-  { id: 'k4-t14', sec: '4.3', p: 13, type: 'tf', a: false, q: 'Bei der Herzhypertrophie nimmt vor allem die Zahl der Myozyten zu.', ex: 'Hypertrophie = Zunahme der Myozytengröße, nicht der Zahl.' },
-  { id: 'k4-t15', sec: '4.3', p: 13, type: 'tf', a: true, q: 'Eine Stauungsleber (Muskatnussleber) ist eine Folge des Cor pulmonale.', ex: 'Folgen des Cor pulmonale: Stauungsleber (Muskatnussleber), Ödeme.' },
   { id: 'k4-t16', sec: '4.4', p: 13, type: 'tf', a: false, q: 'Die HOCM ist eine sekundäre Kardiomyopathie.', ex: 'Die HOCM ist eine primäre (genetische) Kardiomyopathie. Sekundär ist z. B. die ischämische KMP.' },
   { id: 'k4-t17', sec: '4.4', p: 13, type: 'tf', a: true, q: 'Die ARVC ist durch den Ersatz des rechtsventrikulären Myokards durch Fett- und Bindegewebe gekennzeichnet.', ex: 'ARVC: Fett-/Bindegewebsersatz des RV-Myokards, Arrhythmien, plötzlicher Herztod.' },
   { id: 'k4-t18', sec: '4.4', p: 13, type: 'tf', a: true, q: 'Die Amyloidose ist eine Ursache der restriktiven Kardiomyopathie.', ex: 'RCM-Ursachen: Amyloidose, Löffler-Endokarditis (eosinophil), Endokardfibroelastose.' },
@@ -755,8 +603,6 @@ PQ.registerChapter(4, [
   { id: 'k4-t43', sec: '4.8', p: 15, type: 'tf', a: true, q: 'Die Schwere der Fallot-Tetralogie richtet sich v. a. nach dem Ausmaß der Pulmonalstenose.', ex: 'Schwere ∝ Pulmonalstenose; Zyanose in den ersten 6 Monaten.' },
   { id: 'k4-t44', sec: '4.8', p: 15, type: 'tf', a: false, q: 'Ein spaltförmig offenes Foramen ovale ist bei Erwachsenen meist pathologisch.', ex: 'Spaltförmiges PFO: bei ca. 25 % der Erwachsenen, kein pathologischer Befund (paradoxe Embolie möglich).' },
   { id: 'k4-t45', sec: '4.9', p: 15, type: 'tf', a: true, q: 'Herzmetastasen sind viel häufiger als primäre Herztumoren.', ex: 'Metastasen (Lunge, Mamma, Melanom, Lymphom) sind viel häufiger als primäre Herztumoren.' },
-  { id: 'k4-t46', sec: '4.9', p: 15, type: 'tf', a: false, q: 'Primäre Herztumoren sind zu ca. 75 % maligne.', ex: 'Primäre Herztumoren sind zu ca. 75 % benigne.' },
-  { id: 'k4-t47', sec: '4.9', p: 15, type: 'tf', a: true, q: 'Das Rhabdomyom ist mit der tuberösen Sklerose assoziiert und kann sich spontan zurückbilden.', ex: 'Rhabdomyom: oft schon bei Geburt, tuberöse Sklerose, „Spinnenzellen“, Hamartom, spontane Regression.' },
   { id: 'k4-t48', sec: '4.9', p: 15, type: 'tf', a: false, q: 'Herztumoren sind bei Kindern häufiger maligne als bei Erwachsenen.', ex: 'Kindliche Herztumoren sind fast immer benigne; maligne Herztumoren sind bei Erwachsenen häufiger.' },
   { id: 'k4-t49', sec: '4.9', p: 15, type: 'tf', a: true, q: 'Ein Herzmyxom kann durch einen Ventilmechanismus Synkopen verursachen.', ex: 'Myxom-Klinik: Synkope (Ventilmechanismus), Embolien, B-Symptome.' },
   { id: 'k4-t50', sec: '4.9', p: 15, type: 'tf', a: true, q: 'Die Pericarditis constrictiva wird auch als „Panzerherz“ bezeichnet.', ex: 'Pericarditis constrictiva = Panzerherz (Verkalkung), Folge einer Perikarditis.' }

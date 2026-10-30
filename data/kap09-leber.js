@@ -79,27 +79,6 @@ PQ.registerChapter(9, [
     ex: 'Häufigste Primärtumoren nach Altfrage: Dickdarm > Mamma > Schilddrüse. Histologisch sind Lebermetastasen meist Adeno-Ca (39 %) bzw. Karzinom NOS (36 %).'
   },
   {
-    id: 'k9-08', sec: '9.1', p: 29, type: 'match',
-    q: 'Ordne den benignen Leberbefund seinem Kennzeichen zu.',
-    pairs: [
-      ['Hämangiom', 'Häufigster benigner Lebertumor, Irisblendenphänomen'],
-      ['FNH', 'Zentrale sternförmige Narbe, Frauen'],
-      ['Hepatozelluläres Adenom', 'Junge Frauen, Kontrazeptiva, Blutungsneigung'],
-      ['Von-Meyenburg-Komplex', 'Gallengangshamartom']
-    ],
-    ex: 'Hämangiom: sono homogen echoreich; keine perkutane Biopsie (Blutungsgefahr). Adenom: ohne Zirrhose; auch Anabolika, Adipositas.'
-  },
-  {
-    id: 'k9-09', sec: '9.1', p: 29, type: 'match',
-    q: 'Ordne den Subtyp des hepatozellulären Adenoms seinem Kennzeichen zu.',
-    pairs: [
-      ['Inflammatorisch', '~50 %'],
-      ['HNF1α', '~35 %'],
-      ['β-Catenin', '~15 %, Entartungsrisiko']
-    ],
-    ex: 'Hepatozelluläres Adenom: junge Frauen, orale Kontrazeptiva/Anabolika, Adipositas; ohne Zirrhose; Blutungs- und Rupturneigung.'
-  },
-  {
     id: 'k9-10', sec: '9.1', p: 29, type: 'kprim',
     q: 'Fokal noduläre Hyperplasie (FNH) – welche Aussagen treffen zu?',
     st: [
@@ -109,18 +88,6 @@ PQ.registerChapter(9, [
       ['Sie ist eine Vorstufe des HCC.', false]
     ],
     ex: 'FNH: benigne, Frauen >> Männer, Hyperplasie als Reaktion auf abnormen Blutfluss; meist < 5 cm, Zufallsbefund; keine Exzision, keine Vorstufe des HCC.'
-  },
-  {
-    id: 'k9-11', sec: '9.1', p: 29, type: 'match',
-    q: 'Ordne den malignen Lebertumor seinem Kennzeichen zu.',
-    pairs: [
-      ['HCC', 'HepPar1, Glypican-3, AFP'],
-      ['Fibrolamelläres HCC', 'Junge Patienten ohne Zirrhose, DNAJB1-PRKACA'],
-      ['Cholangiozelluläres Karzinom', 'Desmoplastisches Stroma, CK7/CK19+'],
-      ['Hepatoblastom', 'Kinder < 2 J, AFP ↑'],
-      ['Angiosarkom', 'Vinylchlorid, Thorotrast, Arsen']
-    ],
-    ex: 'CCC: Adeno-Ca mit tubulären Strukturen; RF PSC, Leberegel (Asien), Choledochuszysten; nicht mit Gallensteinen assoziiert.'
   },
   {
     id: 'k9-12', sec: '9.1', p: 29, type: 'kprim',
@@ -141,17 +108,6 @@ PQ.registerChapter(9, [
     ex: 'HCC: trabekulär/pseudoglandulär, Gallepigment, Endothelauskleidung der Trabekel; HepPar1/Glypican-3/Arginase; CK7−/CK20−. CK7/CK19 → CCC; CK20/CDX2 → kolorektale Metastase.'
   },
   {
-    id: 'k9-14', sec: '9.1', p: 29, type: 'match',
-    q: 'Ordne die zystische Leberläsion ihrem Kennzeichen zu.',
-    pairs: [
-      ['Echinococcus granulosus (Hundebandwurm)', 'Singuläre, scharf begrenzte Zyste mit Tochterzysten'],
-      ['Echinococcus multilocularis (Fuchsbandwurm)', 'Infiltratives, tumorähnliches Wachstum'],
-      ['Muzinöses Zystadenom', 'Frauen, ovarielles Stroma'],
-      ['Solitäre biliäre Zyste', 'Häufiger Sono-Zufallsbefund']
-    ],
-    ex: 'Weitere zystische Läsionen: polyzystische Lebererkrankung (ADPKD), Abszess (pyogen, Amöben), Pseudozysten.'
-  },
-  {
     id: 'k9-15', sec: '9.1', p: 29, type: 'single',
     q: 'Warum soll ein Leberhämangiom nicht perkutan biopsiert werden?',
     opts: ['Wegen der Blutungsgefahr', 'Weil es sonographisch nicht darstellbar ist', 'Weil es meist maligne entartet'],
@@ -170,16 +126,6 @@ PQ.registerChapter(9, [
     ],
     a: 0,
     ex: 'Zirrhose: irreversibler, diffuser Umbau mit Septen und Regeneratknoten → zerstörte Läppchen- und Gefäßarchitektur. Herdförmige Hyperplasie mit zentraler Narbe → FNH.'
-  },
-  {
-    id: 'k9-17', sec: '9.2', p: 30, type: 'match',
-    q: 'Ordne die Färbung ihrem Nachweis in der Leber zu.',
-    pairs: [
-      ['Elastica-van-Gieson', 'Bindegewebssepten'],
-      ['Berliner Blau', 'Eisen'],
-      ['Rhodanin', 'Kupfer']
-    ],
-    ex: 'Zirrhose-Histo: Septen, Regeneratknoten ohne Zentralvene, duktuläre Proliferation; Eisen (Hämochromatose), Kupfer (M. Wilson).'
   },
   {
     id: 'k9-18', sec: '9.2', p: 30, type: 'kprim',
@@ -327,17 +273,6 @@ PQ.registerChapter(9, [
     ex: 'Gallenblasenkarzinom: spät symptomatisch, früh in die Leber infiltrierend → schlechte Prognose (5-JÜR ~5–20 %).'
   },
   {
-    id: 'k9-31', sec: '9.4', p: 30, type: 'match',
-    q: 'Ordne die Gallenblasenveränderung ihrem Kennzeichen zu.',
-    pairs: [
-      ['Cholesterinose', 'Gelbe Stippchen, schaumzellige Makrophagen'],
-      ['Hydrops', 'Prall, dünnwandig bei Abflussbehinderung'],
-      ['Chronische Cholezystitis', 'Wandfibrose, Rokitansky-Aschoff-Sinus'],
-      ['Porzellangallenblase', 'Verkalkte Wand, Präkanzerose']
-    ],
-    ex: 'Cholesterinose = „Stippchen“-/Erdbeergallenblase. Hydrops: Stein im Ductus cysticus, Tumor.'
-  },
-  {
     id: 'k9-32', sec: '9.4', p: 30, type: 'single',
     q: 'Woraus bestehen die meisten Gallensteine?',
     opts: ['Cholesterin', 'Bilirubinpigment', 'Kalziumoxalat'],
@@ -405,28 +340,6 @@ PQ.registerChapter(9, [
     opts: ['Pankreaskopfkarzinom', 'Pankreaspseudozyste', 'Serös-zystische Neoplasie'],
     a: 0,
     ex: 'IgG4-AIP: „Wurstpankreas“; wichtigste radiologische DD Pankreaskopfkarzinom; steroidsensibel.'
-  },
-  {
-    id: 'k9-39', sec: '9.5', p: 31, type: 'match',
-    q: 'Ordne die zystische Pankreasläsion ihrem Kennzeichen zu.',
-    pairs: [
-      ['IPMN', 'Häufigste zystische Neoplasie, im Gangsystem'],
-      ['MCN', 'Fast nur Frauen, ovarielles Stroma'],
-      ['SCN', 'Ältere Frauen, benigne, mikrozystisch'],
-      ['SPN', 'Junge Frauen, β-Catenin, niedrig maligne'],
-      ['Pseudozyste', 'Nach Pankreatitis, kein Epithel']
-    ],
-    ex: 'IPMN: Hauptgang = höheres Risiko als Seitengang; invasive Form mit besserer Prognose als das PDAC. MCN: Korpus/Schwanz, ER/PR+. SPN: > 80 % Heilung durch OP.'
-  },
-  {
-    id: 'k9-40', sec: '9.5', p: 31, type: 'match',
-    q: 'Ordne das Pankreasenzym seiner Wirkung bei der nekrotisierenden Pankreatitis zu.',
-    pairs: [
-      ['Trypsin', 'Autodigestion'],
-      ['Lipase', 'Fettgewebsnekrosen mit Kalkseifen („Kalkspritzer“)'],
-      ['Elastase', 'Gefäßarrosion und Blutung']
-    ],
-    ex: 'Formen: ödematös-interstitiell vs. hämorrhagisch-nekrotisierend. Komplikationen: Pseudozyste, Abszess, Sepsis, ARDS, Schock, Nierenversagen.'
   },
   {
     id: 'k9-41', sec: '9.5', p: 31, type: 'kprim',

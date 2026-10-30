@@ -143,18 +143,6 @@ PQ.registerChapter(8, [
     ex: 'Alle vier treffen zu. C. difficile (Toxin A/B); Pseudomembranen aus Fibrin, Schleim, Granulozyten und Detritus. Divertikulose v. a. im Sigma.'
   },
   {
-    id: 'k8-15', sec: '8.2', p: 26, type: 'match',
-    q: 'Ordne die Kolitis ihrem Kennzeichen zu.',
-    pairs: [
-      ['Pseudomembranöse Kolitis', 'C. difficile nach Antibiotika, gelblich-weiße Pseudomembranen'],
-      ['Kollagene Kolitis', 'Subepitheliales Kollagenband > 10 µm'],
-      ['Lymphozytäre Kolitis', 'Intraepitheliale Lymphozyten ↑'],
-      ['CMV-Kolitis', 'Eulenaugenzellen bei Immunsuppression'],
-      ['Ischämische Kolitis', 'Wasserscheiden (linke Flexur, rektosigmoidal)']
-    ],
-    ex: 'Mikroskopische Kolitis (kollagen/lymphozytär): endoskopisch unauffällig, wässrige Diarrhö, ältere Frauen.'
-  },
-  {
     id: 'k8-16', sec: '8.2', p: 26, type: 'single',
     q: 'Woraus bestehen die Pseudomembranen der pseudomembranösen Kolitis?',
     opts: ['Fibrin, Schleim, Granulozyten und Detritus', 'Subepithelialem Kollagen', 'Lymphozyten und Plasmazellen'],
@@ -217,26 +205,6 @@ PQ.registerChapter(8, [
     ],
     a: 0,
     ex: 'Hyperplastischer Polyp: häufig, klein, linkskolisch/Rektum; Serratierung (Sägezahn) in der oberen Kryptenhälfte; keine Dysplasie.'
-  },
-  {
-    id: 'k8-22', sec: '8.3', p: 27, type: 'match',
-    q: 'Ordne den serratierten Polypen seinem Kennzeichen zu.',
-    pairs: [
-      ['Hyperplastischer Polyp', 'Serratierung nur in der oberen Kryptenhälfte, keine Dysplasie'],
-      ['Sessiles serratiertes Adenom (SSA/SSL)', 'Rechtskolisch, T-/L-förmige Kryptenbasen, BRAF'],
-      ['Traditionelles serratiertes Adenom (TSA)', 'Linkskolisch, Eosinophilie, ektope Krypten, KRAS']
-    ],
-    ex: 'SSA/SSL: flach, Schleimkappe, Serratierung bis zur Kryptenbasis; BRAF, CIMP → serratierter Karzinogeneseweg (MSI). TSA: fast immer Dysplasie.'
-  },
-  {
-    id: 'k8-23', sec: '8.3', p: 27, type: 'match',
-    q: 'Ordne den Adenomtyp seinem Anteil zu.',
-    pairs: [
-      ['Tubulär', '~75 %'],
-      ['Tubulovillös', '~25 %'],
-      ['Villös', '~5 %']
-    ],
-    ex: 'Das konventionelle Adenom ist der häufigste neoplastische Polyp: benigne Neoplasie mit obligater intraepithelialer Neoplasie/Dysplasie (low/high grade).'
   },
   {
     id: 'k8-24', sec: '8.3', p: 27, type: 'single',
@@ -324,28 +292,6 @@ PQ.registerChapter(8, [
     ex: 'Die meisten KRK entstehen über Vorläuferpolypen (Adenom-Karzinom-Sequenz, serratierter Weg), nicht de novo.'
   },
   {
-    id: 'k8-33', sec: '8.4', p: 27, type: 'match',
-    q: 'Ordne die Stufe der Adenom-Karzinom-Sequenz ihrer genetischen Veränderung zu.',
-    pairs: [
-      ['Normalschleimhaut → frühes Adenom', 'APC-Verlust'],
-      ['Intermediäres Adenom', 'KRAS-Mutation'],
-      ['Spätes Adenom', '18q-Verlust (SMAD4/DCC)'],
-      ['Karzinom', 'p53-Verlust']
-    ],
-    ex: 'Klassische Adenom-Karzinom-Sequenz / chromosomale Instabilität: 60–70 % der sporadischen KRK und FAP.'
-  },
-  {
-    id: 'k8-34', sec: '8.4', p: 27, type: 'match',
-    q: 'Ordne den Karzinogeneseweg des KRK seinem Kennzeichen zu.',
-    pairs: [
-      ['Chromosomale Instabilität', 'Adenom-Karzinom-Sequenz, 60–70 %, FAP'],
-      ['MSI-Weg', 'Mismatch-Repair-Defekt (Lynch, MLH1-Hypermethylierung)'],
-      ['Serratierter Weg', 'SSA, BRAF, CIMP-high, rechtskolisch'],
-      ['Alternativer Weg', 'TSA, KRAS, MSI-low/MSS']
-    ],
-    ex: 'Serratierter Weg (15–20 %): SSA → BRAF, CIMP-high, MLH1-Methylierung → MSI. Alternativer Weg (15–20 %): TSA, KRAS.'
-  },
-  {
     id: 'k8-35', sec: '8.4', p: 27, type: 'single',
     q: 'Welches Immunprofil ist typisch für das kolorektale Adenokarzinom?',
     opts: ['CK20+/CK7−, CDX2+', 'TTF-1+, Napsin A+', 'Calretinin+, WT1+', 'Synaptophysin+, Chromogranin+'],
@@ -371,33 +317,11 @@ PQ.registerChapter(8, [
     ex: 'Staging nach TNM mit ≥ 12 LK. Bei LK-Befall sinkt die 5-JÜR unabhängig vom T-Stadium auf ~50–60 %, durch adjuvante Chemotherapie deutlich verbesserbar.'
   },
   {
-    id: 'k8-38', sec: '8.4', p: 28, type: 'match',
-    q: 'Ordne den Begriff zum Rektumkarzinom zu.',
-    pairs: [
-      ['Definition Rektum', 'Bis 16 cm ab Anokutanlinie'],
-      ['Neoadjuvante Radiochemotherapie', 'Ab cT3/N+'],
-      ['Operation', 'TME, CRM ≥ 1 mm'],
-      ['„yp“-Klassifikation', 'Nach neoadjuvanter Therapie, mit Regressionsgrading']
-    ],
-    ex: 'Rektumkarzinom: Hämatochezie, Stuhlunregelmäßigkeiten, „Bleistiftstuhl“; Staging mit MRT/Endosonographie; TME = totale mesorektale Exzision, ggf. Rektumexstirpation.'
-  },
-  {
     id: 'k8-39', sec: '8.4', p: 27, type: 'single',
     q: 'Welcher histologische Befund ist typisch für das kolorektale Adenokarzinom?',
     opts: ['„Schmutzige Nekrose“ (dirty necrosis)', 'Verkäsende Granulome', 'Psammomkörper'],
     a: 0,
     ex: 'KRK: typische „schmutzige Nekrose“, CK20+/CK7−, CDX2+.'
-  },
-  {
-    id: 'k8-40', sec: '8.4', p: 27, type: 'match',
-    q: 'Ordne den histologischen KRK-Subtyp seinem Kennzeichen zu.',
-    pairs: [
-      ['Adenokarzinom NOS', '~90 %'],
-      ['Muzinöses Adenokarzinom', '> 50 % extrazellulärer Schleim'],
-      ['Siegelringzellkarzinom', '< 1 %, schlechte Prognose'],
-      ['Medulläres Karzinom', 'MSI-H, rechts, eher günstig']
-    ],
-    ex: 'Das muzinöse Adenokarzinom macht ~10 % aus (nicht 80 % – Altfrage).'
   },
   {
     id: 'k8-41', sec: '8.4', p: 27, type: 'single',
@@ -431,28 +355,6 @@ PQ.registerChapter(8, [
     ],
     a: 0,
     ex: 'FAP: APC (5q21), autosomal-dominant; hunderte bis tausende Adenome; KRK-Risiko ~100 % ohne Prophylaxe → prophylaktische (Prokto-)Kolektomie.'
-  },
-  {
-    id: 'k8-44', sec: '8.5', p: 28, type: 'match',
-    q: 'Ordne das Syndrom seinem Gen zu.',
-    pairs: [
-      ['FAP', 'APC (5q21)'],
-      ['Lynch-Syndrom', 'MSH2, MLH1, MSH6, PMS2'],
-      ['Peutz-Jeghers-Syndrom', 'STK11'],
-      ['Cowden-Syndrom', 'PTEN'],
-      ['Juvenile Polyposis', 'SMAD4/BMPR1A']
-    ],
-    ex: 'Lynch: Mismatch-Repair-Gene MSH2 > MLH1 > MSH6 > PMS2 (EPCAM), autosomal-dominant.'
-  },
-  {
-    id: 'k8-45', sec: '8.5', p: 28, type: 'match',
-    q: 'Ordne die FAP-Variante ihrem Kennzeichen zu.',
-    pairs: [
-      ['Gardner-Syndrom', '+ Osteome, Desmoide, Epidermoidzysten'],
-      ['Turcot-Syndrom', '+ Medulloblastom'],
-      ['MUTYH-assoziierte Polyposis', 'Autosomal-rezessiv']
-    ],
-    ex: 'Weitere Variante: attenuierte FAP.'
   },
   {
     id: 'k8-46', sec: '8.5', p: 28, type: 'kprim',

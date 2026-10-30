@@ -79,30 +79,6 @@ PQ.registerChapter(14, [
     ex: 'Die ersten drei Aussagen stammen aus der K-prim-Altfrage 2016 (alle ✓). Östrogen ist kein RF des Zervixkarzinoms (Altfrage 2012).'
   },
   {
-    id: 'k14-08', sec: '14.1', p: 44, type: 'match',
-    q: 'Ordne die Zytologie (Münchner Nomenklatur III) der Histologie zu.',
-    pairs: [
-      ['IIID1', '≈ CIN 1'],
-      ['IIID2', '≈ CIN 2'],
-      ['IVa-p', '≈ CIN 3/CIS'],
-      ['IVa-g', '≈ AIS (glandulär)'],
-      ['V', 'Karzinom']
-    ],
-    ex: 'IVb = V. a. Invasion. CIN I = LSIL (unteres Drittel), CIN III = HSIL (Atypien in der gesamten Epitheldicke, Basalmembran intakt).'
-  },
-  {
-    id: 'k14-09', sec: '14.1', p: 44, type: 'match',
-    q: 'Ordne das FIGO-Stadium des Zervixkarzinoms zu.',
-    pairs: [
-      ['I', 'Auf den Uterus begrenzt'],
-      ['II', 'Jenseits des Uterus, nicht unteres Vaginaldrittel/Beckenwand'],
-      ['III', 'Unteres Vaginaldrittel, Beckenwand oder Hydronephrose'],
-      ['IVA', 'Blasen- oder Rektumschleimhaut'],
-      ['IVB', 'Fernmetastasen']
-    ],
-    ex: 'Frühinvasives Karzinom (FIGO IA): Stromainvasion IA1 ≤ 3 mm, IA2 3–5 mm.'
-  },
-  {
     id: 'k14-10', sec: '14.1', p: 44, type: 'single',
     q: 'Wie wirken die HPV-Onkoproteine E6 und E7?',
     opts: ['E6 baut p53 ab, E7 inaktiviert Rb', 'E6 inaktiviert Rb, E7 baut p53 ab', 'Beide aktivieren KRAS'],
@@ -136,16 +112,6 @@ PQ.registerChapter(14, [
     opts: ['Mit 9–14 Jahren, vor der Kohabitarche', 'Erst ab 30 Jahren', 'Nur nach positivem HPV-Test'],
     a: 0,
     ex: 'Prävention: HPV-Impfung vor der Kohabitarche (STIKO 9–14 J); Früherkennung mit Zytologie/HPV-Test.'
-  },
-  {
-    id: 'k14-15', sec: '14.1', p: 44, type: 'match',
-    q: 'Ordne den Tumor von Vagina bzw. Vulva seinem Kennzeichen zu.',
-    pairs: [
-      ['Klarzelliges Vaginalkarzinom', 'Nach Diethylstilbestrol'],
-      ['Sarcoma botryoides', 'Mädchen'],
-      ['Vulvakarzinom', '> 90 % Plattenepithel-Ca, LK inguinal']
-    ],
-    ex: 'Vagina: PE-Ca (VAIN, HPV), Klarzell-Ca nach DES, Sarcoma botryoides. Vulva: > 90 % PE-Ca, extramammärer Paget.'
   },
 
   /* ---------- 14.2 Endometrium ---------- */
@@ -225,18 +191,6 @@ PQ.registerChapter(14, [
     ex: 'Typ I (~80 %): 55–65 J, endometrioides Adeno-Ca, PTEN, KRAS, β-Catenin, MSI; günstige Prognose. p53/Psammomkörper und atrophes Endometrium → Typ II (serös).'
   },
   {
-    id: 'k14-23', sec: '14.2', p: 45, type: 'match',
-    q: 'Ordne das FIGO-Stadium des Endometriumkarzinoms zu.',
-    pairs: [
-      ['IA', '≤ ½ Myometrium'],
-      ['IB', '≥ ½ Myometrium'],
-      ['II', 'Zervixstroma'],
-      ['III', 'Serosa, Adnexe, Vagina, Parametrien bzw. LK'],
-      ['IV', 'Blase/Darm, Fernmetastasen']
-    ],
-    ex: 'LK-Befall = IIIC. Metastasierung: lokal (Beckenorgane, Peritoneum), lymphogen pelvin/paraaortal, hämatogen Lunge.'
-  },
-  {
     id: 'k14-24', sec: '14.2', p: 44, type: 'single',
     q: 'Wie hoch ist das Karzinomrisiko einer atypischen Endometriumhyperplasie (EIN)?',
     opts: ['28–52 %', '0–3,5 %', '> 90 %'],
@@ -302,16 +256,6 @@ PQ.registerChapter(14, [
     ex: 'Leiomyom: dicht gepackte spindelige glatte Muskelzellen in Faszikeln, ohne Atypien, kaum Mitosen, faserreiches Bindegewebe; Makro derb, weiß, wirbelig.'
   },
   {
-    id: 'k14-33', sec: '14.3', p: 45, type: 'match',
-    q: 'Ordne den Begriff seiner Definition zu.',
-    pairs: [
-      ['Adenomyose', 'Endometrium tief im Myometrium'],
-      ['Endometriose', 'Ektopes Endometrium außerhalb des Uterus'],
-      ['Endometriom', '„Schokoladenzyste“ des Ovars']
-    ],
-    ex: 'Adenomyose: vergrößerter Uterus, Dysmenorrhö. Endometriose: Ovar, Douglas, Ligg. sacrouterina, Peritoneum, Darm, Blase; Drüsen, Stroma, Hämosiderophagen.'
-  },
-  {
     id: 'k14-34', sec: '14.3', p: 45, type: 'kprim',
     q: 'Leiomyom des Uterus – welche Aussagen treffen zu?',
     st: [
@@ -332,16 +276,6 @@ PQ.registerChapter(14, [
     ],
     a: 0,
     ex: 'Leiomyosarkom: 50–55 J, hochmaligne, 5-JÜR 15–25 %. Wirbelige Schnittfläche/Hyalinisierung → Leiomyom; Drüsen und Stroma im Myometrium → Adenomyose.'
-  },
-  {
-    id: 'k14-36', sec: '14.3', p: 45, type: 'match',
-    q: 'Ordne die Gestationstrophoblasterkrankung ihrem Kennzeichen zu.',
-    pairs: [
-      ['Komplette Blasenmole', '46,XX androgenetisch, kein Embryo'],
-      ['Partielle Blasenmole', 'Triploid'],
-      ['Chorionkarzinom', 'Trophoblast ohne Zotten, β-HCG ↑↑, Methotrexat kurativ']
-    ],
-    ex: 'Chorionkarzinom: 50 % nach Blasenmole; Zyto- + Synzytiotrophoblast ohne Zotten, früh hämatogen in die Lunge.'
   },
   {
     id: 'k14-37', sec: '14.3', p: 45, type: 'single',
@@ -432,40 +366,6 @@ PQ.registerChapter(14, [
     opts: ['Thekom mit Östrogenproduktion', 'Reifes zystisches Teratom', 'Sertoli-Leydig-Zelltumor', 'Dysgerminom', 'Krukenberg-Tumor'],
     a: 0,
     ex: 'Thekom: postmenopausal, gelb, Östrogen (→ Blutung, Brustspannen). Sertoli-Leydig bildet Androgene; das Dysgerminom betrifft junge Frauen; das Teratom ist zystisch.'
-  },
-  {
-    id: 'k14-47', sec: '14.4', p: 46, type: 'match',
-    q: 'Ordne den Ovarialtumor seinem Kennzeichen zu.',
-    pairs: [
-      ['Granulosazelltumor', 'Call-Exner-Körperchen, „Kaffeebohnenkerne“, FOXL2'],
-      ['Fibrom', 'Meigs-Syndrom (+ Aszites + Pleuraerguss)'],
-      ['Sertoli-Leydig-Zelltumor', 'Androgene, Virilisierung'],
-      ['Reifes zystisches Teratom', 'Haare, Talg, Zähne'],
-      ['Krukenberg-Tumor', 'Siegelringzell-Metastase (Magen)']
-    ],
-    ex: 'Granulosazelltumor: Östrogen → Endometriumhyperplasie/-Ca; Inhibin. Reifes Teratom (Dermoidzyste): häufigster Ovarialtumor junger Frauen, benigne.'
-  },
-  {
-    id: 'k14-48', sec: '14.4', p: 46, type: 'match',
-    q: 'Ordne den ovariellen Keimzelltumor seinem Kennzeichen zu.',
-    pairs: [
-      ['Dottersacktumor', 'AFP'],
-      ['Chorionkarzinom', 'HCG'],
-      ['Dysgerminom', 'Pendant zum Seminom']
-    ],
-    ex: 'Keimzelltumoren betreffen junge Frauen. „Seminom“ ist kein ovarieller Begriff.'
-  },
-  {
-    id: 'k14-49', sec: '14.4', p: 46, type: 'match',
-    q: 'Ordne das Ovarialkarzinom seinem Kennzeichen zu.',
-    pairs: [
-      ['High-grade serös', 'p53, BRCA, Vorläufer STIC'],
-      ['Low-grade serös', 'KRAS/BRAF, über serösen Borderline-Tumor'],
-      ['Endometrioid', 'Endometriose, oft synchrones Endometrium-Ca'],
-      ['Klarzellig', 'Endometriose, immer high grade, chemoresistent'],
-      ['Muzinös', 'Oft groß, einseitig; DD Metastase aus dem GIT']
-    ],
-    ex: 'HGSC: häufigster Typ (~70 %), aggressiv, chemosensibel. LGSC: indolent, chemoresistent. Brenner: meist benigne.'
   },
   {
     id: 'k14-50', sec: '14.4', p: 46, type: 'kprim',

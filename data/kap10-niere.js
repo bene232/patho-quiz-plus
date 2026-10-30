@@ -96,28 +96,6 @@ PQ.registerChapter(10, [
     ex: 'Nephritisch: Endothel-/Mesangiumschaden (proliferative GN), Proteinurie < 3 g/d, Oligurie; typisch Poststreptokokken-GN, IgA-GN, RPGN. Die Minimal-Change-GN verursacht ein nephrotisches Syndrom.'
   },
   {
-    id: 'k10-10', sec: '10.1', p: 32, type: 'match',
-    q: 'Ordne die Glomerulopathie ihrem Kennzeichen zu.',
-    pairs: [
-      ['Poststreptokokken-GN', 'Subepitheliale „Humps“, C3 ↓'],
-      ['IgA-Nephropathie', 'Mesangiale IgA-Ablagerungen, synpharyngitische Makrohämaturie'],
-      ['Membranöse GN', 'Subepitheliale Deposits, „Spikes“, Anti-PLA2R'],
-      ['Minimal-Change-GN', 'Lichtmikroskopisch unauffällig, Fußfortsatzverschmelzung'],
-      ['Lupusnephritis', '„Full-house“-IF, Drahtschlingen']
-    ],
-    ex: 'Weitere: MPGN I (Doppelkonturen, HCV/HBV), MPGN II (C3-Nephritis-Faktor), FSGS (steroidresistent), diabetische Nephropathie (Kimmelstiel-Wilson).'
-  },
-  {
-    id: 'k10-11', sec: '10.1', p: 32, type: 'match',
-    q: 'Ordne den RPGN-Typ seinem Mechanismus zu.',
-    pairs: [
-      ['Typ I (~10 %)', 'Anti-GBM, lineare Fluoreszenz'],
-      ['Typ II (~40 %)', 'Immunkomplex (postinfektiös, Lupus, Schönlein-Henoch)'],
-      ['Typ III (~50 %)', 'Pauci-immun, ANCA (GPA, MPA)']
-    ],
-    ex: 'RPGN (extrakapillär, Halbmond-GN): rasches Nierenversagen in Wochen/Monaten; Typ I mit Lungenblutung = Goodpasture; frühe Biopsie, Plasmapherese.'
-  },
-  {
     id: 'k10-12', sec: '10.1', p: 32, type: 'single',
     q: 'Welche Glomerulonephritis ist weltweit am häufigsten?',
     opts: ['IgA-Nephropathie (Berger)', 'Membranöse GN', 'Minimal-Change-GN', 'MPGN Typ I'],
@@ -142,13 +120,6 @@ PQ.registerChapter(10, [
     ],
     a: 0,
     ex: 'Diabetische Nephropathie: noduläre und diffuse Glomerulosklerose, hyaline Arteriolosklerose (afferent + efferent), GBM-Verdickung. Humps → Poststreptokokken-GN; lineare IF → Goodpasture; Full-house → Lupus.'
-  },
-  {
-    id: 'k10-15', sec: '10.1', p: 32, type: 'single',
-    q: 'Welche Glomerulopathie hat die höchste Rezidivrate im Transplantat?',
-    opts: ['MPGN Typ II (Dense Deposit Disease)', 'MPGN Typ I', 'Poststreptokokken-GN'],
-    a: 0,
-    ex: 'MPGN Typ II: C3-Nephritis-Faktor, bevorzugt Kinder, ~100 % Rezidiv im Transplantat (höchste Rate). MPGN Typ I: ~30 %.'
   },
   {
     id: 'k10-16', sec: '10.1', p: 32, type: 'kprim',
@@ -181,29 +152,11 @@ PQ.registerChapter(10, [
     ex: 'Goodpasture-Antigen = α3-Kette des Kollagens IV → Antigenverwandtschaft von alveolärer und glomerulärer Basalmembran. PR3 → GPA; PLA2R → membranöse GN; MPO → MPA.'
   },
   {
-    id: 'k10-19', sec: '10.1', p: 32, type: 'match',
-    q: 'Ordne den Begriff des Befallsmusters seiner Definition zu.',
-    pairs: [
-      ['Diffus', 'Alle Glomeruli'],
-      ['Fokal', 'Einige Glomeruli'],
-      ['Global', 'Ganzer Glomerulus'],
-      ['Segmental', 'Teile des Schlingenkonvoluts']
-    ],
-    ex: 'Weitere Einteilungen: primär vs. sekundär, entzündlich vs. nicht entzündlich, proliferativ vs. nicht proliferativ.'
-  },
-  {
     id: 'k10-20', sec: '10.1', p: 32, type: 'single',
     q: 'Welche GN-Form zeigt eine lineare Immunfluoreszenz?',
     opts: ['Anti-GBM-GN (Goodpasture)', 'Immunkomplex-GN', 'Pauci-immune ANCA-GN'],
     a: 0,
     ex: 'Anti-GBM: lineare Fluoreszenz. Immunkomplexe (zirkulierend oder in situ): granuläre Fluoreszenz. ANCA-Formen sind pauci-immun.'
-  },
-  {
-    id: 'k10-21', sec: '10.1', p: 32, type: 'single',
-    q: 'Welcher Urinbefund ist pathognomonisch für eine entzündliche glomeruläre Erkrankung?',
-    opts: ['Erythrozytenzylinder', 'Leukozytenzylinder', 'Lipidurie („Malteserkreuze“)'],
-    a: 0,
-    ex: 'Erythrozytenzylinder entstehen in den Tubuli und sind pathognomonisch für eine entzündliche glomeruläre Erkrankung. Leukozytenzylinder → akute Pyelonephritis; Malteserkreuze → nephrotisches Syndrom.'
   },
 
   /* ---------- 10.2 Interstitial nephritis & pyelonephritis ---------- */
@@ -255,18 +208,6 @@ PQ.registerChapter(10, [
     ex: 'Chronische Pyelonephritis: lymphoplasmazelluläre Infiltrate, interstitielle Fibrose, Tubulusatrophie mit „Thyreoidisation“, periglomeruläre Fibrose. Eingedicktes Nekrosematerial = „Kittniere“ (Tbc).'
   },
   {
-    id: 'k10-27', sec: '10.2', p: 33, type: 'match',
-    q: 'Ordne die interstitielle Nephritis ihrem Kennzeichen zu.',
-    pairs: [
-      ['Akute Pyelonephritis', 'Neutrophile, Leukozytenzylinder, Rindenabszesse'],
-      ['Chronische Pyelonephritis', 'Grobe narbige Einziehungen, Kelchdeformitäten'],
-      ['Medikamentös-allergische Nephritis', 'NSAR, Penicilline, PPI; Eosinophile'],
-      ['Analgetikanephropathie', 'Phenacetin, Papillennekrosen'],
-      ['Nierentuberkulose', '„Kittniere“']
-    ],
-    ex: 'Nierentuberkulose: Epitheloidzellgranulome mit Verkäsung; Kittniere = eingedicktes Nekrosematerial in Nierenbecken und Kelchen.'
-  },
-  {
     id: 'k10-28', sec: '10.2', p: 33, type: 'single',
     q: 'Welcher Erreger verursacht die aszendierende Pyelonephritis am häufigsten?',
     opts: ['E. coli', 'Proteus', 'Enterokokken', 'Mycobacterium tuberculosis'],
@@ -312,17 +253,6 @@ PQ.registerChapter(10, [
     ],
     a: 0,
     ex: 'Hydronephrose = Erweiterung von Nierenbecken und -kelchen durch Harnabflussstörung mit Parenchymatrophie; sie verursacht keine Rindenzysten.'
-  },
-  {
-    id: 'k10-33', sec: '10.3', p: 33, type: 'match',
-    q: 'Ordne den Potter-Typ seiner Entität zu.',
-    pairs: [
-      ['Potter I', 'ARPKD (infantile Form)'],
-      ['Potter II', 'Multizystische Nierendysplasie'],
-      ['Potter III', 'ADPKD (Erwachsenentyp)'],
-      ['Potter IV', 'Zystische Dysplasie bei fetaler Harnwegsobstruktion']
-    ],
-    ex: 'Potter I: beidseits gleichmäßig kleine radiäre Zysten, Leberfibrose · II: meist einseitig, Dysplasie · III: PKD1/PKD2, große Zysten · IV: subkapsuläre Zysten.'
   },
   {
     id: 'k10-34', sec: '10.3', p: 33, type: 'kprim',
@@ -389,28 +319,6 @@ PQ.registerChapter(10, [
     ex: 'Nierensteine: Kalziumoxalat (~70–75 %), Kalziumphosphat, Struvit (Magnesium-Ammonium-Phosphat), Harnsäure/Urat, Zystin. Kein Cholesterin.'
   },
   {
-    id: 'k10-40', sec: '10.4', p: 34, type: 'match',
-    q: 'Ordne den Nierenstein seinem Kennzeichen zu.',
-    pairs: [
-      ['Kalziumoxalat', 'Häufigster Stein (~70–75 %)'],
-      ['Struvit', 'Infektstein durch ureasebildende Proteus, Ausgussstein'],
-      ['Harnsäure/Urat', 'Röntgennegativ; Gicht, Zellzerfall'],
-      ['Zystin', 'Zystinurie']
-    ],
-    ex: 'Klinik: Kolik, Hämaturie; Komplikationen: Harnstau, Pyelonephritis, Pyonephrose.'
-  },
-  {
-    id: 'k10-41', sec: '10.4', p: 34, type: 'match',
-    q: 'Ordne den vaskulären Nierenschaden seinem Befund zu.',
-    pairs: [
-      ['Anämischer Niereninfarkt', 'Keilförmig, gelblich mit hämorrhagischem Randsaum'],
-      ['Benigne Nephrosklerose', 'Hyaline Arteriolosklerose, fein granulierte Oberfläche'],
-      ['Maligne Nephrosklerose', 'Fibrinoide Arteriolonekrosen, zwiebelschalenartige Intimaproliferation'],
-      ['Schockniere', 'Blasse geschwollene Rinde, dunkelrotes Mark']
-    ],
-    ex: 'Anämischer Infarkt meist embolisch (Vorhofflimmern, Endokarditis) → Narbe. Maligne Nephrosklerose: „Flohstichniere“. Schockniere: akute Tubulusnekrose.'
-  },
-  {
     id: 'k10-42', sec: '10.4', p: 34, type: 'single',
     q: 'Welche Reihenfolge der häufigsten Ursachen der chronischen Niereninsuffizienz trifft zu?',
     opts: [
@@ -431,17 +339,6 @@ PQ.registerChapter(10, [
       ['Metabolische Alkalose', false]
     ],
     ex: 'Folgen: renale Anämie (EPO ↓), sekundärer HPT/renale Osteopathie, Hypertonie, Azidose, Urämie (fibrinöse Perikarditis, Urämiegastritis, Pruritus, Enzephalopathie).'
-  },
-  {
-    id: 'k10-44', sec: '10.4', p: 34, type: 'single',
-    q: 'Welcher Befund passt zur End-Stage-Niere?',
-    opts: [
-      'Schrumpfnieren mit globaler Glomerulosklerose, Tubulusatrophie und interstitieller Fibrose',
-      'Geschwollene „Flohstichniere“',
-      'Blasse geschwollene Rinde mit dunkelrotem Mark'
-    ],
-    a: 0,
-    ex: 'End-Stage-Niere: Schrumpfnieren, globale Glomerulosklerose, Tubulusatrophie (Thyreoidisation), interstitielle Fibrose, Arteriosklerose; Ursache oft nicht mehr erkennbar. Blasse Rinde/dunkles Mark → Schockniere.'
   },
 
   /* ---------- 10.5 Kidney tumors ---------- */
@@ -529,40 +426,6 @@ PQ.registerChapter(10, [
     ex: 'Der Wilms-Tumor (Nephroblastom) liegt in der Niere, nicht in der Nebenniere.'
   },
   {
-    id: 'k10-52', sec: '10.5', p: 34, type: 'match',
-    q: 'Ordne den Nierentumor seinem Kennzeichen zu.',
-    pairs: [
-      ['Klarzelliges NZK', 'VHL-Inaktivierung (3p25), optisch leeres Zytoplasma'],
-      ['Papilläres NZK', 'Papillen, Schaumzellen, Psammomkörper'],
-      ['Chromophobes NZK', '„Pflanzenzellartiges“ Zytoplasma, Hale-Eisen+'],
-      ['Onkozytom', 'Mahagonibraun mit zentraler sternförmiger Narbe'],
-      ['Angiomyolipom', 'Fett, glatte Muskulatur, dickwandige Gefäße']
-    ],
-    ex: 'Chromophobes NZK und Onkozytom stammen aus den Schaltzellen. Das Angiomyolipom ist ein PEComa.'
-  },
-  {
-    id: 'k10-53', sec: '10.5', p: 35, type: 'match',
-    q: 'Ordne das familiäre Syndrom seinem Nierentumor zu.',
-    pairs: [
-      ['Von-Hippel-Lindau', 'Klarzelliges NZK, multipel/bilateral'],
-      ['Hereditäres papilläres NZK (MET)', 'Papilläres NZK Typ 1'],
-      ['Birt-Hogg-Dubé', 'Chromophobes NZK/Onkozytom'],
-      ['Tuberöse Sklerose', 'Angiomyolipome'],
-      ['Hereditäre Leiomyomatose (FH)', 'Aggressives papilläres NZK']
-    ],
-    ex: 'VHL außerdem: Hämangioblastome ZNS/Retina, Phäochromozytom, Pankreaszysten/NET.'
-  },
-  {
-    id: 'k10-54', sec: '10.5', p: 34, type: 'match',
-    q: 'Ordne die Paraneoplasie des Nierenzellkarzinoms ihrem Mediator zu.',
-    pairs: [
-      ['Polyglobulie', 'EPO'],
-      ['Hyperkalzämie', 'PTHrP'],
-      ['Hypertonie', 'Renin']
-    ],
-    ex: 'Weitere Paraneoplasie: Stauffer-Syndrom. Die klassische Trias (Flankenschmerz, Tumor, Makrohämaturie) ist selten.'
-  },
-  {
     id: 'k10-55', sec: '10.5', p: 34, type: 'single',
     q: 'Wonach richtet sich das ISUP/WHO-Grading (G1–G3) des Nierenzellkarzinoms?',
     opts: ['Nach der Nukleolengröße', 'Nach der Tumorgröße', 'Nach dem Wachstumsmuster (wie beim Gleason-Score)'],
@@ -602,87 +465,33 @@ PQ.registerChapter(10, [
     ],
     ex: 'Wilms-Tumor: 2–5 J, WT1 (WAGR, Denys-Drash, Beckwith-Wiedemann), Bauchtumor, gute Prognose; liegt in der Niere.'
   },
-  {
-    id: 'k10-59', sec: '10.5', p: 35, type: 'match',
-    q: 'Ordne den Nebennierentumor seinem Kennzeichen zu.',
-    pairs: [
-      ['Phäochromozytom', 'Mark, Erwachsene, 10er-Regel'],
-      ['Neuroblastom', 'Mark, Kinder, Homer-Wright-Rosetten'],
-      ['Nebennierenrindenadenom', 'Cushing/Conn/inaktiv („Inzidentalom“)']
-    ],
-    ex: 'Phäochromozytom: MEN2, VHL, NF1. Neuroblastom: Katecholamine. Metastasen in der NN v. a. vom kleinzelligen Bronchial-Ca, Mamma, Melanom.'
-  },
-  {
-    id: 'k10-60', sec: '10.5', p: 35, type: 'single',
-    q: 'Wie wird ein metastasiertes Nierenzellkarzinom behandelt?',
-    opts: [
-      'Targeted Therapy (VEGF-TKI, mTOR-Inhibitoren) + Immuncheckpoint-Inhibitoren',
-      'Alleinige Strahlentherapie',
-      'Klassische Chemotherapie als Standard'
-    ],
-    a: 0,
-    ex: 'Das NZK ist strahlen- und chemoresistent. Lokal: (nephronsparende) Teilresektion bzw. radikale Nephrektomie, wenn möglich Metastasenresektion.'
-  },
-  {
-    id: 'k10-61', sec: '10.5', p: 34, type: 'single',
-    q: 'Welcher Nierentumor ist immer benigne?',
-    opts: ['Onkozytom', 'Chromophobes NZK', 'Ductus-Bellini-Karzinom', 'Papilläres NZK Typ 2'],
-    a: 0,
-    ex: 'Onkozytom (~5 %, Schaltzellen): immer benigne.'
-  },
 
   /* ---------- True/false statements ---------- */
-  { id: 'k10-t01', sec: '10.1', p: 32, type: 'tf', a: true, q: 'Erythrozytenzylinder entstehen in den Tubuli.', ex: 'Erythrozytenzylinder entstehen in den Tubuli und sind pathognomonisch für eine entzündliche glomeruläre Erkrankung.' },
   { id: 'k10-t02', sec: '10.1', p: 32, type: 'tf', a: false, q: 'Die Poststreptokokken-GN tritt typischerweise 1–2 Tage nach dem Infekt auf.', ex: '1–3 (1–4) Wochen nach dem Infekt (Altfrage 2010).' },
-  { id: 'k10-t03', sec: '10.1', p: 32, type: 'tf', a: true, q: 'Bei der Poststreptokokken-GN ist das Serum-C3 erniedrigt.', ex: 'Poststreptokokken-GN: C3 ↓, subepitheliale „Humps“.' },
   { id: 'k10-t04', sec: '10.1', p: 32, type: 'tf', a: false, q: 'Die IgA-Nephropathie ist eine seltene Glomerulonephritis.', ex: 'IgA-Nephropathie: häufigste GN weltweit.' },
   { id: 'k10-t05', sec: '10.1', p: 32, type: 'tf', a: true, q: 'Die IgA-Nephropathie ist die renale Form der Purpura Schönlein-Henoch.', ex: 'IgA-Nephropathie (Berger): renale Form der Purpura Schönlein-Henoch.' },
   { id: 'k10-t06', sec: '10.1', p: 32, type: 'tf', a: false, q: 'Die Minimal-Change-GN ist typischerweise steroidresistent.', ex: 'Minimal Change: steroidsensibel. Steroidresistent ist die FSGS.' },
   { id: 'k10-t07', sec: '10.1', p: 32, type: 'tf', a: true, q: 'Die FSGS führt zu einem steroidresistenten nephrotischen Syndrom.', ex: 'FSGS: fokal-segmentale Sklerose; steroidresistent; Rezidiv im Transplantat.' },
   { id: 'k10-t08', sec: '10.1', p: 32, type: 'tf', a: true, q: 'Anti-PLA2R-Antikörper sind typisch für die membranöse GN.', ex: 'Membranöse GN: subepitheliale Deposits, „Spikes“, Anti-PLA2R.' },
   { id: 'k10-t09', sec: '10.1', p: 32, type: 'tf', a: false, q: 'Die diabetische Nephropathie ist eine Immunkomplex-GN.', ex: 'Diabetische Nephropathie: keine GN, keine Immunkomplexe (Altfrage 2012, 2024).' },
-  { id: 'k10-t10', sec: '10.1', p: 32, type: 'tf', a: true, q: 'Die diabetische Nephropathie ist die häufigste Ursache der terminalen Niereninsuffizienz.', ex: 'Diabetische Nephropathie = häufigste Ursache der terminalen NI.' },
-  { id: 'k10-t11', sec: '10.1', p: 33, type: 'tf', a: false, q: 'Beim Goodpasture-Syndrom zeigt die Immunfluoreszenz granuläre Ablagerungen.', ex: 'Goodpasture: lineare IgG-Fluoreszenz. Granulär → Immunkomplexe.' },
-  { id: 'k10-t12', sec: '10.1', p: 33, type: 'tf', a: false, q: 'Das Goodpasture-Syndrom betrifft v. a. ältere Frauen.', ex: 'Goodpasture: Männer > Frauen, junge Männer < 40 J.' },
   { id: 'k10-t13', sec: '10.1', p: 33, type: 'tf', a: true, q: 'Unbehandelt verläuft das Goodpasture-Syndrom in ca. 90 % letal.', ex: 'Goodpasture: unbehandelt ~90 % letal.' },
-  { id: 'k10-t14', sec: '10.1', p: 32, type: 'tf', a: true, q: 'Beim nephrotischen Syndrom besteht durch AT-III-Verlust eine Thromboseneigung.', ex: 'Nephrotisch: Thromboseneigung (AT-III-Verlust), Infektanfälligkeit (IgG-Verlust), Vitamin-D-Mangel.' },
-  { id: 'k10-t15', sec: '10.1', p: 32, type: 'tf', a: false, q: 'Die membranöse GN ist die häufigste Ursache des nephrotischen Syndroms bei Kindern.', ex: 'Bei Kindern Minimal Change; die membranöse GN ist bei Erwachsenen am häufigsten.' },
-  { id: 'k10-t16', sec: '10.1', p: 32, type: 'tf', a: true, q: 'Die MPGN Typ I zeigt Doppelkonturen der Basalmembran.', ex: 'MPGN Typ I: Immunkomplexe (HCV/HBV), Doppelkonturen der GBM, C3 ↓.' },
   { id: 'k10-t17', sec: '10.1', p: 32, type: 'tf', a: false, q: 'Die pauci-immune RPGN (Typ III) ist typischerweise ANCA-negativ.', ex: 'RPGN Typ III: pauci-immun, ANCA (GPA c-ANCA, MPA p-ANCA).' },
-  { id: 'k10-t18', sec: '10.2', p: 33, type: 'tf', a: true, q: 'Die aszendierende Pyelonephritis betrifft Frauen etwa 3-mal häufiger.', ex: 'Aszendierend: Frauen 3 : 1.' },
   { id: 'k10-t19', sec: '10.2', p: 33, type: 'tf', a: false, q: 'Bei der akuten eitrigen Pyelonephritis kommt es typischerweise zur Glomerulosklerose.', ex: 'Die Glomeruli bleiben verschont (Altfrage 2018, 2022).' },
   { id: 'k10-t20', sec: '10.2', p: 33, type: 'tf', a: true, q: 'Leukozytenzylinder sind typisch für die akute Pyelonephritis.', ex: 'Granulozyten interstitiell und intratubulär (Leukozytenzylinder).' },
   { id: 'k10-t21', sec: '10.2', p: 33, type: 'tf', a: false, q: 'Die akute Pyelonephritis ist meist viral bedingt.', ex: 'Die Pyelonephritis ist bakteriell (Altfrage 2019).' },
-  { id: 'k10-t22', sec: '10.2', p: 33, type: 'tf', a: true, q: 'Die chronische Pyelonephritis macht ca. 20 % aller chronischen Niereninsuffizienzen aus.', ex: 'Chronische Pyelonephritis: ~20 % aller chronischen NI.' },
   { id: 'k10-t23', sec: '10.2', p: 33, type: 'tf', a: true, q: 'Die xanthogranulomatöse Pyelonephritis ist eine Differenzialdiagnose des Nierenzellkarzinoms.', ex: 'Xanthogranulomatöse Pyelonephritis: Schaumzellen, Abszesse (DD NZK).' },
-  { id: 'k10-t24', sec: '10.2', p: 33, type: 'tf', a: false, q: 'Die „Kittniere“ ist eine Folge der chronischen E.-coli-Pyelonephritis.', ex: 'Kittniere = Nierentuberkulose (eingedicktes Nekrosematerial).' },
-  { id: 'k10-t25', sec: '10.2', p: 33, type: 'tf', a: true, q: 'Die Analgetikanephropathie (Phenacetin) erhöht das Risiko für ein Urothelkarzinom des Nierenbeckens.', ex: 'Analgetikanephropathie: Papillennekrosen, Urothel-Ca des Nierenbeckens.' },
   { id: 'k10-t26', sec: '10.3', p: 34, type: 'tf', a: false, q: 'Bei der Hydronephrose bilden sich Nierenrindenzysten.', ex: 'Die Hydronephrose verursacht keine Rindenzysten (Altfrage 2012, 2016, 2020).' },
-  { id: 'k10-t27', sec: '10.3', p: 33, type: 'tf', a: true, q: 'Die einfache Nierenzyste ist meist ein gutartiger Zufallsbefund ohne OP-Indikation.', ex: 'Einfache Nierenzyste: häufig, gutartig, echofrei mit dorsaler Schallverstärkung, meist ohne OP-Indikation.' },
-  { id: 'k10-t28', sec: '10.3', p: 33, type: 'tf', a: false, q: 'Die ARPKD (Potter I) ist die Erwachsenenform der Zystennieren.', ex: 'Potter I = ARPKD = infantile Form; Erwachsenentyp = ADPKD (Potter III).' },
   { id: 'k10-t29', sec: '10.3', p: 33, type: 'tf', a: true, q: 'Die ADPKD ist mit Hirnbasisaneurysmen assoziiert.', ex: 'ADPKD: Leberzysten, Hirnbasisaneurysmen (SAB), Hypertonie.' },
-  { id: 'k10-t30', sec: '10.3', p: 33, type: 'tf', a: false, q: 'Die multizystische Nierendysplasie geht typischerweise mit Leberzysten einher.', ex: 'Potter II: meist einseitig, keine Leberbeteiligung.' },
-  { id: 'k10-t31', sec: '10.3', p: 34, type: 'tf', a: true, q: 'Erworbene Nierenzysten bei Langzeitdialyse erhöhen das NZK-Risiko.', ex: 'Erworbene Zysten bei Langzeitdialyse → NZK-Risiko ↑.' },
-  { id: 'k10-t32', sec: '10.3', p: 34, type: 'tf', a: false, q: 'Die Markschwammniere ist eine erbliche Erkrankung.', ex: 'Markschwammniere: angeboren, aber nicht erblich.' },
   { id: 'k10-t33', sec: '10.4', p: 34, type: 'tf', a: false, q: 'Cholesterin ist ein häufiger Bestandteil von Nierensteinen.', ex: 'Nierensteine bestehen nie aus Cholesterin (Altfrage 2009, 2022–2024).' },
   { id: 'k10-t34', sec: '10.4', p: 34, type: 'tf', a: true, q: 'Kalziumoxalatsteine sind mit ca. 70–75 % am häufigsten.', ex: 'Kalziumoxalat ~70–75 %.' },
   { id: 'k10-t35', sec: '10.4', p: 34, type: 'tf', a: true, q: 'Harnsäuresteine sind röntgennegativ.', ex: 'Harnsäure/Urat: röntgennegativ; Gicht, Zellzerfall.' },
-  { id: 'k10-t36', sec: '10.4', p: 34, type: 'tf', a: false, q: 'Struvitsteine bestehen aus Kalziumoxalat.', ex: 'Struvit = Magnesium-Ammonium-Phosphat (Infektsteine durch Proteus).' },
-  { id: 'k10-t37', sec: '10.4', p: 34, type: 'tf', a: true, q: 'Der anämische Niereninfarkt entsteht meist embolisch.', ex: 'Anämischer Niereninfarkt: meist embolisch (Vorhofflimmern, Endokarditis).' },
-  { id: 'k10-t38', sec: '10.4', p: 34, type: 'tf', a: false, q: 'Die benigne Nephrosklerose zeigt fibrinoide Arteriolonekrosen.', ex: 'Fibrinoide Arteriolonekrosen → maligne Nephrosklerose. Benigne: hyaline Arteriolosklerose.' },
   { id: 'k10-t39', sec: '10.4', p: 34, type: 'tf', a: true, q: 'Bei der Schockniere findet sich eine akute Tubulusnekrose.', ex: 'Schockniere: blasse geschwollene Rinde, dunkelrotes Mark, akute Tubulusnekrose.' },
-  { id: 'k10-t40', sec: '10.4', p: 34, type: 'tf', a: false, q: 'Bei chronischer Niereninsuffizienz steigt die EPO-Produktion.', ex: 'Chronische NI: renale Anämie durch EPO ↓.' },
-  { id: 'k10-t41', sec: '10.5', p: 34, type: 'tf', a: true, q: 'Das Nierenzellkarzinom ist das dritthäufigste urologische Malignom.', ex: 'NZK: dritthäufigstes urologisches Malignom nach Prostata und Harnblase.' },
   { id: 'k10-t42', sec: '10.5', p: 34, type: 'tf', a: false, q: 'Das papilläre NZK ist der häufigste Typ.', ex: 'Klarzellig 70–80 %, papillär ~10–15 % (Altfrage 2008).' },
   { id: 'k10-t43', sec: '10.5', p: 34, type: 'tf', a: true, q: 'Das klarzellige NZK entsteht aus dem proximalen Tubulus.', ex: 'Klarzelliges NZK: proximaler Tubulus, VHL-Inaktivierung (3p25).' },
-  { id: 'k10-t44', sec: '10.5', p: 34, type: 'tf', a: false, q: 'Das chromophobe NZK entsteht aus dem proximalen Tubulus.', ex: 'Chromophobes NZK: Schaltzellen (distaler Tubulus/Sammelrohr).' },
-  { id: 'k10-t45', sec: '10.5', p: 34, type: 'tf', a: true, q: 'Kleine papilläre Nierentumoren (< 15 mm, low grade) gelten als papilläres Adenom.', ex: 'Kleine papilläre Tumoren (< 15 mm, low grade) = papilläres Adenom (benigne).' },
-  { id: 'k10-t46', sec: '10.5', p: 34, type: 'tf', a: false, q: 'Das Ductus-Bellini-Karzinom hat eine gute Prognose.', ex: 'Ductus-Bellini-Karzinom: sehr aggressiv.' },
   { id: 'k10-t47', sec: '10.5', p: 34, type: 'tf', a: true, q: 'Das Onkozytom ist immer benigne.', ex: 'Onkozytom: immer benigne (Altfrage).' },
   { id: 'k10-t48', sec: '10.5', p: 35, type: 'tf', a: false, q: 'Das Onkozytom besteht aus kleinen basophilen Zellen.', ex: 'Onkozytom: körnig-eosinophiles, mitochondrienreiches Zytoplasma (Altfrage 2025).' },
   { id: 'k10-t49', sec: '10.5', p: 34, type: 'tf', a: true, q: 'Das Angiomyolipom ist mit der tuberösen Sklerose assoziiert.', ex: 'Angiomyolipom (PEComa): tuberöse Sklerose (TSC1/2).' },
   { id: 'k10-t50', sec: '10.5', p: 35, type: 'tf', a: false, q: 'Das Nierenzellkarzinom ist strahlen- und chemosensibel.', ex: 'Das NZK ist strahlen- und chemoresistent.' },
   { id: 'k10-t51', sec: '10.5', p: 35, type: 'tf', a: true, q: 'Das Phäochromozytom ist mit MEN2, VHL und NF1 assoziiert.', ex: 'Phäochromozytom: Erwachsene; 10er-Regel; MEN2, VHL, NF1.' },
   { id: 'k10-t52', sec: '10.5', p: 35, type: 'tf', a: false, q: 'Der Wilms-Tumor liegt typischerweise in der Nebenniere.', ex: 'Der Wilms-Tumor liegt in der Niere (Altfrage 2008, 2024, 2025).' },
-  { id: 'k10-t53', sec: '10.5', p: 35, type: 'tf', a: true, q: 'Nebennierenmetastasen stammen v. a. vom kleinzelligen Bronchialkarzinom, Mamma- und Melanom.', ex: 'Metastasen in der NN: v. a. kleinzelliges Bronchial-Ca, Mamma, Melanom.' }
 ]);
