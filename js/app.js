@@ -617,7 +617,10 @@
     S.record(q.id, res.correct, Q.points(res.score));
     // Wrong → the same question once more a few questions later (except in the exam)
     // Wrong answers come back later (next lesson), not in the same round – except in the exam they are only recorded
-    if (!res.correct && s.mode !== 'exam') res.back = s.origin && s.origin.kind === 'smart' ? 'Kommt in der nächsten Runde nochmal.' : 'Kommt bald nochmal dran.';
+    if (!res.correct && s.mode !== 'exam') {
+      const firstPass = PQ.questions.some(x => !S.get(x.id));
+      res.back = firstPass ? 'Kommt im Wiederholungsprogramm nochmal.' : s.origin && s.origin.kind === 'smart' ? 'Kommt in der nächsten Runde nochmal.' : 'Kommt bald nochmal dran.';
+    }
     res.fixed = res.correct && !!before && before.b === 1;
     if (res.fixed) count('fixed');
     trackTime(s, q);
@@ -717,18 +720,30 @@
     return say(pick(['Weiter geht’s, {n}!', 'Lass uns weiterkreuzen, {n}!', 'Du machst das großartig, {n}.', 'Jede gekreuzte Frage bringt dich näher ans Ziel.', 'Ich bin stolz auf dich, {n}!']));
   }
 
-  // Phase of the plan: first see everything once, then consolidate mistakes and shaky ones
+  // Goal of the first pass: the evening two days before the exam (Saturday for a Monday exam)
+  function deadline() {
+    const days = daysUntilExam();
+    if (days === null || days < 2) return null;
+    if (days === 2) return 'bis heute Abend';
+    const d = new Date();
+    d.setHours(12, 0, 0, 0);
+    d.setDate(d.getDate() + days - 2);
+    return 'bis ' + ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'][d.getDay()] + 'abend';
+  }
+
+  // Phase of the plan: first every question once, then the review programme
   function planSummary(p) {
     const seenPct = Math.round(((p.total - p.fresh) / p.total) * 100);
     if (p.fresh) {
+      const until = deadline();
       return { title: 'Noch ' + plural(p.fresh, 'neue Frage', 'neue Fragen'), pct: seenPct,
-        meta: seenPct + ' % einmal gekreuzt · noch ca. ' + fmtDuration(p.minutes) };
+        meta: (until ? 'Ziel: ' + until + ' alles einmal kreuzen' : seenPct + ' % einmal gekreuzt') + ' · noch ca. ' + fmtDuration(p.minutes) };
     }
     if (p.mistakes + p.shaky) {
       const knownPct = Math.round(((p.total - p.mistakes - p.shaky) / p.total) * 100);
-      return { title: 'Alles einmal gekreuzt!', pct: knownPct,
+      return { title: 'Wiederholungsprogramm', pct: knownPct,
         meta: [p.mistakes ? plural(p.mistakes, 'Fehler', 'Fehler') : null, p.shaky ? p.shaky + ' wackelige' : null].filter(Boolean).join(' + ') +
-          ' festigen · ca. ' + fmtDuration(p.reviewMinutes) };
+          ' wiederholen · ca. ' + fmtDuration(p.reviewMinutes) };
     }
     return { title: 'Alles sitzt!', pct: 100, meta: 'Jetzt Altfragen wiederholen oder die Klausur simulieren.' };
   }
@@ -743,7 +758,7 @@
       d.setHours(12, 0, 0, 0);
       d.setDate(d.getDate() + i);
       const left = days - i;
-      const task = left === 0 ? 'Klausur' : left === 1 && days > 1 ? 'Festigen' : p.fresh ? (left === 2 || days <= 2 ? 'Alles einmal' : 'Neues lernen') : 'Festigen';
+      const task = left === 0 ? 'Klausur' : left === 1 && days > 1 ? 'Wiederholen' : p.fresh ? (left === 2 || days <= 2 ? 'Alles einmal' : 'Neues lernen') : 'Wiederholen';
       cells.push(h('div', { class: 'plan-day' + (i === 0 ? ' today' : '') + (left === 0 ? ' exam' : '') },
         h('span', { class: 'plan-name' }, i === 0 ? 'Heute' : names[d.getDay()]),
         h('span', { class: 'plan-task' }, task),
@@ -777,7 +792,7 @@
         h('button', { class: 'hero-link', onclick: () => { abortSession(); renderHome(); } },
           MODE_TITLE[saved.mode] + ' ' + answeredCount(saved) + '/' + saved.ids.length + ' · verwerfen'));
     } else {
-      const label = p.fresh ? (today ? 'Weiterlernen' : 'Los geht’s') : p.mistakes + p.shaky ? 'Festigen' : 'Extra-Runde';
+      const label = p.fresh ? (today ? 'Weiterlernen' : 'Los geht’s') : p.mistakes + p.shaky ? 'Wiederholen' : 'Extra-Runde';
       actions.push(h('button', { class: 'btn btn-hero', onclick: startSmart }, icon('play'), label));
       // Mistakes come back mixed into the lessons; practicing them on their own stays possible without a big number
       if (p.fresh && p.mistakes) actions.push(h('button', { class: 'hero-link', onclick: startReview }, icon('repeat'), 'Lieber erst Fehler üben'));
@@ -1614,7 +1629,9 @@
     const moments = [];
     if (r.newOutfit) {
       const o = OUTFITS[r.newOutfit - 1];
-      moments.push(['Zelli hat ' + o.name + ' bekommen!', say(Math.round(o.at * 100) + ' % aller Fragen hast du schon gekreuzt. Stark, {n}!')]);
+      moments.push(['Zelli hat ' + o.name + ' bekommen!', say(o.at === 1
+        ? 'Alle Fragen einmal gekreuzt – du hast es geschafft, {n}! Ab jetzt läuft das Wiederholungsprogramm.'
+        : Math.round(o.at * 100) + ' % aller Fragen hast du schon gekreuzt. Stark, {n}!')]);
     }
     const chapters = newBadges.filter(b => b.chapter);
     if (chapters.length) {

@@ -4,7 +4,7 @@
    Questions are added by the chapter files via PQ.registerChapter(). */
 window.PQ = window.PQ || {};
 
-PQ.VERSION = 'Plus 2.2 · Kapitel 1–17';
+PQ.VERSION = 'Plus 2.3 · Kapitel 1–17';
 
 PQ.chapters = [
   {

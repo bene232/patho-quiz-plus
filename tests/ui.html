@@ -113,10 +113,10 @@
     ok($('.logo') && $('.hero .mascot'), 'Startseite mit Maskottchen');
     ok($('.hero-kicker') && $('.hero-kicker').textContent === 'Noch 3 Tage bis zur Klausur', 'Countdown: ' + ($('.hero-kicker') && $('.hero-kicker').textContent));
     ok(/Mia/.test($('.bubble').textContent), 'Begrüßung mit Namen: ' + $('.bubble').textContent);
-    ok($('.hero-title').textContent === 'Noch ' + PQ.questions.length + ' neue Fragen' && /^0 % einmal gekreuzt · noch ca\. \d+ h/.test($('.hero-meta').textContent),
+    ok($('.hero-title').textContent === 'Noch ' + PQ.questions.length + ' neue Fragen' && /^Ziel: bis [A-Za-z]+abend alles einmal kreuzen · noch ca\. \d+ h/.test($('.hero-meta').textContent),
       'Plan: ' + $('.hero-title').textContent + ' · ' + $('.hero-meta').textContent);
     ok($$('.plan-day').length === 4 && $('.plan-day.today .plan-count').textContent === '0 gekreuzt' && $$('.plan-day')[3].classList.contains('exam') &&
-      $$('.plan-task').map(t => t.textContent).join() === 'Neues lernen,Alles einmal,Festigen,Klausur', 'Plan bis zur Klausur: ' + $$('.plan-task').map(t => t.textContent).join(' → '));
+      $$('.plan-task').map(t => t.textContent).join() === 'Neues lernen,Alles einmal,Wiederholen,Klausur', 'Plan bis zur Klausur: ' + $$('.plan-task').map(t => t.textContent).join(' → '));
     ok($$('.quick-btn').length === 3, '3 Schnellzugriffe');
     const avail = PQ.chapters.filter(c => c.available).length;
     ok($$('.tile').length === avail, avail + ' Kapitel-Kacheln');
@@ -164,7 +164,7 @@
       ok(!btn('Prüfen'), q.id + ': Prüfen-Button ersetzt');
       if (q.dis) ok($('.dis', fb), q.id + ': Hinweis „umstritten“ sichtbar');
       if (plan[i]) ok(btn('Geraten?'), q.id + ': „Geraten?“ wird angeboten');
-      else ok(/^Kommt bald nochmal dran\./.test($('.fb-cheer', fb).textContent) && session().ids.length === 8, q.id + ': Mutmach-Satz, Frage kommt später nochmal, Runde bleibt bei 8');
+      else ok(/^Kommt im Wiederholungsprogramm nochmal\./.test($('.fb-cheer', fb).textContent) && session().ids.length === 8, q.id + ': Mutmach-Satz, Frage kommt im Wiederholungsprogramm, Runde bleibt bei 8');
       cp('feedback-' + q.type + (plan[i] ? '' : '-wrong'));
       next();
       await sleep(30);
