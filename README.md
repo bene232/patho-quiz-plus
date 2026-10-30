@@ -1,6 +1,8 @@
-# Patho-Quiz
+# Patho-Quiz Plus
 
 Quiz-Web-App zur „Klinische Pathologie – Kurzfassung“. Läuft ohne Build-Schritt und ist auf dem iPhone über Safari → „Zum Home-Bildschirm“ installierbar, sobald sie über HTTPS gehostet ist (z. B. GitHub Pages).
+
+Weiterentwickelte Version von [Patho-Quiz](https://github.com/bene232/patho-quiz). Beide laufen auf bene232.github.io und teilen sich damit localStorage und Cache Storage. Plus nutzt deshalb eigene Schlüssel (`pathoquiz-plus.*`) und ein eigenes Cache-Präfix (`patho-quiz-plus-`). Den Fortschritt von Patho-Quiz liest es nur, solange es selbst noch nichts gespeichert hat.
 
 ## Lokal starten
 

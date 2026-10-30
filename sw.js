@@ -1,6 +1,8 @@
 /* Service Worker: legt alle Dateien beim Installieren in einen versionierten Cache und liefert sie offline aus.
    Bei jeder inhaltlichen Änderung CACHE hochzählen, damit Geräte die neue Version laden. */
-const CACHE = 'patho-quiz-v23';
+// Eigenes Präfix: Caches gelten für die ganze Origin, die von Patho-Quiz (patho-quiz-vNN) dürfen nicht gelöscht werden
+const PREFIX = 'patho-quiz-plus-';
+const CACHE = PREFIX + 'v1';
 const ART = [
   'microscope', 'shield', 'cells', 'heart', 'vessel', 'lungs', 'stomach', 'colon', 'liver', 'kidney', 'drop',
   'thyroid', 'ribbon', 'uterus', 'bone', 'brain', 'tooth', 'bolt', 'stopwatch', 'chart', 'trophy', 'medal',
@@ -46,7 +48,7 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then(keys => Promise.all(keys.filter(k => k.startsWith(PREFIX) && k !== CACHE).map(k => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });

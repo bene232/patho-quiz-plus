@@ -2,8 +2,11 @@
 (function () {
   'use strict';
 
-  const KEY = 'pathoquiz.v1';
-  const SESSION_KEY = 'pathoquiz.session';
+  // Plus läuft unter derselben Origin (bene232.github.io) wie Patho-Quiz, daher eigene Schlüssel.
+  // MAIN_KEY wird nur gelesen: Solange Plus noch nichts gespeichert hat, startet es mit dem Fortschritt aus Patho-Quiz.
+  const KEY = 'pathoquiz-plus.v1';
+  const SESSION_KEY = 'pathoquiz-plus.session';
+  const MAIN_KEY = 'pathoquiz.v1';
   const DAY = 86400000;
   // Wiedervorlage in Tagen je Box: Box 1 sofort, Box 2 nach 1 Tag, … Box 5 nach 21 Tagen
   const INTERVAL_DAYS = [0, 0, 1, 3, 7, 21];
@@ -17,7 +20,7 @@
 
   function load() {
     try {
-      const raw = localStorage.getItem(KEY);
+      const raw = localStorage.getItem(KEY) || localStorage.getItem(MAIN_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);
         const base = blank();

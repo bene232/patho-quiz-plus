@@ -4,7 +4,7 @@
    Fragen werden von den Kapiteldateien über PQ.registerChapter() eingetragen. */
 window.PQ = window.PQ || {};
 
-PQ.VERSION = '1.16 · Kapitel 1–17';
+PQ.VERSION = 'Plus 1.0 · Kapitel 1–17';
 
 PQ.chapters = [
   {
