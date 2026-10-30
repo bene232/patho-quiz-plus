@@ -206,29 +206,29 @@
   S.importData(code2);
   ok(S.setting('name') === 'Testname', 'Import aus Patho-Quiz behält den Namen');
 
-  // Many old mistakes: the lesson stays mostly new, reviews spread out and never first
+  // Many mistakes: a lesson of 30 stays mostly new (21), the 9 reviews are spread out and never first
   S.reset();
-  PQ.questions.filter(q => q.chapter === 7).forEach(q => S.record(q.id, false, 0));
-  const lesson = Q.smartLesson(10);
+  const ch7 = PQ.questions.filter(q => q.chapter === 7);
+  ch7.forEach(q => S.record(q.id, false, 0));
+  const lesson = Q.smartLesson(30);
   const reviews = lesson.map((q, i) => (S.get(q.id) ? i : -1)).filter(i => i >= 0);
-  ok(lesson.length === 10 && reviews.length === 3 && reviews[0] > 0 && reviews.every((p, i) => !i || p - reviews[i - 1] > 1),
-    'Lektion: 7 neue, 3 Wiederholungen verteilt (Positionen ' + reviews.join(', ') + ')');
+  ok(lesson.length === 30 && reviews.length === 9 && reviews[0] > 0 && reviews.every((p, i) => !i || p - reviews[i - 1] > 1),
+    'Lektion: 21 neue, 9 Wiederholungen verteilt (Positionen ' + reviews.join(', ') + ')');
   const p = Q.plan();
-  ok(p.fresh === PQ.questions.filter(q => !S.get(q.id)).length && p.mistakes === PQ.questions.filter(q => q.chapter === 7).length && p.minutes > 0,
+  ok(p.fresh === PQ.questions.filter(q => !S.get(q.id)).length && p.mistakes === ch7.length && p.minutes > 0,
     'Plan: ' + p.fresh + ' neu, ' + p.mistakes + ' Fehler, ca. ' + p.minutes + ' min');
 
-  // Everything seen: mistakes at most 4 per lesson
-  PQ.questions.forEach(q => { if (!S.get(q.id)) S.record(q.id, true, 0); });
-  const review = Q.smartLesson(10);
-  ok(review.length === 10 && review.filter(q => S.isMistake(q.id)).length === 4, 'Alles gesehen: höchstens 4 Fehler pro Lektion');
+  // Mistakes of the last round come back first in the next lesson, older ones still get a share
+  ch7.slice(10).forEach(q => { S.get(q.id).t = Date.now() - 5 * 3600000; });
+  const next = Q.smartLesson(30).filter(q => S.isMistake(q.id));
+  const recentIds = new Set(ch7.slice(0, 10).map(q => q.id));
+  ok(next.length === 9 && next.filter(q => recentIds.has(q.id)).length === 6,
+    'Nächste Lektion: 6 Fehler der letzten Runde + 3 ältere Fehler');
 
-  // Wrong answer → same question once more 3 questions later, with a new answer order
-  const five = PQ.questions.filter(q => q.chapter === 4 && q.type === 'single').slice(0, 5);
-  const sess = Q.createSession('practice', five);
-  ok(Q.requeue(sess, 0) && sess.ids.length === 6 && sess.ids[4] === five[0].id && sess.views[4].again && sess.results[4] === null,
-    'Falsch → kommt nach 3 anderen Fragen nochmal');
-  ok(!Q.requeue(sess, 0) && !Q.requeue(sess, 4), 'Pro Runde nur eine Wiederholung je Frage');
-  ok(Q.requeue(sess, 5) && sess.ids.length === 7 && sess.ids[6] === five[4].id, 'Am Rundenende: Wiederholung wird angehängt');
+  // Everything seen: at most 40 % mistakes per lesson
+  PQ.questions.forEach(q => { if (!S.get(q.id)) S.record(q.id, true, 0); });
+  const review = Q.smartLesson(30);
+  ok(review.length === 30 && review.filter(q => S.isMistake(q.id)).length === 12, 'Alles gesehen: höchstens 12 von 30 Fehlern pro Lektion');
   S.reset();
 
   S.saveSession({ mode: 'practice', ids: ['k4-01'] });

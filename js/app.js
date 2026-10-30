@@ -7,7 +7,8 @@
   const root = document.getElementById('app');
   const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
   const ALL_TYPES = ['single', 'kprim', 'tf'];
-  const LESSON_SIZE = 10;
+  const LESSON_SIZE = 30;
+  const REVIEW_SIZE = 10; // „Fehler üben“ (practice mistakes) in small bites
   const MODE_TITLE = { practice: 'Üben', review: 'Wiederholen', exam: 'Klausur', blitz: 'Blitzrunde' };
   const PRAISE = ['Richtig!', 'Stark!', 'Genau!', 'Sitzt!', 'Super!', 'Klasse!', 'Perfekt!'];
   const MILESTONES = [3, 5, 10, 15, 20, 30];
@@ -543,7 +544,7 @@
 
   // Small bites, so a long list of mistakes doesn't discourage
   function startReview() {
-    startSession('review', Q.reviewPool().slice(0, LESSON_SIZE), { origin: { kind: 'review' } });
+    startSession('review', Q.reviewPool().slice(0, REVIEW_SIZE), { origin: { kind: 'review' } });
   }
 
   function startSection(sec) {
@@ -615,7 +616,8 @@
     s.bestCombo = Math.max(s.bestCombo, s.combo);
     S.record(q.id, res.correct, Q.points(res.score));
     // Wrong → the same question once more a few questions later (except in the exam)
-    if (!res.correct && s.mode !== 'exam') res.again = Q.requeue(s, s.idx);
+    // Wrong answers come back later (next lesson), not in the same round – except in the exam they are only recorded
+    if (!res.correct && s.mode !== 'exam') res.back = s.origin && s.origin.kind === 'smart' ? 'Kommt in der nächsten Runde nochmal.' : 'Kommt bald nochmal dran.';
     res.fixed = res.correct && !!before && before.b === 1;
     if (res.fixed) count('fixed');
     trackTime(s, q);
@@ -1171,11 +1173,12 @@
     kprim: 'K-prim · jede Aussage einzeln bewerten'
   };
 
-  function questionHead(q, view) {
+  // repeat: the question was answered wrong last time (shows „Nochmal“)
+  function questionHead(q, repeat) {
     const ch = chapterOf(q);
     return h('div', { class: 'q-head' },
       h('div', { class: 'q-meta' },
-        view && view.again ? h('span', { class: 'q-chip q-again' }, icon('repeat'), 'Nochmal') : null,
+        repeat ? h('span', { class: 'q-chip q-again' }, icon('repeat'), 'Nochmal') : null,
         h('span', { class: 'q-chip' }, art(ch.art, 'art-xs'), sectionTitle(q.sec)),
         q.alt ? h('span', { class: 'q-chip q-alt' }, art('scroll', 'art-xs'), 'Altfrage ' + q.alt) : null),
       q.type === 'tf'
@@ -1202,7 +1205,7 @@
   // Line under the title in the feedback sheet: comfort after mistakes, now and then praise
   function cheerLine(res) {
     if (res.correct) return Math.random() < 0.35 ? say(pick(CHEER_OK)) : null;
-    return (res.again ? 'Kommt gleich nochmal. ' : '') + say(pick(CHEER_BAD));
+    return (res.back ? res.back + ' ' : '') + say(pick(CHEER_BAD));
   }
 
   /* Feedback: as a bar at the bottom (onNext set) or embedded in the results.
@@ -1224,7 +1227,7 @@
     const cheer = cheerLine(res);
     const guess = onGuess && res.correct ? h('button', {
       class: 'fb-guess',
-      onclick: () => { onGuess(); guess.disabled = true; guess.textContent = 'Kommt gleich nochmal'; }
+      onclick: () => { onGuess(); guess.disabled = true; guess.textContent = 'Kommt später nochmal'; }
     }, 'Geraten?') : null;
     return h('section', { class: 'fb sheet ' + tone, 'aria-live': 'polite' },
       h('div', { class: 'sheet-inner' },
@@ -1266,7 +1269,9 @@
     const exam = s.mode === 'exam';
     const q = PQ.byId[s.ids[s.idx]];
     const view = s.views[s.idx];
-    // A wrong answer adds the question once more (Q.requeue), so length and end can change during the round
+    // A question answered wrong last time (e.g. in the previous lesson) is marked and announced by Zelli
+    const repeat = !exam && (!!view.again || (!s.results[s.idx] && S.isMistake(q.id)));
+    // Older saved rounds may still contain repeated questions, so length and end are read from the round
     const total = () => s.ids.length;
     const last = () => s.idx === s.ids.length - 1;
     let result = exam ? null : s.results[s.idx];
@@ -1300,13 +1305,9 @@
     }
     updateCount();
 
-    // „Geraten?“ (guessed): counts as shaky and comes back in this round
+    // „Geraten?“ (guessed): counts as shaky and comes back in a later round
     function guessed() {
       S.markGuessed(q.id);
-      Q.requeue(s, s.idx);
-      persist();
-      updateCount();
-      if (primary) primary.textContent = last() ? 'Zur Auswertung' : 'Weiter';
     }
 
     const head = h('header', { class: 'quiz-top' },
@@ -1366,7 +1367,7 @@
       ctx.repaint();
       updateCount();
       track.set((doneCount() / total()) * 100, moodOf(result));
-      if (result.correct && (view.again || result.fixed)) track.say(view.again ? 'Diesmal sitzt’s!' : 'Fehler ausgebügelt!');
+      if (result.fixed) track.say('Fehler ausgebügelt!');
       combo.classList.toggle('hidden', s.combo < 2);
       combo.lastChild.textContent = s.combo;
       showSheet();
@@ -1392,13 +1393,13 @@
     }
 
     refreshFooter();
-    main.append(head, navGrid || '', questionHead(q, view), answer, footer);
+    main.append(head, navGrid || '', questionHead(q, repeat), answer, footer);
     mount(main);
     if (result) showSheet();
     else if (!exam) {
       // Zelli comments on the start, the middle and the end of a round and on a question that comes back
       const n = total();
-      const remark = view.again ? 'Die kennst du schon – diesmal klappt’s!'
+      const remark = repeat ? 'Die kennst du schon – diesmal klappt’s!'
         : s.idx === 0 ? say(pick(['Los geht’s!', 'Ab ans Kreuzen!', 'Auf geht’s, {n}!', 'Lass uns kreuzen, {n}!', 'Du schaffst das!']))
           : n >= 8 && s.idx === Math.floor(n / 2) ? 'Halbzeit!'
             : n >= 5 && last() ? 'Letzte Frage!' : null;
@@ -1432,7 +1433,7 @@
   function renderBlitz() {
     const s = restoreSession();
     if (!s || s.mode !== 'blitz') { go('#/'); return; }
-    const total = s.ids.length; // fixed for this card; a wrong answer may add the statement again (Q.requeue)
+    const total = s.ids.length;
     const q = PQ.byId[s.ids[s.idx]];
     const ch = chapterOf(q);
     const done = s.results.filter(r => r !== null).length;
@@ -1557,7 +1558,7 @@
         onclick: () => {
           if (!detail.childElementCount) {
             const ctx = { value: clone(r.responses[i]), locked: true, solved: true, onChange: () => {} };
-            detail.append(questionHead(q, r.views[i]), RENDERERS[q.type](q, r.views[i], ctx), feedback(q, res));
+            detail.append(questionHead(q, false), RENDERERS[q.type](q, r.views[i], ctx), feedback(q, res));
           }
           detail.hidden = !detail.hidden;
           row.setAttribute('aria-expanded', String(!detail.hidden));

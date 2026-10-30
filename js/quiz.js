@@ -5,8 +5,11 @@
   const TYPE_LABEL = { single: 'Einfachauswahl', kprim: 'K-prim', tf: 'Richtig/Falsch' };
   // Seconds per question incl. reading the explanation, until the measured pace (pref „pace“) takes over
   const PACE = { single: 40, kprim: 60, tf: 18 };
-  // A wrong answer comes back after this many other questions in the same round
-  const AGAIN_GAP = 3;
+  // Share of reviews in a lesson while new questions remain, and the cap on mistakes once everything has been seen
+  const REVIEW_SHARE = 0.3;
+  const MISTAKE_SHARE = 0.4;
+  // Mistakes from the last 3 hours (i.e. the last rounds) come back first, in the next lesson
+  const RECENT = 3 * 3600000;
 
   function shuffle(arr) {
     const a = arr.slice();
@@ -130,25 +133,39 @@
     return out;
   }
 
-  /* „Weiterlernen“ (continue learning). While new questions remain: 7 new, 2 mistakes or shaky ones and
-     1 question to consolidate – old mistakes come back spread out instead of all at once.
-     When everything has been seen: at most 4 mistakes, filled up with shaky, due and then extra practice of what sits,
-     so a lesson never turns into a long row of mistakes. */
+  /* „Weiterlernen“ (continue learning). Wrong answers don't come back in the same round but in the next one,
+     when the answer is no longer in short-term memory.
+     While new questions remain: 70 % new, 30 % reviews – first the mistakes of the last rounds (up to two thirds of
+     the reviews), then older mistakes and shaky ones taking turns and one question to consolidate. Old mistakes
+     thus come back spread out instead of all at once.
+     When everything has been seen: at most 40 % mistakes, filled up with shaky, due and then extra practice of
+     what sits, so a lesson never turns into a long row of mistakes. */
   function smartLesson(size) {
-    const qs = queues();
+    const now = Date.now();
+    const qs = queues(now);
     const fresh = freshInOrder();
-    // Mistakes and shaky ones take turns, so both get their share
+    const isRecent = q => now - (PQ.store.get(q.id).t || 0) < RECENT;
+    const recent = qs.mistakes.filter(isRecent).reverse();
+    const older = qs.mistakes.filter(q => !isRecent(q));
+    // Older mistakes and shaky ones take turns, so both get their share
     const weak = [];
-    for (let i = 0; i < Math.max(qs.mistakes.length, qs.shaky.length); i++) weak.push(qs.mistakes[i], qs.shaky[i]);
+    for (let i = 0; i < Math.max(older.length, qs.shaky.length); i++) weak.push(older[i], qs.shaky[i]);
     const weakList = weak.filter(Boolean);
     if (fresh.length) {
-      const pool = weakList.slice(0, 2).concat(qs.due.slice(0, 1), weakList.slice(2), qs.due.slice(1));
-      const nFresh = Math.min(fresh.length, size - Math.min(3, pool.length));
+      const nReview = Math.round(size * REVIEW_SHARE);
+      const nRecent = Math.ceil(nReview * 2 / 3);
+      const k = nReview - nRecent;
+      // The rest of the reviews: older mistakes / shaky ones and one question to consolidate
+      const others = weakList.slice(0, k - 1).concat(qs.due.slice(0, 1), weakList.slice(k - 1), qs.due.slice(1));
+      const pool = recent.slice(0, nRecent).concat(others.slice(0, k), recent.slice(nRecent), others.slice(k));
+      const nFresh = Math.min(fresh.length, size - Math.min(nReview, pool.length));
       // Questions not yet due only fill up when the new ones run out
       return interleave(shuffle(fresh.slice(0, nFresh)), shuffle(pool.concat(qs.later).slice(0, size - nFresh)));
     }
-    const lesson = qs.mistakes.slice(0, 4);
-    const rest = qs.shaky.concat(qs.due, qs.later, qs.mistakes.slice(4));
+    const cap = Math.round(size * MISTAKE_SHARE);
+    const mistakes = recent.concat(older);
+    const lesson = mistakes.slice(0, cap);
+    const rest = qs.shaky.concat(qs.due, qs.later, mistakes.slice(cap));
     while (lesson.length < size && rest.length) lesson.push(rest.shift());
     return shuffle(lesson);
   }
@@ -159,15 +176,15 @@
     return list.reduce((a, q) => a + (pace[q.type] || 30), 0);
   }
 
-  // Remaining plan with estimated minutes: until everything has been seen once (about a third of the new questions
-  // comes back once in the same round, see AGAIN_GAP), and for consolidating the mistakes and shaky ones
+  // Remaining plan with estimated minutes: until everything has been seen once (new questions are 70 % of each
+  // lesson, see REVIEW_SHARE), and for consolidating the mistakes and shaky ones
   function plan() {
     const qs = queues();
     const fresh = PQ.questions.filter(q => !PQ.store.get(q.id));
     const shaky = PQ.questions.filter(q => PQ.store.isShaky(q.id));
     return {
       total: PQ.questions.length, fresh: fresh.length, mistakes: qs.mistakes.length, shaky: shaky.length,
-      minutes: Math.round(seconds(fresh) * 1.33 / 60),
+      minutes: Math.round(seconds(fresh) / (1 - REVIEW_SHARE) / 60),
       reviewMinutes: Math.round((seconds(qs.mistakes) * 1.2 + seconds(shaky)) / 60)
     };
   }
@@ -189,19 +206,6 @@
       bestCombo: 0,
       started: Date.now()
     }, extra || {});
-  }
-
-  // Ask the question at position idx once more later in the same round (with new answer order).
-  // Only once per question and round, so nobody gets stuck in a loop.
-  function requeue(s, idx) {
-    const id = s.ids[idx];
-    if (s.views[idx].again || s.ids.indexOf(id, idx + 1) >= 0) return false;
-    const pos = Math.min(idx + 1 + AGAIN_GAP, s.ids.length);
-    s.ids.splice(pos, 0, id);
-    s.views.splice(pos, 0, Object.assign(makeView(PQ.byId[id]), { again: true }));
-    s.responses.splice(pos, 0, null);
-    s.results.splice(pos, 0, null);
-    return true;
   }
 
   function isComplete(q, r) {
@@ -235,6 +239,6 @@
 
   PQ.quiz = {
     TYPE_LABEL, PACE, shuffle, filter, prioritize, take, bySection, queues, reviewPool, mastery, isOpen, progress,
-    smartLesson, seconds, plan, createSession, requeue, isComplete, evaluate, points
+    smartLesson, seconds, plan, createSession, isComplete, evaluate, points
   };
 })();
