@@ -143,16 +143,20 @@
   }
 
   /* Review programme, decided by the user for the last day before the exam: only open mistakes and open guesses, so it
-     gets shorter with every right answer. Mistakes of the last rounds first, then due guesses, then older mistakes;
-     guesses of the last 3 hours only when nothing else is left. Once all are done: extra rounds of questions once
-     answered wrong. */
+     gets shorter with every right answer. Mistakes of the last rounds first, then due guesses, then older mistakes by
+     exam relevance (past exam questions, then ★★★, ★★, the rest; oldest first), so whenever she stops the most
+     important ones are done; guesses of the last 3 hours only when nothing else is left. Once all are done: extra
+     rounds of questions once answered wrong. */
   function reviewLesson(size) {
     const now = Date.now();
     const qs = queues(now);
     const isRecent = q => now - (PQ.store.get(q.id).t || 0) < RECENT;
     const guessed = q => PQ.store.isGuessed(q.id);
+    const rank = q => (q.alt ? 4 : 0) + (q.stars || 0);
+    const older = qs.mistakes.filter(q => !isRecent(q))
+      .sort((a, b) => rank(b) - rank(a) || (PQ.store.get(a.id).t || 0) - (PQ.store.get(b.id).t || 0));
     const open = qs.mistakes.filter(isRecent).reverse()
-      .concat(qs.shaky.filter(guessed), qs.mistakes.filter(q => !isRecent(q)), qs.waiting.filter(guessed));
+      .concat(qs.shaky.filter(guessed), older, qs.waiting.filter(guessed));
     if (open.length) return shuffle(open.slice(0, size));
     const once = q => PQ.store.get(q.id).n > PQ.store.get(q.id).c;
     return shuffle(qs.shaky.concat(qs.due, qs.later, qs.waiting).filter(once).slice(0, size));

@@ -278,6 +278,17 @@
   ok(PQ.chapters.every(c => chapterPct(c.id) === 100) && Q.progress(PQ.questions).pct === 100 && !Q.smartLesson(30).some(q => Q.isOpen(q.id)),
     'Alles erledigt → jedes Kapitel und alles zusammen 100 %');
   ok(Q.percent(1195, 1196) === 99 && Q.percent(1196, 1196) === 100 && Q.percent(0, 0) === 0, '99,9 % wird nicht als 100 % angezeigt');
+
+  // Older mistakes by exam relevance, even if the less important ones are older; the number of questions stays the same
+  S.reset();
+  PQ.questions.forEach(q => S.record(q.id, true, 0));
+  const pick = f => PQ.questions.filter(f).slice(0, 10).map(q => q.id);
+  const tiers = [pick(q => q.alt), pick(q => !q.alt && q.stars === 3), pick(q => !q.alt && q.stars === 2), pick(q => !q.alt && q.stars < 2)];
+  tiers.slice().reverse().flat().forEach((id, i) => { S.record(id, false, 0); S.get(id).t = Date.now() - 10 * HOUR + i * 1000; });
+  const openBefore = Q.plan().mistakes;
+  const order = tiers.map(() => { const l = Q.smartLesson(10).map(q => q.id); l.forEach(id => S.record(id, true, 0)); return l.sort().join(); });
+  ok(openBefore === 40 && order.every((l, i) => l === tiers[i].slice().sort().join()) && !Q.plan().mistakes,
+    'Ältere Fehler: erst Altfragen, dann ★★★, ★★, Rest – genau dieselben 40 Fragen');
   S.reset();
 
   S.saveSession({ mode: 'practice', ids: ['k4-01'] });

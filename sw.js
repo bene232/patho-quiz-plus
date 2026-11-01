@@ -2,7 +2,7 @@
    Bump CACHE on every content change so devices load the new version. */
 // Own prefix: caches are shared across the whole origin, and those of Patho-Quiz (patho-quiz-vNN) must not be deleted
 const PREFIX = 'patho-quiz-plus-';
-const CACHE = PREFIX + 'v6';
+const CACHE = PREFIX + 'v7';
 const ART = [
   'microscope', 'shield', 'cells', 'heart', 'vessel', 'lungs', 'stomach', 'colon', 'liver', 'kidney', 'drop',
   'thyroid', 'ribbon', 'uterus', 'bone', 'brain', 'tooth', 'bolt', 'stopwatch', 'chart', 'trophy', 'medal',
