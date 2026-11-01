@@ -289,6 +289,32 @@
     toast(mascot(mood || 'cheer', 'mascot-toast'), h('span', {}, text));
   }
 
+  // What Zelli says on the progress bar of a round; {n} = name
+  const RUNNER_LINES = {
+    start: ['Los geht’s!', 'Ab ans Kreuzen!', 'Auf geht’s, {n}!', 'Lass uns kreuzen, {n}!', 'Du schaffst das!'],
+    repeatStart: ['Fehler abräumen – los geht’s, {n}!', 'Alte Bekannte! Die packst du jetzt.', 'Zweite Chance für diese Fragen – auf geht’s!', 'Jetzt holen wir uns die Punkte zurück!'],
+    repeat: ['Die kennst du schon – diesmal klappt’s!', 'Alte Bekannte!', 'Na, erinnerst du dich?', 'Zweite Chance – du packst das!', 'Die hatten wir schon, {n}!',
+      'Denk an die Erklärung von letztem Mal.', 'Nochmal – und diesmal sitzt sie.', 'Wiederholen macht’s fest!'],
+    fixed: ['Fehler ausgebügelt!', 'Abgehakt!', 'Sitzt jetzt!', 'Weg damit!', 'Na bitte, {n}!', 'Genau so!']
+  };
+
+  // Comments on returning questions and corrected mistakes only now and then: at least 3 questions apart, never the same line twice in a row
+  const RUNNER_GAP = 3;
+  const RUNNER_CHANCE = { repeat: 0.3, fixed: 0.4 };
+
+  function runnerLine(s, kind) {
+    const said = s.said || {};
+    const lines = RUNNER_LINES[kind].filter(l => l !== said.line);
+    const line = pick(lines.length ? lines : RUNNER_LINES[kind]);
+    s.said = { at: s.idx, line };
+    return say(line);
+  }
+
+  function runnerMayTalk(s, kind) {
+    const said = s.said || { at: -RUNNER_GAP };
+    return s.idx - said.at >= RUNNER_GAP && Math.random() < RUNNER_CHANCE[kind];
+  }
+
   // Tips and encouragement when Zelli is tapped; {n} = name, {seen} = questions seen, {today} = answered today
   const ZELLI_LINES = [
     'Kreuzen schlägt Lesen: Jede gekreuzte Frage festigt mehr als nochmal durchlesen.',
@@ -1392,7 +1418,14 @@
       ctx.repaint();
       updateCount();
       track.set((doneCount() / total()) * 100, moodOf(result));
-      if (result.fixed) track.say('Fehler ausgebügelt!');
+      if (result.fixed && runnerMayTalk(s, 'fixed')) {
+        const p = Q.plan();
+        const left = p.mistakes + p.guessed;
+        // Now and then the countdown of the review programme instead
+        if (left && Math.random() < 0.4) { s.said = { at: s.idx }; track.say('Einer weniger – noch ' + left + '!'); }
+        else track.say(runnerLine(s, 'fixed'));
+        persist();
+      }
       combo.classList.toggle('hidden', s.combo < 2);
       combo.lastChild.textContent = s.combo;
       showSheet();
@@ -1422,13 +1455,14 @@
     mount(main);
     if (result) showSheet();
     else if (!exam) {
-      // Zelli comments on the start, the middle and the end of a round and on a question that comes back
+      // Zelli comments on the start, the middle and the end of a round and now and then on a question that comes back
       const n = total();
-      const remark = repeat ? 'Die kennst du schon – diesmal klappt’s!'
-        : s.idx === 0 ? say(pick(['Los geht’s!', 'Ab ans Kreuzen!', 'Auf geht’s, {n}!', 'Lass uns kreuzen, {n}!', 'Du schaffst das!']))
-          : n >= 8 && s.idx === Math.floor(n / 2) ? 'Halbzeit!'
-            : n >= 5 && last() ? 'Letzte Frage!' : null;
-      if (remark) track.say(remark);
+      const mark = line => { s.said = { at: s.idx, line }; return line; };
+      const remark = s.idx === 0 ? runnerLine(s, repeat ? 'repeatStart' : 'start')
+        : n >= 8 && s.idx === Math.floor(n / 2) ? mark('Halbzeit!')
+          : n >= 5 && last() ? mark('Letzte Frage!')
+            : repeat && runnerMayTalk(s, 'repeat') ? runnerLine(s, 'repeat') : null;
+      if (remark) { track.say(remark); persist(); }
     }
 
     if (s.endsAt) {

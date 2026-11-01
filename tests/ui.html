@@ -200,11 +200,31 @@
     link.click();
     await sleep(40);
     ok(session().mode === 'review' && session().ids.length === 4, 'Fehlerrunde mit 4 Fragen');
-    ok($('.q-again') && /Die kennst du schon/.test($('.runner-say').textContent), 'Alter Fehler: markiert mit „Nochmal“, Zelli: ' + $('.runner-say').textContent);
+    ok($('.q-again') && /Fehler abräumen|Alte Bekannte|Zweite Chance|Punkte zurück/.test($('.runner-say').textContent), 'Alter Fehler: markiert mit „Nochmal“, Zelli: ' + $('.runner-say').textContent);
     await playThrough(4, true);
     ok($('.rstat-val').textContent === '4/4', 'Fehlerrunde 4/4');
     ok((PQ.store.pref('counters') || {}).fixed === 4, 'Korrigierte Fehler gezählt: ' + JSON.stringify(PQ.store.pref('counters')));
     ok(btn('Weiterlernen'), 'Nach der Fehlerrunde: weiterlernen');
+
+    /* ---------- Zelli in a lesson of only mistakes: comments now and then, not on every question ---------- */
+    const mistakeIds = PQ.questions.filter(q => q.chapter === 6).slice(0, 20).map(q => q.id);
+    mistakeIds.forEach(id => PQ.store.record(id, false, 0));
+    PQ.app.startSession('practice', mistakeIds.map(id => PQ.byId[id]), { origin: { kind: 'smart' } });
+    await sleep(40);
+    const remarks = [];
+    for (let i = 0; i < 20; i++) {
+      const shown = $('.runner-say');
+      if (shown) remarks.push(shown.textContent);
+      await answer(true);
+      btn('Prüfen').click();
+      await sleep(10);
+      if ($('.runner-say') && $('.runner-say') !== shown) remarks.push($('.runner-say').textContent);
+      next();
+      await sleep(20);
+    }
+    const spoken = remarks.filter(Boolean);
+    ok(spoken.length >= 3 && spoken.length <= 9 && spoken.every((r, i) => !i || r !== spoken[i - 1]) && spoken.filter(r => /Die kennst du schon/.test(r)).length <= 2,
+      'Fehlerrunde mit 20 Fragen: Zelli sagt nur ab und zu etwas, nie zweimal dasselbe hintereinander (' + spoken.length + '×: ' + spoken.join(' | ') + ')');
     await nav('#/');
     ok(!$('.hero-link'), 'Keine offenen Fehler mehr');
 
