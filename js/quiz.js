@@ -5,8 +5,6 @@
   const TYPE_LABEL = { single: 'Einfachauswahl', kprim: 'K-prim', tf: 'Richtig/Falsch' };
   // Seconds per question incl. reading the explanation, until the measured pace (pref „pace“) takes over
   const PACE = { single: 40, kprim: 60, tf: 18 };
-  // Cap on mistakes per lesson in the review programme
-  const MISTAKE_SHARE = 0.4;
   // Mistakes from the last 3 hours (i.e. the last rounds) come back first
   const RECENT = 3 * 3600000;
 
@@ -66,11 +64,12 @@
   }
 
   /* Seen questions by learning state: open mistakes (oldest first), due shaky ones, due solid ones
-     (consolidation, important first) and solid ones not yet due (extra practice, longest ago first). */
+     (consolidation, important first), solid ones not yet due (extra practice, longest ago first) and shaky ones
+     not yet due (just corrected or guessed, due soonest first). */
   function queues(now) {
     now = now || Date.now();
     const st = q => PQ.store.get(q.id);
-    const mistakes = [], shaky = [], due = [], later = [];
+    const mistakes = [], shaky = [], due = [], later = [], waiting = [];
     PQ.questions.forEach(q => {
       const s = st(q);
       if (!s) return;
@@ -78,12 +77,14 @@
       else if (s.b === 2 && s.d <= now) shaky.push(q);
       else if (s.d <= now) due.push(q);
       else if (s.b >= 3) later.push(q);
+      else waiting.push(q);
     });
     mistakes.sort((a, b) => (st(a).t || 0) - (st(b).t || 0));
     shaky.sort((a, b) => st(a).d - st(b).d);
     due.sort((a, b) => weight(b) - weight(a) || st(a).d - st(b).d);
     later.sort((a, b) => weight(b) - weight(a) || (st(a).t || 0) - (st(b).t || 0));
-    return { mistakes, shaky, due, later };
+    waiting.sort((a, b) => st(a).d - st(b).d);
+    return { mistakes, shaky, due, later, waiting };
   }
 
   // „Fehler üben“ (practice mistakes): open mistakes, then due shaky questions
@@ -106,21 +107,30 @@
     return s.b >= 3 ? 'solid' : 'learning';
   }
 
+  // Still to do: new, open mistake or open guess (what the review programme still brings)
   function isOpen(id) {
     const m = mastery(id);
-    return m === 'new' || m === 'mistake';
+    return m === 'new' || m === 'mistake' || PQ.store.isGuessed(id);
   }
 
-  // pct = share of questions whose last answer was correct (“mastered”)
+  // Rounded percentage that only reaches 100 when nothing is left
+  function percent(part, total) {
+    if (!total) return 0;
+    return part >= total ? 100 : Math.min(99, Math.round((part / total) * 100));
+  }
+
+  // pct = share of questions done: last answer correct and no open „Geraten?“
   function progress(questions) {
     const r = { total: questions.length, seen: 0, known: 0, solid: 0, pct: 0 };
+    let done = 0;
     questions.forEach(q => {
       const m = mastery(q.id);
       if (m !== 'new') r.seen += 1;
       if (m === 'learning' || m === 'solid') r.known += 1;
       if (m === 'solid') r.solid += 1;
+      if (!isOpen(q.id)) done += 1;
     });
-    r.pct = r.total ? Math.round((r.known / r.total) * 100) : 0;
+    r.pct = percent(done, r.total);
     return r;
   }
 
@@ -132,18 +142,20 @@
     return out;
   }
 
-  /* Review programme: at most 40 % mistakes (those of the last rounds first), filled up with shaky, due and then
-     extra practice of what sits, so a lesson never turns into a long row of mistakes. */
+  /* Review programme, decided by the user for the last day before the exam: only open mistakes and open guesses, so it
+     gets shorter with every right answer. Mistakes of the last rounds first, then due guesses, then older mistakes;
+     guesses of the last 3 hours only when nothing else is left. Once all are done: extra rounds of questions once
+     answered wrong. */
   function reviewLesson(size) {
     const now = Date.now();
     const qs = queues(now);
     const isRecent = q => now - (PQ.store.get(q.id).t || 0) < RECENT;
-    const mistakes = qs.mistakes.filter(isRecent).reverse().concat(qs.mistakes.filter(q => !isRecent(q)));
-    const cap = Math.round(size * MISTAKE_SHARE);
-    const lesson = mistakes.slice(0, cap);
-    const rest = qs.shaky.concat(qs.due, qs.later, mistakes.slice(cap));
-    while (lesson.length < size && rest.length) lesson.push(rest.shift());
-    return shuffle(lesson);
+    const guessed = q => PQ.store.isGuessed(q.id);
+    const open = qs.mistakes.filter(isRecent).reverse()
+      .concat(qs.shaky.filter(guessed), qs.mistakes.filter(q => !isRecent(q)), qs.waiting.filter(guessed));
+    if (open.length) return shuffle(open.slice(0, size));
+    const once = q => PQ.store.get(q.id).n > PQ.store.get(q.id).c;
+    return shuffle(qs.shaky.concat(qs.due, qs.later, qs.waiting).filter(once).slice(0, size));
   }
 
   /* „Weiterlernen“ (continue learning), decided by the user for the exam sprint: first every question once – only
@@ -166,11 +178,11 @@
   function plan() {
     const qs = queues();
     const fresh = PQ.questions.filter(q => !PQ.store.get(q.id));
-    const shaky = PQ.questions.filter(q => PQ.store.isShaky(q.id));
+    const guessed = PQ.questions.filter(q => PQ.store.isGuessed(q.id));
     return {
-      total: PQ.questions.length, fresh: fresh.length, mistakes: qs.mistakes.length, shaky: shaky.length,
+      total: PQ.questions.length, fresh: fresh.length, mistakes: qs.mistakes.length, guessed: guessed.length,
       minutes: Math.round(seconds(fresh) / 60),
-      reviewMinutes: Math.round((seconds(qs.mistakes) * 1.2 + seconds(shaky)) / 60)
+      reviewMinutes: Math.round((seconds(qs.mistakes) * 1.2 + seconds(guessed)) / 60)
     };
   }
 
@@ -223,7 +235,7 @@
   }
 
   PQ.quiz = {
-    TYPE_LABEL, PACE, shuffle, filter, prioritize, take, bySection, queues, reviewPool, mastery, isOpen, progress,
+    TYPE_LABEL, PACE, shuffle, filter, prioritize, take, bySection, queues, reviewPool, mastery, isOpen, percent, progress,
     smartLesson, seconds, plan, createSession, isComplete, evaluate, points
   };
 })();

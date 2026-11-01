@@ -203,6 +203,7 @@
     ok($('.q-again') && /Die kennst du schon/.test($('.runner-say').textContent), 'Alter Fehler: markiert mit „Nochmal“, Zelli: ' + $('.runner-say').textContent);
     await playThrough(4, true);
     ok($('.rstat-val').textContent === '4/4', 'Fehlerrunde 4/4');
+    ok((PQ.store.pref('counters') || {}).fixed === 4, 'Korrigierte Fehler gezählt: ' + JSON.stringify(PQ.store.pref('counters')));
     ok(btn('Weiterlernen'), 'Nach der Fehlerrunde: weiterlernen');
     await nav('#/');
     ok(!$('.hero-link'), 'Keine offenen Fehler mehr');
@@ -455,6 +456,16 @@
     $('.quiz-top .icon-btn').click();
     btn('Runde beenden').click();
     await sleep(30);
+
+    /* ---------- Badges for mistakes corrected before Plus 2.4 (the counter did not count then) ---------- */
+    const fixedQs = {};
+    PQ.questions.slice(0, 12).forEach(q => { fixedQs[q.id] = { b: 2, d: 0, n: 2, c: 1, l: 1, t: Date.now() - 3600000 }; });
+    PQ.store.importData(JSON.stringify({ v: 1, sched: 2, points: 0, days: {}, settings: {}, prefs: {}, q: fixedQs }));
+    PQ.app.route();
+    await sleep(30);
+    const fixBadges = PQ.store.pref('badges') || {};
+    ok(fixBadges.fix10 && !fixBadges.fix50, 'Früher korrigierte Fehler zählen: Abzeichen „Ausgebügelt“ gleich beim Öffnen');
+
     PQ.store.reset();
     PQ.store.pref('welcomed', true);
     PQ.store.pref('outfit', 0);

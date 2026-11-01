@@ -181,8 +181,21 @@
   /* ---------- Learning plan: guessed, old progress, spread reviews, repeat in the round ---------- */
   S.reset();
   S.record('k4-03', true, 10);
+  ok(!S.isGuessed('k4-03'), 'Gleich richtig → nicht geraten');
   S.markGuessed('k4-03');
-  ok(S.isShaky('k4-03') && Q.mastery('k4-03') === 'learning' && !S.isDue('k4-03'), '„Geraten“ → wackelig (Box 2), in ca. 3 h fällig');
+  ok(S.isShaky('k4-03') && S.isGuessed('k4-03') && Q.mastery('k4-03') === 'learning' && !S.isDue('k4-03'), '„Geraten“ → wackelig (Box 2), in ca. 3 h fällig');
+  S.record('k4-03', true, 10);
+  ok(!S.isGuessed('k4-03'), '„Geraten“ erledigt, sobald die Frage wieder richtig beantwortet ist');
+  S.record('k4-06', false, 0);
+  S.record('k4-06', true, 10);
+  ok(!S.isGuessed('k4-06'), 'Korrigierter Fehler gilt nicht als geraten');
+  S.markGuessed('k4-06');
+  ok(S.isGuessed('k4-06'), 'Korrigiert, aber „Geraten“ gedrückt → bleibt offen');
+  // Progress from before the mark: a box 2 never answered wrong can only be a guess
+  S.importData(JSON.stringify({ v: 1, sched: 2, points: 0, days: {}, settings: {}, prefs: {},
+    q: { 'k4-01': { b: 2, d: 0, n: 1, c: 1, l: 1, t: 1 }, 'k4-02': { b: 2, d: 0, n: 2, c: 1, l: 1, t: 1 } } }));
+  ok(S.isGuessed('k4-01') && !S.isGuessed('k4-02'), 'Älterer Stand: Box 2 ohne Fehler gilt als geraten, ein korrigierter Fehler nicht');
+  S.reset();
 
   // Progress from Patho-Quiz (schedule v1): box 2 never answered wrong → box 3; due dates counted from the last answer
   const HOUR = 3600000;
@@ -224,14 +237,47 @@
   ok(lastLesson.length === 30 && lastLesson.filter(q => !S.get(q.id)).length === 10 && !!S.get(lastLesson[1].id) === false,
     'Letzte Runde des ersten Durchgangs: 10 neue + 20 Wiederholungen');
 
-  // Review programme: at most 40 % mistakes, those of the last rounds first
+  // Review programme: only open mistakes and open guesses, mistakes of the last rounds first, then due guesses
   left.slice(0, 10).forEach(q => S.record(q.id, true, 0));
   ch7.slice(10).forEach(q => { S.get(q.id).t = Date.now() - 5 * 3600000; });
+  const corrected = ch7.slice(-15);
+  corrected.forEach(q => { S.record(q.id, true, 0); S.get(q.id).d = Date.now() - 1; });
+  const guessedIds = left.slice(0, 5).map(q => q.id);
+  guessedIds.forEach(id => { S.markGuessed(id); S.get(id).d = Date.now() - 1; });
   const review = Q.smartLesson(30);
-  const recentIds = new Set(ch7.slice(0, 10).map(q => q.id));
-  const reviewMistakes = review.filter(q => S.isMistake(q.id));
-  ok(review.length === 30 && reviewMistakes.length === 12 && reviewMistakes.filter(q => recentIds.has(q.id)).length === 10,
-    'Wiederholungsprogramm: 12 von 30 Fehler, die der letzten Runden (10) zuerst');
+  const reviewIds = review.map(q => q.id);
+  ok(review.length === 30 && review.every(q => S.isMistake(q.id) || S.isGuessed(q.id)) &&
+    ch7.slice(0, 10).map(q => q.id).concat(guessedIds).every(id => reviewIds.includes(id)) && !corrected.some(q => reviewIds.includes(q.id)),
+    'Wiederholungsprogramm: nur offene Fehler und Geratene, die der letzten Runden zuerst, keine korrigierten');
+
+  // Every right answer takes one off, so it comes to an end; afterwards extra rounds of questions once answered wrong
+  const openCount = () => { const pl = Q.plan(); return pl.mistakes + pl.guessed; };
+  const before = openCount();
+  review.forEach(q => S.record(q.id, true, 0));
+  ok(openCount() === before - 30, 'Jede richtige Antwort zählt runter: ' + before + ' → ' + openCount());
+  let rounds = 0;
+  while (openCount() && rounds < 50) { Q.smartLesson(30).forEach(q => S.record(q.id, true, 0)); rounds++; }
+  const extra = Q.smartLesson(30);
+  ok(!openCount() && extra.length && extra.every(q => S.get(q.id).n > S.get(q.id).c),
+    'Fertig nach ' + rounds + ' weiteren Lektionen, danach Extra-Runden mit einmal falschen Fragen');
+
+  // Just guessed: only when nothing else is open
+  S.reset();
+  PQ.questions.forEach(q => S.record(q.id, true, 0));
+  S.record('k4-01', false, 0);
+  S.markGuessed('k4-05');
+  ok(Q.smartLesson(1)[0].id === 'k4-01' && Q.smartLesson(30).map(q => q.id).sort().join() === 'k4-01,k4-05',
+    'Gerade geraten: kommt erst, wenn sonst nichts offen ist');
+
+  // Chapters: 100 % exactly when the review programme has nothing left there
+  const chapterPct = id => Q.progress(PQ.questions.filter(q => q.chapter === id)).pct;
+  ok(chapterPct(4) < 100 && Q.isOpen('k4-05') && PQ.chapters.every(c => c.id === 4 || chapterPct(c.id) === 100),
+    'Kapitel: 100 % überall außer Herz (1 Fehler + 1 Geratene offen, Herz ' + chapterPct(4) + ' %)');
+  S.record('k4-01', true, 0);
+  S.record('k4-05', true, 0);
+  ok(PQ.chapters.every(c => chapterPct(c.id) === 100) && Q.progress(PQ.questions).pct === 100 && !Q.smartLesson(30).some(q => Q.isOpen(q.id)),
+    'Alles erledigt → jedes Kapitel und alles zusammen 100 %');
+  ok(Q.percent(1195, 1196) === 99 && Q.percent(1196, 1196) === 100 && Q.percent(0, 0) === 0, '99,9 % wird nicht als 100 % angezeigt');
   S.reset();
 
   S.saveSession({ mode: 'practice', ids: ['k4-01'] });

@@ -75,19 +75,28 @@
     s.b = !correct ? 1 : s.n === 1 ? 3 : Math.min(Math.max(s.b, 1) + 1, 5);
     s.d = s.b === 1 ? 0 : now + INTERVAL[s.b];
     s.t = now;
+    delete s.g; // a new answer settles an open „Geraten?“
     const k = dayKey(now);
     state.days[k] = (state.days[k] || 0) + 1;
     state.points += points || 0;
     save();
   }
 
-  // „Geraten“ (guessed): a right answer counts as shaky, so the question comes back soon
+  // „Geraten“ (guessed): a right answer counts as shaky, so the question comes back soon; g marks it until the next answer
   function markGuessed(id) {
     const s = state.q[id];
     if (!s) return;
     s.b = 2;
     s.d = Date.now() + INTERVAL[2];
+    s.g = 1;
     save();
+  }
+
+  // Open guess: marked „Geraten?“ and not answered since. Progress from before the mark: a box 2 never answered wrong
+  // can only come from „Geraten?“.
+  function isGuessed(id) {
+    const s = state.q[id];
+    return !!s && (!!s.g || (s.b === 2 && s.n === s.c));
   }
 
   function isMistake(id) {
@@ -200,7 +209,7 @@
   }
 
   PQ.store = {
-    get, record, markGuessed, isMistake, isShaky, isDue, streak, recentDays, todayCount, dayKey,
+    get, record, markGuessed, isGuessed, isMistake, isShaky, isDue, streak, recentDays, todayCount, dayKey,
     points: () => state.points,
     GOALS, DEFAULT_GOAL,
     exportData, exportCode, importData, reset, setting, pref,

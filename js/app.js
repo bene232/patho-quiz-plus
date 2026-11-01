@@ -609,7 +609,8 @@
     const s = session;
     const q = PQ.byId[s.ids[s.idx]];
     const res = Q.evaluate(q, response);
-    const before = S.get(q.id);
+    // Before S.record(), which updates the question's state in place
+    const wasMistake = S.isMistake(q.id);
     s.responses[s.idx] = response;
     s.results[s.idx] = res;
     s.combo = res.correct ? s.combo + 1 : 0;
@@ -621,7 +622,7 @@
       const firstPass = PQ.questions.some(x => !S.get(x.id));
       res.back = firstPass ? 'Kommt im Wiederholungsprogramm nochmal.' : s.origin && s.origin.kind === 'smart' ? 'Kommt in der nächsten Runde nochmal.' : 'Kommt bald nochmal dran.';
     }
-    res.fixed = res.correct && !!before && before.b === 1;
+    res.fixed = res.correct && wasMistake;
     if (res.fixed) count('fixed');
     trackTime(s, q);
     persist();
@@ -688,17 +689,24 @@
     zelliToast(fresh.length > 1 ? fresh.length + ' neue Abzeichen!' : 'Abzeichen: ' + b.title);
   }
 
-  function checkBadges(s) {
+  // Until Plus 2.4 the counter never counted, so questions last answered right after a mistake count as well
+  function fixedCount() {
     const c = S.pref('counters') || {};
+    const corrected = PQ.questions.filter(q => { const s = S.get(q.id); return s && s.l === 1 && s.n > s.c; }).length;
+    return Math.max(c.fixed || 0, corrected);
+  }
+
+  function checkBadges(s) {
     const today = S.todayCount();
     const hour = new Date().getHours();
     const best = s ? s.bestCombo : 0;
     const seen = PQ.questions.filter(q => S.get(q.id)).length / (PQ.questions.length || 1);
     const chapterDone = id => PQ.questions.every(q => q.chapter !== id || S.get(q.id));
+    const fixed = fixedCount();
     const met = {
       combo10: best >= 10, combo25: best >= 25,
       day100: today >= 100, day250: today >= 250, day400: today >= 400,
-      fix10: c.fixed >= 10, fix50: c.fixed >= 50, fix150: c.fixed >= 150,
+      fix10: fixed >= 10, fix50: fixed >= 50, fix150: fixed >= 150,
       seen75: seen >= 0.75, seen100: seen >= 1,
       night: today > 0 && hour >= 22, early: today > 0 && hour >= 4 && hour < 8
     };
@@ -714,7 +722,7 @@
 
   function greeting(p, today) {
     const hour = new Date().getHours();
-    if (!p.fresh && !p.mistakes && !p.shaky) return say('Alles sitzt, {n}! Du bist bereit.');
+    if (!p.fresh && !p.mistakes && !p.guessed) return say('Alles sitzt, {n}! Du bist bereit.');
     if (hour >= 23 || hour < 4) return say('Schon spät, {n}. Schlaf hilft beim Merken – vielleicht noch eine kleine Runde?');
     if (!today) return say(hour < 11 ? 'Guten Morgen, {n}! Bereit zum Kreuzen?' : 'Hallo {n}! Schön, dass du da bist – lass uns kreuzen!');
     return say(pick(['Weiter geht’s, {n}!', 'Lass uns weiterkreuzen, {n}!', 'Du machst das großartig, {n}.', 'Jede gekreuzte Frage bringt dich näher ans Ziel.', 'Ich bin stolz auf dich, {n}!']));
@@ -733,17 +741,18 @@
 
   // Phase of the plan: first every question once, then the review programme
   function planSummary(p) {
-    const seenPct = Math.round(((p.total - p.fresh) / p.total) * 100);
+    const seenPct = Q.percent(p.total - p.fresh, p.total);
     if (p.fresh) {
       const until = deadline();
       return { title: 'Noch ' + plural(p.fresh, 'neue Frage', 'neue Fragen'), pct: seenPct,
         meta: (until ? 'Ziel: ' + until + ' alles einmal kreuzen' : seenPct + ' % einmal gekreuzt') + ' · noch ca. ' + fmtDuration(p.minutes) };
     }
-    if (p.mistakes + p.shaky) {
-      const knownPct = Math.round(((p.total - p.mistakes - p.shaky) / p.total) * 100);
-      return { title: 'Wiederholungsprogramm', pct: knownPct,
-        meta: [p.mistakes ? plural(p.mistakes, 'Fehler', 'Fehler') : null, p.shaky ? p.shaky + ' wackelige' : null].filter(Boolean).join(' + ') +
-          ' wiederholen · ca. ' + fmtDuration(p.reviewMinutes) };
+    // Review programme: open mistakes and guesses, each right answer takes one off
+    if (p.mistakes + p.guessed) {
+      const knownPct = Q.percent(p.total - p.mistakes - p.guessed, p.total);
+      return { title: 'Noch ' + plural(p.mistakes + p.guessed, 'Frage', 'Fragen') + ' wiederholen', pct: knownPct,
+        meta: [p.mistakes ? plural(p.mistakes, 'Fehler', 'Fehler') : null, p.guessed ? p.guessed + ' geratene' : null].filter(Boolean).join(' + ') +
+          ' · ca. ' + fmtDuration(p.reviewMinutes) };
     }
     return { title: 'Alles sitzt!', pct: 100, meta: 'Jetzt Altfragen wiederholen oder die Klausur simulieren.' };
   }
@@ -769,6 +778,7 @@
 
   function renderHome() {
     if (!S.pref('welcomed')) { renderWelcome(); return; }
+    checkBadges(); // badges earned without a new answer (e.g. after an update) show up right away
     const all = PQ.questions;
     const today = S.todayCount();
     const p = Q.plan();
@@ -792,7 +802,7 @@
         h('button', { class: 'hero-link', onclick: () => { abortSession(); renderHome(); } },
           MODE_TITLE[saved.mode] + ' ' + answeredCount(saved) + '/' + saved.ids.length + ' · verwerfen'));
     } else {
-      const label = p.fresh ? (today ? 'Weiterlernen' : 'Los geht’s') : p.mistakes + p.shaky ? 'Wiederholen' : 'Extra-Runde';
+      const label = p.fresh ? (today ? 'Weiterlernen' : 'Los geht’s') : p.mistakes + p.guessed ? 'Wiederholen' : 'Extra-Runde';
       actions.push(h('button', { class: 'btn btn-hero', onclick: startSmart }, icon('play'), label));
       // Mistakes come back mixed into the lessons; practicing them on their own stays possible without a big number
       if (p.fresh && p.mistakes) actions.push(h('button', { class: 'hero-link', onclick: startReview }, icon('repeat'), 'Lieber erst Fehler üben'));
@@ -807,7 +817,7 @@
       : 'Zelli ist bereit für die Klausur – und du auch!';
     const hero = h('section', { class: 'hero' },
       h('div', { class: 'hero-top' },
-        talkingZelli(p.fresh || p.mistakes || p.shaky ? 'wave' : 'cheer', 'mascot-hero', bubble),
+        talkingZelli(p.fresh || p.mistakes || p.guessed ? 'wave' : 'cheer', 'mascot-hero', bubble),
         h('div', { class: 'hero-hello' },
           examKicker(days) ? h('p', { class: 'hero-kicker' }, examKicker(days)) : null,
           bubble)),
